@@ -1,0 +1,126 @@
+﻿//namespace ThingsLibrary.Tests
+//{
+//    [TestClass, ExcludeFromCodeCoverage]
+//    public class TestExamples
+//    {
+//        // Examples: https://www.lambdatest.com/blog/nunit-vs-xunit-vs-mstest/#:~:text=As%20far%20as%20NUnit%20vs,of%20the%20%5BTest%5D%20attribute.
+
+//        //private static TestContext Context { get; set; }
+//        private const int TimeoutInMilliseconds = 100;
+
+//        #region --- Initialization --- 
+
+//        // ======================================================================
+//        // 1. Called once before constructor
+//        // ======================================================================
+//        [ClassInitialize]
+//        public static void ClassInitialize(TestContext testContext)
+//        {
+//            Console.WriteLine("Inside ClassInitialize");
+
+//            //Context = testContext;
+//        }
+
+//        // ======================================================================
+//        // 2. Called once before each test
+//        // ======================================================================
+//        public TestExamples()
+//        {
+//            Console.WriteLine("Constructor");
+//        }
+
+//        // ======================================================================
+//        //  3. Called once before each test after the constructor
+//        // ======================================================================
+//        [TestInitialize]
+//        public void TestInitialize()
+//        {
+//            Console.WriteLine("TestInitialize");
+//        }
+
+//        #endregion
+
+//        // ======================================================================
+//        // 4. TESTS 
+//        // ======================================================================        
+//        [DataTestMethod]
+//        [DataRow("/static/test.css")]
+//        [DataRow("/static/missing.css")]
+//        [DataRow("/static/test2.css")]
+
+//        public void GetFile(string url)
+//        {
+//            Console.WriteLine($"GetFile: url = {url}");
+//        }
+
+//        /// <summary>
+//        ///     A typical test that asserts something.
+//        /// </summary>
+//        [TestMethod]
+//        public void TestTypicalAssertion()
+//        {
+//            Assert.AreEqual(1, 1);
+//        }
+
+//        /// <summary>
+//        ///     An example of a test that is expected to throw an exception.
+//        /// </summary>
+//        /// <exception cref="System.Exception">doh!</exception>
+//        [TestMethod]
+//        [ExpectedException(typeof(InvalidOperationException))]
+//        public void TestThatIsExpectedToThrowAnException()
+//        {
+//            throw new InvalidOperationException("Argh!");
+//        }
+
+//        /// <summary>
+//        ///     Test will fail if it takes longer than the specifed timeout value.
+//        /// </summary>
+//        [TestMethod]
+//        [Timeout(TimeoutInMilliseconds)]
+//        public void TestThatTimeouts()
+//        {
+//            Thread.Sleep(TimeoutInMilliseconds / 2);
+//        }
+
+//        /// <summary>
+//        ///     An example of a test that is ignored.
+//        /// </summary>
+//        [TestMethod]
+//        [Ignore]
+//        public void TestThatIsIgnored()
+//        {
+//            throw new InvalidOperationException();
+//        }
+
+//        #region --- Cleanup ---
+
+//        // ======================================================================
+//        // 5. Called once after each test before the Dispose method
+//        // ======================================================================
+//        [TestCleanup]
+//        public void TestCleanup()
+//        {
+//            Console.WriteLine("TestCleanup");
+//        }
+
+//        // ======================================================================
+//        // 6. Called once after each test
+//        // ======================================================================
+//        public void Dispose()
+//        {
+//            Console.WriteLine("Dispose");
+//        }
+
+//        // ======================================================================
+//        // 7. Called once after each dispose
+//        // ======================================================================
+//        [ClassCleanup]
+//        public static void ClassCleanup()
+//        {
+//            Console.WriteLine($"Test Cleanup");
+//        }
+
+//        #endregion
+//    }
+//}

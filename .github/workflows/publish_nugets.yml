@@ -1,0 +1,56 @@
+# ======================================================================
+# Publish Nugets: Build, Test and Publish Nuget Packages
+# ======================================================================
+name: 'Build/Publish Nugets'
+
+on:
+  push:
+    tags:
+    - "v[0-9]+.[0-9]+.[0-9]+"
+    
+jobs:  
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+    steps:    
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Setup .NET 8.0.x
+      uses: actions/setup-dotnet@v3
+      with:
+        # Semantic version range syntax or exact version of a dotnet version
+        dotnet-version: '8.0.x'
+
+    - name: Set VERSION variable from tag
+      run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      
+    - name: Restore
+      run: dotnet restore ./ThingsLibrary.All.sln
+      
+    - name: Build
+      run: dotnet build ./ThingsLibrary.All.sln --configuration Release /p:Version="${VERSION}" --no-restore
+      
+    - name: Test
+      run: dotnet test ./ThingsLibrary.All.sln -c Release --nologo --no-build --results-directory "./Artifacts/Test/${VERSION}" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    
+    - name: Pack
+      run: dotnet pack ./ThingsLibrary.All.sln -v normal -c Release /p:Version="${VERSION}" /p:PackageVersion="${VERSION}" /p:PackageReleaseNotes="${{ github.event.inputs.releaseNotes }}" --no-restore --no-build --output "./Artifacts/Build"
+      if: success()
+
+    - name: File Tree
+      run: tree -a ./Artifacts
+
+    - name: Push to Github  
+      run: dotnet nuget push ./Artifacts/Build/*.nupkg -k ${API_TOKEN} -s https://nuget.pkg.github.com/things-library/index.json
+      env:
+        API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Push to Nuget.org
+      run: dotnet nuget push ./Artifacts/Build/*.nupkg -k ${API_TOKEN} -s https://api.nuget.org/v3/index.json
+      env:
+        API_TOKEN: ${{ secrets.NUGET_API_KEY }}

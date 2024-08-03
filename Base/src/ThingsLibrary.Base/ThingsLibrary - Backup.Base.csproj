@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Base</PackageId>
+		<PackageDescription>ThingsLibrary base framework libraries and wrappers.</PackageDescription>
+
+		<ProductName>ThingsLibrary.Base</ProductName>
+		<Title>ThingsLibrary Base Framework Library</Title>
+		<Description>This is the shared foundational library.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>ThingsLibrary Software Co.</Company>
+	</PropertyGroup>
+
+</Project>

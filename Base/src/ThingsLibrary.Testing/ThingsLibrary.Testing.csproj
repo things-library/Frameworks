@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Testing</PackageId>
+		<PackageDescription>Things Library testing framework libraries and wrappers.</PackageDescription>
+		
+		<ProductName>ThingsLibrary.Testing</ProductName>
+		<Title>Testing Library</Title>
+		<Description>This is the testing library that adds test container capabilities</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+		<PackageReference Include="Testcontainers" Version="3.6.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Base\ThingsLibrary.Base.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Scheduler</PackageId>
+		<PackageDescription>Things Library scheduler framework libraries and wrappers.</PackageDescription>
+
+		<ProductName>ThingsLibrary.Scheduler</ProductName>
+		<Title>Things Library Scheduler Framework Library</Title>
+		<Description>This is the scheduler foundational library for supporting cron statements.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="ncrontab" Version="3.3.3" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Base\ThingsLibrary.Base.csproj" />
+	</ItemGroup>
+
+</Project>

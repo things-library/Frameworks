@@ -1,0 +1,23 @@
+# ================================================================================
+# MARKDOWN LINK CHECKER
+# ================================================================================
+# https://github.com/gaurav-nelson/github-action-markdown-link-check?tab=readme-ov-file
+# <!-- markdown-link-check-disable --> and <!-- markdown-link-check-enable-->
+# Check a single file using:
+#   markdown-link-check ./README.md
+# Recursive: 
+#   find . -name \*.md -print0 | xargs -0 -n1 markdown-link-check -q -p
+# ================================================================================
+name: Check Markdown links
+
+on: push
+
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'yes'
+        config-file: '.github/workflows/markdown_checker.json'
