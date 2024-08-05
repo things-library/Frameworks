@@ -1,4 +1,4 @@
-﻿namespace ThingsLibrary.Base.DataType.Json.Converters
+﻿namespace ThingsLibrary.DataType.Json.Converters
 {
     public class DictionaryStringObjectConverter : JsonConverter<Dictionary<string, object>>
     {

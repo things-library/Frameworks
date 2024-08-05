@@ -1,6 +1,6 @@
 ﻿using ThingsLibrary.Interfaces;
 
-namespace ThingsLibrary.Base.DataType.Extensions
+namespace ThingsLibrary.DataType.Extensions
 {
     public static class ListExtensions
     {

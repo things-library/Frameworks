@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ThingsLibrary.Base.DataType.Json.Converters
+namespace ThingsLibrary.DataType.Json.Converters
 {
     public class DictionaryStringOrStringListConverter : JsonConverter<Dictionary<string, object>>
     {

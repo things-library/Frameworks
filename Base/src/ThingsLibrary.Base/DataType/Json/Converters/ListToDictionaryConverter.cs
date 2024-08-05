@@ -1,6 +1,6 @@
 ﻿using ThingsLibrary.Interfaces;
 
-namespace ThingsLibrary.Base.DataType.Json.Converters
+namespace ThingsLibrary.DataType.Json.Converters
 {
     /// <summary>
     /// The purpose of this converter is so we aren't serializing the 'key'.  Once for the dictionary key and once inside of the object.  When deserializing we need to put it back however
