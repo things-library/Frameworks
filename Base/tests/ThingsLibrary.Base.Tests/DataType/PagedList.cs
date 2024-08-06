@@ -96,7 +96,7 @@ namespace ThingsLibrary.Tests.DataType
         public class TestClass
         {
             public int Id { get; set; }
-            public string Name { get; set; }
+            public string Name { get; set; } = string.Empty;
         }
     }    
 }

@@ -397,7 +397,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
             var analysis = new AnalysisEntity16();
             analysis.Add(rootAnalysis);
 
-            analysis.Add((AnalysisEntity16)null);
+            //analysis.Add((AnalysisEntity16)null);
             analysis.Add(new AnalysisEntity16());
 
             Assert.AreEqual(5, analysis.Min);

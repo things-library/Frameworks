@@ -8,7 +8,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
         public class TestClass 
         { 
             public int Id { get; set; }
-            public string Name { get; set; }
+            public string Name { get; set; } = string.Empty;
         }
 
         [TestMethod]

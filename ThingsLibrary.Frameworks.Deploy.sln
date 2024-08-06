@@ -11,11 +11,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Base", "Base\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Base.Tests", "Base\tests\ThingsLibrary.Base.Tests\ThingsLibrary.Base.Tests.csproj", "{91E7473F-DD2A-4200-B41F-9305D8DA853A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{363AB45F-AE3E-4EF1-8FDA-846B982DDFEF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{363AB45F-AE3E-4EF1-8FDA-846B982DDFEF}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\publish_nugets.yml = .github\workflows\publish_nugets.yml
 		.github\workflows\pull_requests.yml = .github\workflows\pull_requests.yml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B6219468-26C8-4B0E-AB9F-D06FC5BED113}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F807700F-D771-4F0C-9A61-8817DA1D770B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{625B340B-8DED-4E01-9252-49A01FD3AFE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Security.OAuth2", "Security\src\ThingsLibrary.Security.OAuth2\ThingsLibrary.Security.OAuth2.csproj", "{4EB380DF-AC28-4387-9BB5-77570740DA92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{827FE983-CB41-4775-8502-46D8A8DB7FCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Security.OAuth2.Tests", "Security\tests\ThingsLibrary.Security.OAuth2.Tests\ThingsLibrary.Security.OAuth2.Tests.csproj", "{14BDE79B-8256-4F68-89E8-EA78153684F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +43,14 @@ Global
 		{91E7473F-DD2A-4200-B41F-9305D8DA853A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91E7473F-DD2A-4200-B41F-9305D8DA853A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91E7473F-DD2A-4200-B41F-9305D8DA853A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB380DF-AC28-4387-9BB5-77570740DA92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EB380DF-AC28-4387-9BB5-77570740DA92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EB380DF-AC28-4387-9BB5-77570740DA92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EB380DF-AC28-4387-9BB5-77570740DA92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14BDE79B-8256-4F68-89E8-EA78153684F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14BDE79B-8256-4F68-89E8-EA78153684F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14BDE79B-8256-4F68-89E8-EA78153684F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14BDE79B-8256-4F68-89E8-EA78153684F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +59,10 @@ Global
 		{6E23992A-8A85-49F1-A705-6B28F7A5F1DC} = {48D763BE-5112-4A94-AA2F-140576D50DD4}
 		{897462BC-4FAE-4B76-B404-815D9985F391} = {48D763BE-5112-4A94-AA2F-140576D50DD4}
 		{91E7473F-DD2A-4200-B41F-9305D8DA853A} = {6E23992A-8A85-49F1-A705-6B28F7A5F1DC}
+		{F807700F-D771-4F0C-9A61-8817DA1D770B} = {B6219468-26C8-4B0E-AB9F-D06FC5BED113}
+		{4EB380DF-AC28-4387-9BB5-77570740DA92} = {625B340B-8DED-4E01-9252-49A01FD3AFE6}
+		{827FE983-CB41-4775-8502-46D8A8DB7FCB} = {625B340B-8DED-4E01-9252-49A01FD3AFE6}
+		{14BDE79B-8256-4F68-89E8-EA78153684F0} = {827FE983-CB41-4775-8502-46D8A8DB7FCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CF34144-3CDD-4955-B934-A5278D7A1139}

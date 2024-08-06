@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     
+    env:      
+      SOLUTION_PATH: './ThingsLibrary.Frameworks.Deploy.sln'
+
     steps:    
     - name: Checkout
       uses: actions/checkout@v3
@@ -34,13 +37,13 @@ jobs:
       run: dotnet nuget list source
 
     - name: Restore Files
-      run: dotnet restore ./ThingsLibrary.All.sln
+      run: dotnet restore ${{env.SOLUTION_PATH}}
 
     - name: Build
-      run: dotnet build ./ThingsLibrary.All.sln --configuration Release --no-restore
+      run: dotnet build ${{env.SOLUTION_PATH}} --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test ./ThingsLibrary.All.sln -c Release --nologo --no-build --results-directory "./Artifacts/Test/0.0.0" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test ${{env.SOLUTION_PATH}} -c Release --nologo --no-build --results-directory "./Artifacts/Test/0.0.0" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
     - name: Tree List
       run: tree -a ./Artifacts
