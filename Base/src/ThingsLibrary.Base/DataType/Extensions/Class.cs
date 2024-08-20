@@ -153,9 +153,12 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="instance">Class Instance</param>        
         /// <param name="property">Property</param>
         /// <returns>List of key values</returns>
-        public static T GetPropertyValue<T>(this object instance, PropertyInfo property)
-        {            
-            return (T)property.GetValue(instance);
+        public static T GetPropertyValue<T>(this object instance, PropertyInfo property, T devaultValue)
+        {
+            var value = property.GetValue(instance);
+            if (value == null) { return devaultValue; }
+
+            return (T)value;
         }
 
         /// <summary>
@@ -164,9 +167,12 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="property">Property</param>
         /// <param name="instance">Class Instance</param> 
         /// <returns>List of key values</returns>
-        public static T GetPropertyValue<T>(this PropertyInfo property, object instance)
+        public static T GetPropertyValue<T>(this PropertyInfo property, object instance, T devaultValue)
         {
-            return (T)property.GetValue(instance);
+            var value = property.GetValue(instance);
+            if (value == null) { return devaultValue; }
+
+            return (T)value;
         }
 
         /// <summary>
@@ -175,17 +181,17 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="instance">Class Instance</param>        
         /// <param name="key">Key</param>
         /// <returns>List of key values</returns>
-        public static TReturn GetPropertyValue<TAttribute, TReturn>(this object instance) where TAttribute : Attribute
+        public static TReturn GetPropertyValue<TAttribute, TReturn>(this object instance, TReturn defaultValue) where TAttribute : Attribute
         {            
             var type = instance.GetType();
 
             var attrib = type.GetProperties().FirstOrDefault(x => x.GetCustomAttributes(typeof(TAttribute), false).Any());
             if (attrib == null) 
             {                
-                return default(TReturn); 
+                return defaultValue; 
             }
 
-            return GetPropertyValue<TReturn>(instance, attrib);
+            return GetPropertyValue<TReturn>(instance, attrib, defaultValue);
         }
 
         /// <summary>

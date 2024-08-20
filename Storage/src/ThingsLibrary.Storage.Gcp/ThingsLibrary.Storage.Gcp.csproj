@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Storage.Gcp</PackageId>
+		<ProductName>ThingsLibrary.Storage.Gcp</ProductName>
+		<Title>Cloud File GCP Framework Library</Title>
+		<Description>This is the shared library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Google.Apis.Storage.v1" Version="1.68.0.3474" />
+		<PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />		
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Storage\ThingsLibrary.Storage.csproj" />
+	</ItemGroup>
+
+</Project>

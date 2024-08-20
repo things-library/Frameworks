@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Cloud.File.Aws</PackageId>
+		<ProductName>ThingsLibrary.Cloud.File.Aws</ProductName>
+		<Title>Cloud File AWS Framework Library</Title>
+		<Description>This is the shared library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="CloudFile.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AWSSDK.S3" Version="3.7.400.3" />		
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Storage\ThingsLibrary.Storage.csproj" />
+	</ItemGroup>
+
+</Project>

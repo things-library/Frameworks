@@ -150,7 +150,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
 
             var attrib = testClass.GetType().GetProperties().Single(x => x.GetCustomAttributes(typeof(KeyAttribute), false).Any());
 
-            var keyValue = testClass.GetPropertyValue<Guid>(attrib);
+            var keyValue = testClass.GetPropertyValue<Guid>(attrib, Guid.Empty);
             Assert.AreEqual(testClass.Id, keyValue);
         }
 
@@ -162,7 +162,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
                 Id = Guid.NewGuid()
             };
 
-            var keyValue = testClass.GetPropertyValue<KeyAttribute, Guid>();
+            var keyValue = testClass.GetPropertyValue<KeyAttribute, Guid>(Guid.Empty);
             Assert.AreEqual(testClass.Id, keyValue);
         }
 

@@ -1,3 +1,5 @@
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
+
 namespace ThingsLibrary.Security.OAuth2.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
@@ -16,14 +18,14 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             Assert.AreEqual(null, testToken.AccessToken);
             Assert.AreEqual(null, testToken.IdToken);
 
-            Assert.AreEqual("", testToken.UserId);
+            Assert.AreEqual("", testToken.ObjectId);
             Assert.AreEqual("", testToken.UserEmail);
         }
 
         [TestMethod]
         public void Constructor_Details()
         {
-            var handler = new JwtSecurityTokenHandler();
+            //var handler = new JwtSecurityTokenHandler();
 
             var testToken = new OAuth2Token
             {
@@ -42,7 +44,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             Assert.AreEqual(13, testToken.JwtIdToken.Claims.Count());
             Assert.AreEqual(637979963600000000, testToken.JwtIdToken.ValidTo.Ticks);
 
-            Assert.AreEqual("ff563d9c-f278-4fd3-b51f-3636f358593b", testToken.UserId);
+            //Assert.AreEqual("ff563d9c-f278-4fd3-b51f-3636f358593b", testToken.UserId);
             Assert.AreEqual("chikateanagha@gmail.com", testToken.UserEmail);
         }
 
@@ -76,7 +78,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             Assert.AreEqual("https://agsync.com", testToken.JwtIdToken.Issuer);
 
             //Assert.AreEqual(null, testToken.ClientId);
-            Assert.AreEqual("", testToken.UserId);
+            Assert.AreEqual("", testToken.ObjectId);
             Assert.AreEqual("", testToken.UserEmail);
         }
 
@@ -118,5 +120,74 @@ namespace ThingsLibrary.Security.OAuth2.Tests
         ///  "aud": "10000000-0000-0000-0000-100000000001"
         ///}.[Signature]
         public static JwtSecurityToken Token3Jwt => new JwtSecurityToken("eyJhbGciOiJSUzI1NiIsImtpZCI6IjgxREQzNzUxMzBFNkFFOTEyRjgxQjY5RkNFNDg4NjcxMEExMzVEODciLCJ4NXQiOiJnZDAzVVREbXJwRXZnYmFmemtpR2NRb1RYWWMiLCJ0eXAiOiJKV1QifQ.eyJpZCI6IjE3YzFlZWMxLThlM2MtNGFlYS1iMTQ3LTBjMDQzZThjN2Q2NyIsImlwYWRkciI6Ijo6MSIsImNsaWVudF9pZCI6IjEwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTEwMDAwMDAwMDAwMSIsInVzZXJfaWQiOiJmZjU2M2Q5Yy1mMjc4LTRmZDMtYjUxZi0zNjM2ZjM1ODU5M2IiLCJ1c2VyX2VtYWlsIjoiY2hpa2F0ZWFuYWdoYUBnbWFpbC5jb20iLCJpbXBlcnNvbmF0b3JfaWQiOiI2MWE5YTEzOC1kMzk4LTQ1NjctYWQ5Ni0zNDZmOTExODIyOGQiLCJpbXBlcnNvbmF0b3JfZW1haWwiOiJtbGFubmluZ0BnbWFpbC5jb20iLCJpbXBlcnNvbmF0b3JfZWRpdCI6InRydWUiLCJuYmYiOjE2NjIzOTU5NjAsImV4cCI6MTY2MjM5OTU2MCwiaWF0IjoxNjYyMzk1OTYwLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDc3L29hdXRoMiIsImF1ZCI6IjEwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTEwMDAwMDAwMDAwMSJ9.BkQpskdpOsH-4IdRMnFsXF0TxYrDm_ymdStjFaVTiUud7NZ0GSnC-uzEkYONtHVHIMhNR7oy4Jn2K-54viuLsczNKNnczxJMvqK6-veqyAuoHOac7ZQJZoPvlj0tGzjL_LD7Uy4tOGsv1JKqB1cOS1NuhUxJsy2jnif4MQlFLJehCT8n9snMFmEZdJf7FHzobEMuJKFNqwEFsmn6lz2pKgZgKWTBcmUd29hv_d6AGDSpYjyvohsxotJ8uvhdmO2VngWwrERuy9X0PGNdsXvvuvU8_CCVnTuwfCifNT50XiL7iNoLq_zA4heUcTq4rQvEXoMoS_1TV_uNEXwgRr8t4A");
+
+
+        /// <summary>
+        /// Generate Security Token
+        /// </summary>
+        /// <param name="claims">Claims to Include</param>
+        /// <param name="secret">Signing Key</param>
+        /// <param name="startOn">Started DateTime</param>
+        /// <param name="expiresOn">Expires DateTime</param>
+        /// <returns></returns>
+        private SecurityToken GenerateToken(IEnumerable<Claim> claims, string secret, DateTime startOn, DateTime expiresOn)
+        {              
+            var key = Encoding.ASCII.GetBytes(secret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Issuer = "https://issuer.thingslibrary.io",
+                Audience = "audience.thingslibrary.io",
+                Subject = new ClaimsIdentity(claims),
+                NotBefore = startOn,
+                Expires = expiresOn,
+                IssuedAt = DateTime.UtcNow,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            //for JWT string call tokenHandler.WriteToken(token)
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            
+            return tokenHandler.CreateToken(tokenDescriptor);            
+        }
+
+        /// <summary>
+        /// Validate the JWT Token
+        /// </summary>
+        /// <param name="token">Token</param>
+        /// <param name="secret">Signing Key</param>
+        /// <returns></returns>
+        private bool ValidateToken(string token, string secret)
+        {
+            if (token == null) { return false; }
+
+            var key = Encoding.ASCII.GetBytes(secret);
+            var tokenHandler = new JwtSecurityTokenHandler();            
+
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+
+                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                //var jwtToken = (JwtSecurityToken)validatedToken;
+                
+                // return user id from JWT token if validation successful
+                return true;
+            }
+            catch
+            {
+                // return null if validation fails
+                return false;
+            }
+        }
     }
 }

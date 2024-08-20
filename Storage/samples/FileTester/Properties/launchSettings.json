@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CloudFilesTester": {
+        "commandName": "Project",
+        "environmentVariables": {
+            "GOOGLE_APPLICATION_CREDENTIALS": "C:\\dev\\test-63997b53380d.json"
+        }
+    }
+  }
+}

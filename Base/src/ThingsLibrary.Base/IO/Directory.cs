@@ -18,7 +18,7 @@ namespace ThingsLibrary.IO
             // already exists???
             if (System.IO.Directory.Exists(directoryPath)) { return; }
 
-            var response = System.IO.Directory.CreateDirectory(directoryPath);
+            System.IO.Directory.CreateDirectory(directoryPath);
         }
 
         /// <summary>

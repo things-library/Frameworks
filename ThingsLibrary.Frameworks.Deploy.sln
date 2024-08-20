@@ -29,6 +29,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{827FE983
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Security.OAuth2.Tests", "Security\tests\ThingsLibrary.Security.OAuth2.Tests\ThingsLibrary.Security.OAuth2.Tests.csproj", "{14BDE79B-8256-4F68-89E8-EA78153684F0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Services", "Services\src\ThingsLibrary.Services\ThingsLibrary.Services.csproj", "{07DB7DD5-6AAC-4982-8411-8D1930A29375}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Services.Tests", "Services\tests\ThingsLibrary.Services.Tests\ThingsLibrary.Services.Tests.csproj", "{A8F03533-0BA7-40C4-9770-C0EF4A7E1692}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{F2EB0266-EB80-473F-99E4-6F282BECAA7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +57,14 @@ Global
 		{14BDE79B-8256-4F68-89E8-EA78153684F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14BDE79B-8256-4F68-89E8-EA78153684F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14BDE79B-8256-4F68-89E8-EA78153684F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07DB7DD5-6AAC-4982-8411-8D1930A29375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07DB7DD5-6AAC-4982-8411-8D1930A29375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07DB7DD5-6AAC-4982-8411-8D1930A29375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07DB7DD5-6AAC-4982-8411-8D1930A29375}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8F03533-0BA7-40C4-9770-C0EF4A7E1692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8F03533-0BA7-40C4-9770-C0EF4A7E1692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8F03533-0BA7-40C4-9770-C0EF4A7E1692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8F03533-0BA7-40C4-9770-C0EF4A7E1692}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +77,8 @@ Global
 		{4EB380DF-AC28-4387-9BB5-77570740DA92} = {625B340B-8DED-4E01-9252-49A01FD3AFE6}
 		{827FE983-CB41-4775-8502-46D8A8DB7FCB} = {625B340B-8DED-4E01-9252-49A01FD3AFE6}
 		{14BDE79B-8256-4F68-89E8-EA78153684F0} = {827FE983-CB41-4775-8502-46D8A8DB7FCB}
+		{07DB7DD5-6AAC-4982-8411-8D1930A29375} = {B6219468-26C8-4B0E-AB9F-D06FC5BED113}
+		{A8F03533-0BA7-40C4-9770-C0EF4A7E1692} = {F807700F-D771-4F0C-9A61-8817DA1D770B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CF34144-3CDD-4955-B934-A5278D7A1139}
