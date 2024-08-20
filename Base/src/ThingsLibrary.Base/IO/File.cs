@@ -222,7 +222,9 @@ namespace ThingsLibrary.IO
             ["class"] = "application/java-vm",
             ["js"] = "application/javascript",
             ["json"] = "application/json",
+            ["jsonl"] = "application/json",
             ["jsonml"] = "application/jsonml+json",
+            ["jsonsd"] = "application/schema+json", //JSON Schema Document
             ["lostxml"] = "application/lost+xml",
             ["hqx"] = "application/mac-binhex40",
             ["cpt"] = "application/mac-compactpro",

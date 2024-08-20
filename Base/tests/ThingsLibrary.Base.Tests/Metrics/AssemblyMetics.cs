@@ -9,17 +9,17 @@ namespace ThingsLibrary.Tests.Metrics
         [TestMethod]
         public void Constructor()
         {
-            var metrics = new AssemblyMetrics();
+            var assemblyMetrics = new AssemblyMetrics();
 
             // test to make sure the empty constructor is using calling assembly
             var assembly = Assembly.GetEntryAssembly();
-            Assert.AreSame(assembly, metrics.Assembly);
+            Assert.AreSame(assembly, assemblyMetrics.Assembly);
 
-            Assert.AreEqual(System.IO.Path.GetDirectoryName(metrics.Assembly.Location), metrics.DirectoryPath());
-            Assert.AreEqual(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), metrics.Name()), metrics.AppDataPath());
-            Assert.IsTrue(metrics.TempDirectoryPath().StartsWith(System.IO.Path.GetTempPath()));
-            Assert.AreEqual(assembly.GetName()?.Version, metrics.FileVersion());
-            Assert.AreEqual(metrics.FileVersion().ToDotString(), metrics.FileVersionStr());
+            Assert.AreEqual(System.IO.Path.GetDirectoryName(assemblyMetrics.Assembly.Location), assemblyMetrics.DirectoryPath());
+            Assert.AreEqual(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), assemblyMetrics.Name()), assemblyMetrics.AppDataPath());
+            Assert.IsTrue(assemblyMetrics.TempDirectoryPath().StartsWith(System.IO.Path.GetTempPath()));
+            Assert.AreEqual(assembly.GetName()?.Version, assemblyMetrics.FileVersion());
+            Assert.AreEqual(assemblyMetrics.FileVersion().ToDotString(), assemblyMetrics.FileVersionStr());
             
             // this will change over time but good to test what it is currently set to
             //Assert.AreEqual(".NETCoreApp,Version=v6.0", metrics.NetFrameworkVersion());
@@ -53,7 +53,7 @@ namespace ThingsLibrary.Tests.Metrics
             //Assert.AreEqual("Base Tests", metrics.Title());   //for some reason assembly picks up productname as also title
             Assert.AreEqual("This is the base tests project", metrics.Description());
             Assert.AreEqual(assembly.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company, metrics.Company());
-            Assert.AreEqual("2022", metrics.Copyright());
+            Assert.AreEqual("1998", metrics.Copyright());
 
             Assert.AreEqual(assembly.GetName().Name, metrics.Namespace());
             

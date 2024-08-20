@@ -46,10 +46,29 @@ namespace ThingsLibrary.Security.OAuth2
         public string ObjectId => this.JwtAccessToken.Claims.FirstOrDefault(c => c.Type == "oid")?.Value.ToLower() ?? string.Empty;
 
         /// <summary>
-        /// User Id (Claim: uid)
+        /// User Display Name (Claim: name)
         /// </summary>
-        [JsonPropertyName("uid")]
-        public string UserId => this.JwtAccessToken.Claims.FirstOrDefault(c => c.Type == "user_id")?.Value.ToLower() ?? string.Empty;
+        [JsonPropertyName("name"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string DisplayName => this.JwtAccessToken?.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? string.Empty;
+
+
+        /// <summary>
+        /// Given (First) Name (Claim: given_name)
+        /// </summary>
+        [JsonPropertyName("given_name"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string GivenName => this.JwtAccessToken?.Claims.FirstOrDefault(c => c.Type == "given_name")?.Value ?? string.Empty;
+
+        /// <summary>
+        /// First Name (Claim: family_name)
+        /// </summary>
+        [JsonPropertyName("family_name"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string FamilyName => this.JwtAccessToken?.Claims.FirstOrDefault(c => c.Type == "family_name")?.Value ?? string.Empty;
+
+        /// <summary>
+        /// User Principal Name (Claim: upn)
+        /// </summary>
+        [JsonPropertyName("upn"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string Username => this.JwtAccessToken?.Claims.FirstOrDefault(c => c.Type == "upn")?.Value.ToLower() ?? string.Empty;
 
         /// <summary>
         /// User Email (Claim: email)

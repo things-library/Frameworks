@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Entity.Gcp</PackageId>
+		<ProductName>ThingsLibrary.Entity.Gcp</ProductName>
+		<Title>Entity GCP Framework Library</Title>
+		<Description>This is the shared library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
+	  <PackageReference Include="Google.Cloud.Datastore.V1" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Entity\ThingsLibrary.Entity.csproj" />
+	</ItemGroup>
+
+</Project>
