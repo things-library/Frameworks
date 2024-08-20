@@ -1,6 +1,6 @@
 ﻿namespace ThingsLibrary.Storage.Interfaces
 {
-    public interface IFileStore
+    public interface ICloudFileStore
     {
         #region --- Observable Events ---
 
@@ -25,7 +25,7 @@
         /// <summary>
         /// File Store Type
         /// </summary>
-        public FileStoreType StorageType { get; }
+        public CloudFileStoreType StorageType { get; }
 
         /// <summary>
         /// If edits to files should be versioned / snapshots

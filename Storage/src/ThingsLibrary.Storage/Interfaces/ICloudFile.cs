@@ -33,14 +33,9 @@
         public double FileSizeMB { get; } // => this.FileSize / (double)1048576;     //(1024x1024) == bytes to megs
 
         /// <summary>
-        /// Locak File Path
+        /// Actual metadata stamped on the cloud files
         /// </summary>
-        public string LocalFilePath { get; set; }
-
-        /// <summary>
-        /// Tag
-        /// </summary>
-        public object Tag { get; set; }
+        public IDictionary<string, string> Metadata { get; }
 
         /// <summary>
         /// Updated Date
@@ -52,11 +47,19 @@
         /// </summary>
         public DateTimeOffset? CreatedOn { get; }
 
-        /// <summary>
-        /// Actual metadata stamped on the cloud files
-        /// </summary>
-        public IDictionary<string, string> Metadata { get; init; }
+        #region --- Extended Local Properties --- 
 
+        /// <summary>
+        /// Locak File Path
+        /// </summary>
+        public string LocalFilePath { get; set; }
+
+        /// <summary>
+        /// Tag
+        /// </summary>
+        public object Tag { get; set; }
+
+        #endregion
 
         /// <summary>
         /// Is the local file path the same one in cloud storage based on MD5

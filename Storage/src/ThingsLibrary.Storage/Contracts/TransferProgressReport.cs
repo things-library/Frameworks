@@ -1,6 +1,6 @@
-﻿namespace Core.Cloud.Storage.File
+﻿namespace ThingsLibrary.Storage.Contracts
 {
-    public class TransferProgressReport
+    public class TransferProgressReportDto
     {
         public string Message { get; set; } = "";
         public DateTime? StartedOn { get; set; } = null;
@@ -28,7 +28,7 @@
         public Exception LastException { get; set; } = null;
         public DateTime? LastExceptionOn { get; set; } = null;
 
-        public TransferProgressReport()
+        public TransferProgressReportDto()
         {
 
         }
