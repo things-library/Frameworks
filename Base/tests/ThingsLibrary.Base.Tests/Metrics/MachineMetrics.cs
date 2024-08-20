@@ -13,7 +13,7 @@ namespace ThingsLibrary.Tests.Metrics
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            TestDirectoryPath = testContext.TestRunDirectory;
+            TestDirectoryPath = testContext.TestRunDirectory ?? throw new ArgumentException("Unable to get test run directory.");
         }
 
         [TestMethod]
