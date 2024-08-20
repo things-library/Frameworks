@@ -30,7 +30,7 @@
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />				
 		<PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-		<PackageReference Include="ThingsLibrary.Schema.Library" Version="0.1.8" />
+		<PackageReference Include="ThingsLibrary.Schema.Library" Version="0.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
