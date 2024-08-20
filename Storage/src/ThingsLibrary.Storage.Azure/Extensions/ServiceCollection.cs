@@ -11,7 +11,7 @@ namespace ThingsLibrary.Storage.Azure.Extensions
             var fileStores = new FileStores(connectionString);
 
             // Register lib services here...
-            services.AddSingleton<IFileStores>(fileStores);
+            services.AddSingleton<ICloudFileStores>(fileStores);
 
             return services;
         }

@@ -11,7 +11,7 @@ using ThingsLibrary.Storage.Azure.Extensions;
 
 namespace ThingsLibrary.Storage.Azure
 {
-    public class FileStore : IFileStore
+    public class FileStore : ICloudFileStore
     {        
         #region --- Transfer Events ---
 
@@ -51,7 +51,7 @@ namespace ThingsLibrary.Storage.Azure
         public string BucketName { get; private set; }
 
         /// <inheritdoc/>
-        public FileStoreType StorageType { get; init; } = FileStoreType.Azure_Blob;
+        public CloudFileStoreType StorageType { get; init; } = CloudFileStoreType.Azure_Blob;
 
         /// <inheritdoc/>
         public bool IsVersioning { get; set; } = false;

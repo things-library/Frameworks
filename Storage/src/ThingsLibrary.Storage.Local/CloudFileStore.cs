@@ -5,7 +5,7 @@ using Serilog;
 
 namespace ThingsLibrary.Storage.Local
 {
-    public class FileStore : IFileStore
+    public class CloudFileStore : ICloudFileStore
     {
         // TRANSFER EVENTS
         #region --- Observable Events ---
@@ -53,7 +53,7 @@ namespace ThingsLibrary.Storage.Local
         public bool IsVersioning { get; set; } = false;
 
         /// <inheritdoc/>
-        public FileStoreType StorageType { get; init; } = FileStoreType.Local;
+        public CloudFileStoreType StorageType { get; init; } = CloudFileStoreType.Local;
 
         /// <inheritdoc/>
         public CancellationToken CancellationToken { get; set; } = default;
@@ -68,7 +68,7 @@ namespace ThingsLibrary.Storage.Local
         private Task ScanTask { get; set; }
 
         /// <inheritdoc/>
-        public FileStore(string storageConnectionString, string bucketName)
+        public CloudFileStore(string storageConnectionString, string bucketName)
         {
             //Connection String: 
             //  "RootStorePath=./TestDirectory"
@@ -85,7 +85,7 @@ namespace ThingsLibrary.Storage.Local
             };
 
             // validate the bucket naming against cloud specs
-            FileStore.ValidateBucketName(bucketName);
+            CloudFileStore.ValidateBucketName(bucketName);
 
             // set the core properties            
             this.BucketName = bucketName;
@@ -301,7 +301,7 @@ namespace ThingsLibrary.Storage.Local
             this.UpdateDatabase(this.BucketDirectoryPath);
 
             // add the population complete record (use a invalid bucket name)
-            this.DataCollection.Upsert(new BsonValue("<Populated>"), new CloudFile());
+            this.DataCollection.Upsert(new BsonValue("<Populated>"), new CloudFile("populated"));   //TODO?
 
             Log.Information("================================================================================");
             Log.Information("File Count: {FileCount}", this.DataCollection.Count());
@@ -421,11 +421,7 @@ namespace ThingsLibrary.Storage.Local
                 {   "content_md5", IO.File.ComputeMD5Base64(storageFilePath)     }
             };
 
-            var cloudFile = new CloudFile()
-            {
-                Key = this.GetCloudFilePath(storageFilePath),
-                Name = Path.GetFileName(storageFilePath)
-            };
+            var cloudFile = new CloudFile(this.GetCloudFilePath(storageFilePath));
 
             cloudFile.Add(attributes);
 

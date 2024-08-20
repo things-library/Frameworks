@@ -7,71 +7,59 @@ namespace ThingsLibrary.Storage.Azure.Extensions
     {
         public static CloudFile ToCloudFile(this BlobItem blob)
         {
+            var item = new CloudFile(blob.Name)
+            {
+                Attributes =
+                {
+                    { "version", blob.VersionId }
+                },
+                Metadata = blob.Metadata
+            };
+
             if (blob.Properties != null)
             {
-                return new CloudFile
+                item.Add(new Dictionary<string, object>()
                 {
-                    // blob items                    
-                    FilePath = blob.Name,
-                    Version = blob.VersionId,
-                    Metadata = blob.Metadata,
-
-                    // properties
-                    FileSize = (long)blob.Properties.ContentLength,
-                    CreatedOn = blob.Properties.CreatedOn,
-                    UpdatedOn = blob.Properties.LastModified,
-
-                    ContentType = blob.Properties.ContentType,
-                    ContentMD5 = (blob.Properties.ContentHash != null ? Convert.ToBase64String(blob.Properties.ContentHash) : null),
-
-                    Tag = blob.Properties.ETag.ToString()
-                };
-            }
-            else
-            {
-                return new CloudFile
-                {
-                    // blob items                    
-                    FilePath = blob.Name,
-                    Version = blob.VersionId,
-                    Metadata = blob.Metadata
-                };
+                    // blob items
+                    { "size", blob.Properties.ContentLength },
+                    { "content_type", blob.Properties.ContentType },
+                    { "content_md5", (blob.Properties.ContentHash != null ? Convert.ToBase64String(blob.Properties.ContentHash) : null) },
+                    { "content_etag", blob.Properties.ETag.ToString() },
+                    
+                    { "created",  blob.Properties.CreatedOn },
+                    { "updated",  blob.Properties.LastModified }
+                });                
             }
 
+            return item;
         }
 
         public static CloudFile ToCloudFile(this BlobClient fromEntity)
         {
+            var item = new CloudFile(fromEntity.Name);
+            
             var response = fromEntity.GetProperties();
-
             if (response != null)
             {
                 var properties = response.Value;
-
-                return new CloudFile
+                                
+                item.Metadata = properties.Metadata;
+                
+                item.Add(new Dictionary<string, object>
                 {
-                    FilePath = fromEntity.Name,
+                    { "version", properties.VersionId },
 
-                    FileSize = properties.ContentLength,
+                    { "size", properties.ContentLength },
+                    { "content_type", properties.ContentType },
+                    { "content_md5", (properties.ContentHash != null ? Convert.ToBase64String(properties.ContentHash) : null) },
+                    { "content_etag", properties.ETag.ToString() },
 
-                    CreatedOn = properties.CreatedOn,
-                    UpdatedOn = properties.LastModified,
-
-                    ContentType = properties.ContentType,
-                    ContentMD5 = (properties.ContentHash != null ? Convert.ToBase64String(properties.ContentHash) : null),
-
-                    Metadata = properties.Metadata,
-
-                    Tag = properties.ETag.ToString()
-                };
+                    { "created",  properties.CreatedOn },
+                    { "updated",  properties.LastModified }                    
+                });     
             }
-            else
-            {
-                return new CloudFile
-                {
-                    FilePath = fromEntity.Name
-                };
-            }
+            
+            return item;
         }
     }
 }

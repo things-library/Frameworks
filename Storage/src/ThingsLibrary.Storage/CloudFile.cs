@@ -2,20 +2,19 @@
 
 namespace ThingsLibrary.Storage
 {
-    public class CloudFile : ItemDto//, ICloudFile
+    public class CloudFile : ItemDto, ICloudFile
     {
-                
         /// <inheritdoc />        
-        public string FilePath { get; init; }
+        public string FilePath => this["resource_path"];
 
         /// <inheritdoc />
-        public string FileName => System.IO.Path.GetFileName(this.FilePath);
+        public string FileName => this.Name;
+        
+        /// <inheritdoc />
+        public long FileSize => this.Get<long>("file_size", 0);
 
         /// <inheritdoc />
-        public DateTimeOffset? CreatedOn => this.Get<DateTimeOffset?>("created", null);
-
-        /// <inheritdoc />
-        public DateTimeOffset? UpdatedOn => this.Get<DateTimeOffset?>("updated", null);
+        public double FileSizeMB => this.FileSize / (double)1048576;     //(1024x1024) == bytes to megs
 
         /// <inheritdoc />
         public string ContentType => this["content_type"];
@@ -24,11 +23,12 @@ namespace ThingsLibrary.Storage
         public string ContentMD5 => this["content_md5"]; //MD5 Hash        
 
         /// <inheritdoc />
-        public long FileSize => this.Get<long>("file_size", 0);
-        
+        public DateTimeOffset? CreatedOn => this.Get<DateTimeOffset?>("created", null);
+
         /// <inheritdoc />
-        public double FileSizeMB => this.FileSize / (double)1048576;     //(1024x1024) == bytes to megs
-                
+        public DateTimeOffset? UpdatedOn => this.Get<DateTimeOffset?>("updated", null);
+
+
         #region --- Local / Generic Properties ---
 
         /// <inheritdoc />
@@ -46,6 +46,21 @@ namespace ThingsLibrary.Storage
         }
 
         #endregion
+
+        public CloudFile(string key, string name)
+        {
+            this.Key = key;
+            this.Name = name;
+        }
+
+        public CloudFile(string resourcePath)
+        {
+            this.Key = Path.GetFileName(resourcePath);
+            this.Name = Path.GetFileName(resourcePath);
+
+            // keep track of the entire resource path
+            this.Attributes["resource_path"] = resourcePath;
+        }
 
     }
 }

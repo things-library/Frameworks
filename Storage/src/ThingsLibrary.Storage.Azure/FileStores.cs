@@ -3,10 +3,10 @@ using ThingsLibrary.Storage.Interfaces;
 
 namespace ThingsLibrary.Storage.Azure
 {
-    public class FileStores : IFileStores
+    public class FileStores : ICloudFileStores
     {
         /// <inheritdoc />
-        public FileStoreType StoreType => FileStoreType.Azure_Blob;
+        public CloudFileStoreType StoreType => CloudFileStoreType.Azure_Blob;
 
         private string StorageConnectionString { get; set; }
         private BlobServiceClient BlobServiceClient { get; set; }
@@ -22,7 +22,7 @@ namespace ThingsLibrary.Storage.Azure
         }
 
         /// <inheritdoc />
-        public IFileStore GetStore(string bucketName)
+        public ICloudFileStore GetStore(string bucketName)
         {
             return new FileStore(this.BlobServiceClient, bucketName);            
         }

@@ -20,4 +20,7 @@
 		<RepositoryUrl></RepositoryUrl>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="ThingsLibrary.Schema.Library" Version="0.2.1" />
+	</ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 ﻿namespace ThingsLibrary.Storage
 {
-    public abstract class FileStore
+    public abstract class CloudFileStore
     {
         /// <inheritdoc />        
         public string BucketPrefix { get; set; }
@@ -9,7 +9,7 @@
         public string BucketName { get; set; }
 
         /// <inheritdoc />        
-        public FileStoreType StorageType { get; set; }
+        public CloudFileStoreType StorageType { get; set; }
 
         /// <inheritdoc />        
         public abstract DateTime? CreatedOn { get; }
