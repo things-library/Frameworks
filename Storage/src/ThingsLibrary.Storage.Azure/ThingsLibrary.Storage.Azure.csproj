@@ -3,26 +3,26 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		
+
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Storage.Azure</PackageId>
 		<ProductName>ThingsLibrary.Storage.Azure</ProductName>
-		<Title>Cloud File Azure Framework Library</Title>
+		<Title>Azure Storage Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>
-		<Company>Starlight Software Co.</Company>		
+		<Company>Starlight Software Co.</Company>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Azure.Storage.Blobs" Version="12.21.2" />		
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.21.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ThingsLibrary.Storage\ThingsLibrary.Storage.csproj" />
+		<ProjectReference Include="..\ThingsLibrary.Storage\ThingsLibrary.Storage.csproj" />
 	</ItemGroup>
 
 </Project>

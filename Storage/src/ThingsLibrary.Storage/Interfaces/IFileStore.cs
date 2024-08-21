@@ -1,6 +1,6 @@
 ﻿namespace ThingsLibrary.Storage.Interfaces
 {
-    public interface ICloudFileStore
+    public interface IFileStore
     {
         #region --- Observable Events ---
 
@@ -25,7 +25,7 @@
         /// <summary>
         /// File Store Type
         /// </summary>
-        public CloudFileStoreType StorageType { get; }
+        public FileStoreType StorageType { get; }
 
         /// <summary>
         /// If edits to files should be versioned / snapshots
@@ -68,22 +68,22 @@
         /// Get cloud file details for cloud file path
         /// </summary>
         /// <param name="cloudFilePath"></param>
-        /// <returns><see cref="ICloudFile"/></returns>
-        public ICloudFile GetFile(string cloudFilePath);
+        /// <returns><see cref="IFileItem"/></returns>
+        public IFileItem GetFile(string cloudFilePath);
 
         /// <summary>
         /// Get the version history for thie specified file
         /// </summary>
         /// <param name="cloudFilePath">Cloud File Path</param>
         /// <returns></returns>
-        public IEnumerable<ICloudFile> GetFileVersions(string cloudFilePath);
+        public IEnumerable<IFileItem> GetFileVersions(string cloudFilePath);
 
         /// <summary>
         /// Get Files based on cloud file Path
         /// </summary>
         /// <param name="cloudFolderPath"></param>
         /// <returns></returns>
-        public IEnumerable<ICloudFile> GetFiles(string cloudFolderPath);
+        public IEnumerable<IFileItem> GetFiles(string cloudFolderPath);
 
         /// <summary>
         /// Upload file to path

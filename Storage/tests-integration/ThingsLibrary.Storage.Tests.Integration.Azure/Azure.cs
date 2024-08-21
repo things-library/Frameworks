@@ -1,6 +1,4 @@
-﻿using Az = ThingsLibrary.Storage.Azure;
-
-namespace ThingsLibrary.Storage.Tests.Integration.Azure
+﻿namespace ThingsLibrary.Storage.Tests.Integration.Azure
 {
     [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
     public class AzureTests : IBaseTests
@@ -13,11 +11,11 @@ namespace ThingsLibrary.Storage.Tests.Integration.Azure
 
         private static IContainer TestContainer { get; set; }
 
-        private static void Init()
+        private static async Task Init()
         {
-            var configuration = Settings.GetConfigurationRoot();
+            var configuration = typeof(AzureTests).GetConfigurationRoot();
 
-            var connectionString = configuration.GetConnectionString("Azure");
+            var connectionString = configuration.GetConnectionString("Azure_TestStorage");
             if (string.IsNullOrEmpty(connectionString)) { return; }
 
             // get a test container to use for our tests            
@@ -25,10 +23,13 @@ namespace ThingsLibrary.Storage.Tests.Integration.Azure
             if (testContainerSection.Exists())
             {
                 var containerConfig = testContainerSection.Get<TestContainerOptions>();
+                TestContainer = containerConfig
+                    .GetContainerBuilder()
+                    .Build();
 
                 Console.Write("Starting docker container...");
-                //TODO: TestContainer = containerConfig.TryStartContainer();
-                if (TestContainer == null) { return; }
+                await TestContainer.StartAsync().ConfigureAwait(false);
+
                 Console.WriteLine("Done");
             }
 
@@ -40,22 +41,32 @@ namespace ThingsLibrary.Storage.Tests.Integration.Azure
         // Called once before ALL tests
         // ======================================================================
         [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
+        public static async Task ClassInitialize(TestContext testContext)
         {
-            Init();
+            await Init();
         }
 
         // ======================================================================
         // Called once AFTER all tests
         // ======================================================================
         [ClassCleanup]
-        public static void ClassCleanup()
+        public static async Task ClassCleanup()
         {
-            //FileStore?.DeleteStore();
-
-            TestContainer?.DisposeAsync();
+            // if we aren't using a test container, clean up our test bucket
+            if (TestContainer != null)
+            {
+                await TestContainer.DisposeAsync();
+            }
+            else if (FileStore != null)
+            {
+                //TODO: FileStore.DeleteStore();
+            }
         }
 
+        /// <summary>
+        /// Show the tests be ignored due to initialize incompatibility
+        /// </summary>
+        /// <returns></returns>
         public static bool IgnoreTests()
         {
             return (FileStore == null);

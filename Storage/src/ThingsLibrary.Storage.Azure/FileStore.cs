@@ -11,7 +11,7 @@ using ThingsLibrary.Storage.Azure.Extensions;
 
 namespace ThingsLibrary.Storage.Azure
 {
-    public class FileStore : ICloudFileStore
+    public class FileStore : IFileStore
     {        
         #region --- Transfer Events ---
 
@@ -51,7 +51,7 @@ namespace ThingsLibrary.Storage.Azure
         public string BucketName { get; private set; }
 
         /// <inheritdoc/>
-        public CloudFileStoreType StorageType { get; init; } = CloudFileStoreType.Azure_Blob;
+        public FileStoreType StorageType { get; init; } = FileStoreType.Azure_Blob;
 
         /// <inheritdoc/>
         public bool IsVersioning { get; set; } = false;
@@ -117,7 +117,7 @@ namespace ThingsLibrary.Storage.Azure
 
         #region --- File ---
 
-        public ICloudFile GetFile(string cloudFilePath)
+        public IFileItem GetFile(string cloudFilePath)
         {
             Log.Debug("Getting File: '{CloudFilePath}'...", cloudFilePath);
 
@@ -129,7 +129,7 @@ namespace ThingsLibrary.Storage.Azure
             return blobClient.ToCloudFile();
         }
 
-        public IEnumerable<ICloudFile> GetFileVersions(string cloudFilePath)
+        public IEnumerable<IFileItem> GetFileVersions(string cloudFilePath)
         {
             Log.Debug("Getting File Versions: '{CloudFilePath}'...", cloudFilePath);
 
@@ -139,7 +139,7 @@ namespace ThingsLibrary.Storage.Azure
             return blobs.Select(x => x.ToCloudFile());            
         }
 
-        public IEnumerable<ICloudFile> GetFiles(string cloudFolderPath)
+        public IEnumerable<IFileItem> GetFiles(string cloudFolderPath)
         {
             // tack it on if it is missing
             if (!string.IsNullOrEmpty(cloudFolderPath) && !cloudFolderPath.EndsWith("/"))

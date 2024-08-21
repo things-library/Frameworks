@@ -1,6 +1,6 @@
 ﻿namespace ThingsLibrary.Storage
 {
-    public abstract class CloudFileStore
+    public abstract class FileStore
     {
         /// <inheritdoc />        
         public string BucketPrefix { get; set; }
@@ -9,7 +9,7 @@
         public string BucketName { get; set; }
 
         /// <inheritdoc />        
-        public CloudFileStoreType StorageType { get; set; }
+        public FileStoreType StorageType { get; set; }
 
         /// <inheritdoc />        
         public abstract DateTime? CreatedOn { get; }
@@ -32,10 +32,10 @@
         #region --- FILE ---
 
         /// <inheritdoc />        
-        public abstract CloudFile GetFile(string cloudFilePath);
+        public abstract FileItem GetFile(string cloudFilePath);
 
         /// <inheritdoc />
-        public abstract List<CloudFile> GetFiles(string cloudFolderPath);
+        public abstract List<FileItem> GetFiles(string cloudFolderPath);
 
         /// <inheritdoc />
         public abstract void DownloadFile(string cloudFilePath, string localFilePath);
@@ -59,7 +59,7 @@
         public abstract void DeleteFile(string cloudFilePath);
 
         /// <inheritdoc />
-        public abstract string GetDownloadUrl(CloudFile cloudFile, double ttlMinutes);
+        public abstract string GetDownloadUrl(FileItem cloudFile, double ttlMinutes);
 
         #endregion
     }

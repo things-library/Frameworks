@@ -1,21 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Download;
-using Google.Apis.Upload;
-using Google.Apis.Storage.v1.Data;
-using Google.Cloud.Storage.V1;
-
-
-using System.ComponentModel.DataAnnotations;
-using Serilog;
-
-
-using ThingsLibrary.Storage.Gcp.Extensions;
-
+﻿using ThingsLibrary.Storage.Gcp.Extensions;
 
 namespace ThingsLibrary.Storage.Gcp
 {
@@ -222,7 +205,7 @@ namespace ThingsLibrary.Storage.Gcp
 
         #region --- File ---
 
-        public ICloudFile GetFile(string cloudFilePath)
+        public IFileItem GetFile(string cloudFilePath)
         {
             try
             {
@@ -239,14 +222,14 @@ namespace ThingsLibrary.Storage.Gcp
             }
         }
                 
-        public IEnumerable<ICloudFile> GetFiles(string cloudFolderPath)
+        public IEnumerable<IFileItem> GetFiles(string cloudFolderPath)
         {
             var list = this.GoogleStorageClient.ListObjects(this.BucketName, cloudFolderPath);
 
             return list.Select(x => x.ToCloudFile());
         }
 
-        public IEnumerable<ICloudFile> GetFileVersions(string cloudFilePath)
+        public IEnumerable<IFileItem> GetFileVersions(string cloudFilePath)
         {
             var list = this.GoogleStorageClient.ListObjects(this.BucketName, cloudFilePath, new ListObjectsOptions
             {

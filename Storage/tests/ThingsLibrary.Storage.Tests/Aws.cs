@@ -1,6 +1,6 @@
-using CloudProvider = Starlight.Cloud.File.Aws;
+using CloudProvider = ThingsLibrary.Storage.Aws;
 
-namespace Starlight.Cloud.File.Tests
+namespace ThingsLibrary.Storage.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class Aws

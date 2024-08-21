@@ -1,6 +1,4 @@
-﻿using ThingsLibrary.Storage.Interfaces;
-
-namespace ThingsLibrary.Storage.Gcp
+﻿namespace ThingsLibrary.Storage.Gcp
 {
     public class FileStores : IFileStores
     {

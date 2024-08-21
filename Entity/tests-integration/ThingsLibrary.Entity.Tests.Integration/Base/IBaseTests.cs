@@ -1,4 +1,4 @@
-﻿namespace Starlight.Entity.Tests.Integration.Base
+﻿namespace ThingsLibrary.Entity.Tests.Integration.Base
 {    
     public interface IBaseTests
     {

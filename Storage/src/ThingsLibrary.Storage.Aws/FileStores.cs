@@ -1,6 +1,4 @@
-﻿using ThingsLibrary.Storage.Interfaces;
-
-namespace ThingsLibrary.Storage.Aws
+﻿namespace ThingsLibrary.Storage.Aws
 {
     public class FileStores : IFileStores
     {
@@ -19,9 +17,9 @@ namespace ThingsLibrary.Storage.Aws
         }
 
         /// <inheritdoc />
-        public IFileStore GetStore(string name)
+        public IFileStore GetStore(string bucketName)
         {
-            return new FileStore(this.StorageConnectionString, name);            
+            return new FileStore(this.StorageConnectionString, bucketName);            
         }
     }
 }

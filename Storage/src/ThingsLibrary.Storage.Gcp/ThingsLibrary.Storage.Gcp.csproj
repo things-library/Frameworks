@@ -10,7 +10,7 @@
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Storage.Gcp</PackageId>
 		<ProductName>ThingsLibrary.Storage.Gcp</ProductName>
-		<Title>Cloud File GCP Framework Library</Title>
+		<Title>GCP Storage Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>
