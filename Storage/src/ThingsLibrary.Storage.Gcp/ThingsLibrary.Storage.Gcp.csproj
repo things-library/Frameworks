@@ -10,7 +10,7 @@
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Storage.Gcp</PackageId>
 		<ProductName>ThingsLibrary.Storage.Gcp</ProductName>
-		<Title>Cloud File GCP Framework Library</Title>
+		<Title>GCP Storage Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>
@@ -18,7 +18,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Google.Apis.Storage.v1" Version="1.68.0.3474" />
+		<PackageReference Include="Google.Apis.Storage.v1" Version="1.68.0.3508" />
 		<PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />		
 	</ItemGroup>
 

@@ -1,11 +1,12 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 using LiteDB;
 using Serilog;
 
 namespace ThingsLibrary.Storage.Local
 {
-    public class CloudFileStore : ICloudFileStore
+    public class FileStore : IFileStore
     {
         // TRANSFER EVENTS
         #region --- Observable Events ---
@@ -53,14 +54,14 @@ namespace ThingsLibrary.Storage.Local
         public bool IsVersioning { get; set; } = false;
 
         /// <inheritdoc/>
-        public CloudFileStoreType StorageType { get; init; } = CloudFileStoreType.Local;
+        public FileStoreType StorageType { get; init; } = FileStoreType.Local;
 
         /// <inheritdoc/>
         public CancellationToken CancellationToken { get; set; } = default;
 
         // VENDOR SPECIFIC (if you aren't using the interface methods) allow for exposure of vendor specific objects
         public LiteDatabase DataContext { get; init; }
-        public ILiteCollection<CloudFile> DataCollection { get; init; }
+        public ILiteCollection<FileItem> DataCollection { get; init; }
 
         // allow for access to vendor specific 
         public string BucketDirectoryPath { get; set; }
@@ -68,7 +69,7 @@ namespace ThingsLibrary.Storage.Local
         private Task ScanTask { get; set; }
 
         /// <inheritdoc/>
-        public CloudFileStore(string storageConnectionString, string bucketName)
+        public FileStore(string storageConnectionString, string bucketName)
         {
             //Connection String: 
             //  "RootStorePath=./TestDirectory"
@@ -85,8 +86,8 @@ namespace ThingsLibrary.Storage.Local
             };
 
             // validate the bucket naming against cloud specs
-            CloudFileStore.ValidateBucketName(bucketName);
-
+            FileStore.ValidateBucketName(bucketName);
+            
             // set the core properties            
             this.BucketName = bucketName;
 
@@ -104,16 +105,20 @@ namespace ThingsLibrary.Storage.Local
             if (!Directory.Exists(this.BucketDirectoryPath))
             {
                 Log.Information("Creating Bucket Directory Path: '{CloudFilePath}'...", this.BucketDirectoryPath);
-                Directory.CreateDirectory(this.BucketDirectoryPath);
-            }            
+                if (!this.TryCreateDirectory(this.BucketDirectoryPath)) { throw new ArgumentException("Unable to create directory."); }
+            }
 
             // ================================================================================
-            // DATABASE
+            // DATABASE  (note: Filename=:memory:   ==> memory database
             // ================================================================================
-            var storageDbPath = this.GetOrCreateDatabasePath();
+            var storageDbPath = builder.GetValue<string>("Filename", null);
+            if (storageDbPath != ":memory:" && !string.IsNullOrEmpty(storageDbPath))
+            {
+                storageDbPath = this.GetOrCreateDatabasePath();
+            }
 
             this.DataContext = new LiteDatabase($"Filename={storageDbPath};Upgrade=true;");
-            this.DataCollection = this.DataContext.GetCollection<CloudFile>(bucketName);
+            this.DataCollection = this.DataContext.GetCollection<FileItem>(bucketName);
 
             // make sure we can do quick lookups
             this.DataCollection.EnsureIndex(x => x.FilePath);
@@ -131,6 +136,23 @@ namespace ThingsLibrary.Storage.Local
             }
         }
 
+        private bool TryCreateDirectory(string path)
+        {
+            try
+            {
+                Directory.CreateDirectory(path);
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error creating path: '{path}'");
+                Console.WriteLine(ex.ToString());
+
+                return false;
+            }
+        }
+
         #region --- File ---
 
         private string GetCloudFilePath(string storageFilePath)
@@ -144,7 +166,7 @@ namespace ThingsLibrary.Storage.Local
         }
 
         /// <inheritdoc/>
-        public ICloudFile GetFile(string cloudFilePath)
+        public IFileItem GetFile(string cloudFilePath)
         {
             Log.Debug("{CloudFilePath} - Getting Cloud File", cloudFilePath);
                         
@@ -152,14 +174,14 @@ namespace ThingsLibrary.Storage.Local
         }
 
         /// <inheritdoc/>
-        public IEnumerable<ICloudFile> GetFileVersions(string cloudFilePath)
+        public IEnumerable<IFileItem> GetFileVersions(string cloudFilePath)
         {
             Log.Debug("{CloudFilePath} - Geting Versions...", cloudFilePath);
 
             if (!this.IsVersioning) 
             {
                 Log.Debug("{CloudFilePath} - Revisioning Turned Off!", cloudFilePath);
-                return Enumerable.Empty<ICloudFile>(); 
+                return Enumerable.Empty<IFileItem>(); 
             }
 
             var prefix = $"{Path.GetDirectoryName(cloudFilePath)}/~revisions/{Path.GetFileNameWithoutExtension(cloudFilePath)}~Rev";
@@ -168,7 +190,7 @@ namespace ThingsLibrary.Storage.Local
         }
 
         /// <inheritdoc/>
-        public IEnumerable<ICloudFile> GetFiles(string cloudFolderPath)
+        public IEnumerable<IFileItem> GetFiles(string cloudFolderPath)
         {            
             Log.Debug("Getting Cloud Files For Prefix: '{CloudFolderPath}'...", cloudFolderPath);
 
@@ -301,7 +323,7 @@ namespace ThingsLibrary.Storage.Local
             this.UpdateDatabase(this.BucketDirectoryPath);
 
             // add the population complete record (use a invalid bucket name)
-            this.DataCollection.Upsert(new BsonValue("<Populated>"), new CloudFile("populated"));   //TODO?
+            this.DataCollection.Upsert(new BsonValue("<Populated>"), new FileItem("populated"));   //TODO?
 
             Log.Information("================================================================================");
             Log.Information("File Count: {FileCount}", this.DataCollection.Count());
@@ -407,7 +429,7 @@ namespace ThingsLibrary.Storage.Local
         #endregion
 
         /// <inheritdoc/>
-        private CloudFile GenerateCloudFile(string storageFilePath)
+        private FileItem GenerateCloudFile(string storageFilePath)
         {
             if (!System.IO.File.Exists(storageFilePath)) { throw new ArgumentException("Local file does not exit."); }
 
@@ -421,14 +443,14 @@ namespace ThingsLibrary.Storage.Local
                 {   "content_md5", IO.File.ComputeMD5Base64(storageFilePath)     }
             };
 
-            var cloudFile = new CloudFile(this.GetCloudFilePath(storageFilePath));
+            var cloudFile = new FileItem(this.GetCloudFilePath(storageFilePath));
 
             cloudFile.Add(attributes);
 
             return cloudFile;
         }
 
-        private CloudFile GetCloudFile(string cloudFilePath)
+        private FileItem GetCloudFile(string cloudFilePath)
         {
             return this.DataCollection.FindById(new BsonValue(cloudFilePath.ToLower()));
         }
@@ -465,7 +487,7 @@ namespace ThingsLibrary.Storage.Local
         /// This function takes a file and creates a 'revision' of that file
         /// </summary>
         /// <param name="cloudFile">Cloud file we want to create a reivison file of</param>        
-        private void CreateRevisionFile(CloudFile cloudFile)
+        private void CreateRevisionFile(FileItem cloudFile)
         {
             var storageFilePath = Path.Combine(this.BucketDirectoryPath, cloudFile.FilePath);
 

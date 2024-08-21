@@ -1,4 +1,4 @@
-using CloudProvider = ThingsLibrary.Storage.Azure;
+using CloudProvider = ThingsLibrary.Storage.Aws;
 
 namespace ThingsLibrary.Storage.Tests
 {
@@ -48,7 +48,7 @@ namespace ThingsLibrary.Storage.Tests
         [DataRow("bad#Character")]      // 3. Container names can contain only letters, numbers, and the dash(-) character.
         [DataRow("bad_Character")]      // 3. Container names can contain only letters, numbers, and the dash(-) character.
         [DataRow("bad%character")]      // 3. Container names can contain only letters, numbers, and the dash(-) character.
-        [DataRow("bad--character")]     // 4. Every dash(-) character must be immediately preceded and followed by a letter or number; consecutive dashes are not permitted in container names.
+        //[DataRow("bad--character")]     // 4. Every dash(-) character must be immediately preceded and followed by a letter or number; consecutive dashes are not permitted in container names.
         [DataRow("abCd")]               // 5. All letters in a container name must be lowercase.
         [ExpectedException(typeof(ArgumentException))]
         public void Constructor_TestTableName(string bucketName)

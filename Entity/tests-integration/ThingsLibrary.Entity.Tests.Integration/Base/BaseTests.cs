@@ -1,17 +1,17 @@
-using Starlight.Entity.Interfaces;
+using ThingsLibrary.Entity.Interfaces;
 
-/* Unmerged change from project 'Starlight.Entity.Tests.Integration (net6.0)'
+/* Unmerged change from project 'ThingsLibrary.Entity.Tests.Integration (net6.0)'
 Before:
 using System.IO;
 After:
-using Starlight.Entity.Tests.Integration.Base.TestData;
+using ThingsLibrary.Entity.Tests.Integration.Base.TestData;
 using System.IO;
 */
-using Starlight.Entity.Tests.Integration.Base.TestData;
+using ThingsLibrary.Entity.Tests.Integration.Base.TestData;
 using System.IO;
 using System.Reflection;
 
-namespace Starlight.Entity.Tests.Integration.Base
+namespace ThingsLibrary.Entity.Tests.Integration.Base
 {
     //[ExcludeFromCodeCoverage]
     //public static class BaseTests

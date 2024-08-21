@@ -3,7 +3,7 @@
     /// <summary>
     /// Storage System Type
     /// </summary>
-    public enum CloudFileStoreType : byte
+    public enum FileStoreType : byte
     {
         Azure_Blob = 1,
         AWS_S3 = 2,

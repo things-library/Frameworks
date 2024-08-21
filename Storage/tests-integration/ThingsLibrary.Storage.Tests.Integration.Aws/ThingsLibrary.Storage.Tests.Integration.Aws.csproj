@@ -1,29 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<IsPackable>false</IsPackable>
-		<UserSecretsId>997d5bd2-81a8-40da-b078-f81dd293a71c</UserSecretsId>		
+		<IsTestProject>true</IsTestProject>
+
+		<UserSecretsId>70000007-7000-7000-7000-700000000007</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
-		<PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
-		<PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
-		<PackageReference Include="coverlet.collector" Version="3.2.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />
+		<PackageReference Include="MSTest.TestAdapter" Version="3.5.2" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.5.2" />
+		<PackageReference Include="coverlet.collector" Version="6.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Testcontainers" Version="2.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Starlight.Cloud.File.Tests.Integration\Starlight.Cloud.File.Tests.Integration.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Storage.Aws\ThingsLibrary.Storage.Aws.csproj" />
+	  <ProjectReference Include="..\ThingsLibrary.Storage.Tests.Integration\ThingsLibrary.Storage.Tests.Integration.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

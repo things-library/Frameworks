@@ -1,16 +1,16 @@
 ﻿namespace ThingsLibrary.Storage.Interfaces
 {
-    public interface ICloudFileStores
+    public interface IFileStores
     {
         /// <summary>
         /// Type of entity store (Azure_Table, GCP_DataStore)
         /// </summary>
-        public CloudFileStoreType StoreType { get; }
+        public FileStoreType StoreType { get; }
 
         /// <summary>
         /// Get/Create Cloud File Store
         /// </summary>        
-        /// <returns><see cref="CloudFileStore"/></returns>
-        public ICloudFileStore GetStore(string bucketName);
+        /// <returns><see cref="FileStore"/></returns>
+        public IFileStore GetStore(string bucketName);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ThingsLibrary.Storage.Interfaces
 {
-    public interface ICloudFile
+    public interface IFileItem
     {
         /// <summary>
         /// MD5 of the contents

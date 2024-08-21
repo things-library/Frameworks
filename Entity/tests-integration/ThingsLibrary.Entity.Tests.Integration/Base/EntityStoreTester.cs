@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-using Starlight.Entity.Interfaces;
+using ThingsLibrary.Entity.Interfaces;
 
-namespace Starlight.Entity.Tests.Integration.Base
+namespace ThingsLibrary.Entity.Tests.Integration.Base
 {
     [ExcludeFromCodeCoverage]
     public class EntityStoreTester<TEntity> where TEntity : class

@@ -1,4 +1,4 @@
-﻿namespace Starlight.Cloud.File.Tests.Integration.Aws
+﻿namespace ThingsLibrary.Storage.Tests.Integration.Aws
 {
     [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
     public class AwsTests : IBaseTests
@@ -9,24 +9,27 @@
 
         #region --- Provider ---
 
-        private static TestcontainersContainer TestContainer { get; set; }
+        private static IContainer TestContainer { get; set; }
 
-        private static void Init()
+        private static async Task Init()
         {
-            var configuration = Settings.GetConfigurationRoot();
+            var configuration = typeof(AwsTests).GetConfigurationRoot();
 
-            var connectionString = configuration.GetConnectionString("AWS");
+            var connectionString = configuration.GetConnectionString("AWS_TestStorage");
             if (string.IsNullOrEmpty(connectionString)) { return; }
 
             // get a test container to use for our tests            
             var testContainerSection = configuration.GetSection("TestContainer");
             if (testContainerSection.Exists())
             {
-                var containerConfig = testContainerSection.Get<TestContainerConfig>();
+                var containerConfig = testContainerSection.Get<TestContainerOptions>();
+                TestContainer = containerConfig
+                    .GetContainerBuilder()
+                    .Build();
 
                 Console.Write("Starting docker container...");
-                TestContainer = containerConfig.TryStartContainer();
-                if (TestContainer == null) { return; }
+                await TestContainer.StartAsync().ConfigureAwait(false);
+
                 Console.WriteLine("Done");
             }
 
@@ -38,20 +41,26 @@
         // Called once before ALL tests
         // ======================================================================
         [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
+        public static async Task ClassInitialize(TestContext testContext)
         {
-            Init();
+            await Init();
         }
 
         // ======================================================================
         // Called once AFTER all tests
         // ======================================================================
         [ClassCleanup]
-        public static void ClassCleanup()
+        public static async Task ClassCleanup()
         {
-            //FileStore?.DeleteStore();
-
-            TestContainer?.DisposeAsync();
+            // if we aren't using a test container, clean up our test bucket
+            if (TestContainer != null)
+            {
+                await TestContainer.DisposeAsync();
+            }
+            else if (FileStore != null)
+            {
+                //TODO: FileStore.DeleteStore();
+            }
         }
 
         public static bool IgnoreTests()

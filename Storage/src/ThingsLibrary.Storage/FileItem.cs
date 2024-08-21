@@ -1,11 +1,9 @@
-﻿using ThingsLibrary.Storage.Interfaces;
-
-namespace ThingsLibrary.Storage
+﻿namespace ThingsLibrary.Storage
 {
-    public class CloudFile : ItemDto, ICloudFile
+    public class FileItem : ItemDto, IFileItem
     {
         /// <inheritdoc />        
-        public string FilePath => this["resource_path"];
+        public string FilePath => this["resource_key"];
 
         /// <inheritdoc />
         public string FileName => this.Name;
@@ -47,19 +45,19 @@ namespace ThingsLibrary.Storage
 
         #endregion
 
-        public CloudFile(string key, string name)
+        public FileItem(string key, string name)
         {
             this.Key = key;
             this.Name = name;
         }
 
-        public CloudFile(string resourcePath)
+        public FileItem(string resourcePath)
         {
             this.Key = Path.GetFileName(resourcePath);
             this.Name = Path.GetFileName(resourcePath);
 
             // keep track of the entire resource path
-            this.Attributes["resource_path"] = resourcePath;
+            this.Attributes["resource_key"] = resourcePath;
         }
 
     }

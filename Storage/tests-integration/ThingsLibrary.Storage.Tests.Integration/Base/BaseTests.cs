@@ -65,6 +65,11 @@ namespace ThingsLibrary.Storage.Tests.Integration.Base
 
         #region --- Tests ---
 
+        /// <summary>
+        /// Upload, Download, Delete file
+        /// </summary>
+        /// <param name="fileStore"></param>
+        /// <exception cref="ArgumentException"></exception>
         public static void TestFile(IFileStore fileStore)
         {
             var fileName = "TestFile.json";
@@ -115,6 +120,11 @@ namespace ThingsLibrary.Storage.Tests.Integration.Base
             }
         }
 
+        /// <summary>
+        /// Upload, Download, Delete file
+        /// </summary>
+        /// <param name="fileStore"></param>
+        /// <exception cref="ArgumentException"></exception>
         public static void TestImageFile(IFileStore fileStore)
         {
             var fileName = "TestImage.jpg";
@@ -144,6 +154,7 @@ namespace ThingsLibrary.Storage.Tests.Integration.Base
                 fileStore.DownloadFile(cloudFilePath, stream);
                 stream.Position = 0;
 
+                // make sure the file contents MD5 matches
                 Assert.AreEqual(md5, IO.File.ComputeMD5Base64(stream));
             }
 

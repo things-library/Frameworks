@@ -5,9 +5,9 @@ namespace ThingsLibrary.Storage.Azure.Extensions
 {
     public static class CloudFileExtensions
     {
-        public static CloudFile ToCloudFile(this BlobItem blob)
+        public static FileItem ToCloudFile(this BlobItem blob)
         {
-            var item = new CloudFile(blob.Name)
+            var item = new FileItem(blob.Name)
             {
                 Attributes =
                 {
@@ -25,19 +25,19 @@ namespace ThingsLibrary.Storage.Azure.Extensions
                     { "content_type", blob.Properties.ContentType },
                     { "content_md5", (blob.Properties.ContentHash != null ? Convert.ToBase64String(blob.Properties.ContentHash) : null) },
                     { "content_etag", blob.Properties.ETag.ToString() },
-                    
+
                     { "created",  blob.Properties.CreatedOn },
                     { "updated",  blob.Properties.LastModified }
-                });                
+                });
             }
 
             return item;
         }
 
-        public static CloudFile ToCloudFile(this BlobClient fromEntity)
+        public static FileItem ToCloudFile(this BlobClient fromEntity)
         {
-            var item = new CloudFile(fromEntity.Name);
-            
+            var item = new FileItem(fromEntity.Name);
+
             var response = fromEntity.GetProperties();
             if (response != null)
             {

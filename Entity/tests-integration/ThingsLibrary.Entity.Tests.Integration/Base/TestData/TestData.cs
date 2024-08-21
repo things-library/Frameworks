@@ -1,7 +1,6 @@
-﻿using Org.BouncyCastle.Bcpg.OpenPgp;
-using Starlight.Attributes;
+﻿using ThingsLibrary.Attributes;
 
-namespace Starlight.Entity.Tests.Integration.Base.TestData
+namespace ThingsLibrary.Entity.Tests.Integration.Base.TestData
 {
     //[ExcludeFromCodeCoverage]
     //public class TestData

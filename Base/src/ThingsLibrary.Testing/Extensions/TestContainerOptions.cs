@@ -5,7 +5,6 @@ namespace ThingsLibrary.Testing.Extensions
 {
     public static class TestContainerOptionsExtensions
     {
-
         /// <summary>
         /// Create a container builder object based on the options object
         /// </summary>
@@ -13,14 +12,8 @@ namespace ThingsLibrary.Testing.Extensions
         /// <exception cref="ArgumentException"></exception>
         public static ContainerBuilder GetContainerBuilder(this TestContainerOptions options)
         {
-            //_ = Guard.Argument(options.Image, nameof(options.Image))
-            //    .NotNull()
-            //    .NotUppercase();
-
-            //_ = Guard.Argument(options.Name, nameof(options.Name))
-            //    .NotNull()
-            //    .NotEmpty()
-            //    .NotUppercase();
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(options.Image);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(options.Name);
 
             if (!Regex.IsMatch(options.Name, "^[a-z0-9_.-]*$", RegexOptions.Singleline | RegexOptions.CultureInvariant))
             {

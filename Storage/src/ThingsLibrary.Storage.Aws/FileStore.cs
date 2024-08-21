@@ -130,7 +130,7 @@ namespace ThingsLibrary.Storage.Aws
 
         #region --- File ---
 
-        public ICloudFile GetFile(string cloudFilePath)
+        public IFileItem GetFile(string cloudFilePath)
         {
             try
             {
@@ -151,12 +151,12 @@ namespace ThingsLibrary.Storage.Aws
             }
         }
 
-        public IEnumerable<ICloudFile> GetFileVersions(string cloudFilePath)
+        public IEnumerable<IFileItem> GetFileVersions(string cloudFilePath)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ICloudFile> GetFiles(string cloudFolderPath)
+        public IEnumerable<IFileItem> GetFiles(string cloudFolderPath)
         {
             throw new NotImplementedException();
         }

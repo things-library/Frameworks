@@ -3,14 +3,14 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		
+
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>ThingsLibrary.Cloud.File.Aws</PackageId>
-		<ProductName>ThingsLibrary.Cloud.File.Aws</ProductName>
-		<Title>Cloud File AWS Framework Library</Title>
+		<PackageId>ThingsLibrary.Storage.Aws</PackageId>
+		<ProductName>ThingsLibrary.Storage.Aws</ProductName>
+		<Title>AWS Storage Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>
@@ -18,15 +18,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="CloudFile.cs" />
+		<PackageReference Include="AWSSDK.S3" Version="3.7.402" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AWSSDK.S3" Version="3.7.400.3" />		
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\ThingsLibrary.Storage\ThingsLibrary.Storage.csproj" />
+		<ProjectReference Include="..\ThingsLibrary.Storage\ThingsLibrary.Storage.csproj" />
 	</ItemGroup>
 
 </Project>
