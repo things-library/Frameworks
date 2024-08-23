@@ -27,3 +27,4 @@ global using ThingsLibrary.Entity.Types;
 global using ThingsLibrary.Entity.Interfaces;
 
 global using ThingsLibrary.Attributes;
+global using ThingsLibrary.Schema.Library;

@@ -2,10 +2,23 @@
 {
     public static class DateTimeExtensions
     {
+        /// <summary>
+        /// To Epoch Seconds * 100 (milliseconds)
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static long ToEpoch100(DateTime dateTime) => (long)(dateTime - new DateTime(1970, 1, 1)).TotalSeconds * 100;
+
+        /// <summary>
+        /// Nullable version of the ToHHMMSS format
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="isUtc"></param>
+        /// <returns></returns>
         public static string ToHHMMSS(this DateTime? dateTime, bool isUtc = true)
         {
             if (dateTime == null) { return "--"; }
-
+            
             return ToHHMMSS(dateTime.Value, isUtc);
         }
 

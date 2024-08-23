@@ -1,7 +1,4 @@
-﻿
-using ThingsLibrary.DataType;
-
-namespace ThingsLibrary.IO
+﻿namespace ThingsLibrary.IO
 {
     public static class Directory
     {

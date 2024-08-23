@@ -6,12 +6,15 @@
 		<Nullable>enable</Nullable>
 		
 		<IsPackable>true</IsPackable>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Entity.AzureTable</PackageId>
 		<ProductName>ThingsLibrary.Entity.AzureTable</ProductName>
-		<Title>Cloud Entity Azure Table Framework Library</Title>
+		<Title>Azure Table Entity Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>

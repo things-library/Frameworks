@@ -1,3 +1,4 @@
+using Azure;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -125,7 +126,7 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             // ================================================================================
             // fetch it
             // ================================================================================
-            var storeEntity = this.EntityStore.GetEntityAsync(key, partitionKey).Result;
+            var storeEntity = this.EntityStore.GetEntityAsync(key, partitionKey, default).Result;
                         
             this.CompareEntities(storeEntity, testEntity);
 
@@ -135,7 +136,7 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             this.ChangeRandomFields(storeEntity);
             this.EntityStore.UpsertEntityAsync(storeEntity).Wait();
 
-            var storeEntity2 = this.EntityStore.GetEntityAsync(key, partitionKey).Result;
+            var storeEntity2 = this.EntityStore.GetEntityAsync(key, partitionKey, default).Result;
 
             this.CompareEntities(storeEntity2, storeEntity);
                         
@@ -147,7 +148,7 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             // ================================================================================
             // try to fetch and make sure it is gone
             // ================================================================================
-            var storeEntity3 = this.EntityStore.GetEntityAsync(key, partitionKey).Result;
+            var storeEntity3 = this.EntityStore.GetEntityAsync(key, partitionKey, default).Result;
             Assert.IsNull(storeEntity3);
         }
 
@@ -171,7 +172,7 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             // ================================================================================
             // fetch it
             // 
-            var storeEntity = this.EntityStore.GetEntityAsync(key, partitionKey).Result;
+            var storeEntity = this.EntityStore.GetEntityAsync(key, partitionKey, default).Result;
 
             this.CompareEntities(storeEntity, testEntity);
 
@@ -184,7 +185,7 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             // ================================================================================
             // fetch again and test
             // ================================================================================
-            var storeEntity2 = this.EntityStore.GetEntityAsync(key, partitionKey).Result;
+            var storeEntity2 = this.EntityStore.GetEntityAsync(key, partitionKey, default).Result;
 
             this.CompareEntities(storeEntity, storeEntity2);
                         
@@ -196,7 +197,7 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             // ================================================================================
             // try to fetch and make sure it is gone
             // ================================================================================
-            var sotreEntity3 = this.EntityStore.GetEntityAsync(key, partitionKey).Result;
+            var sotreEntity3 = this.EntityStore.GetEntityAsync(key, partitionKey, default).Result;
             Assert.AreEqual(null, sotreEntity3);
         }
 
@@ -220,7 +221,8 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             // ================================================================================
             // fetch and test
             // ================================================================================
-            var storeEntity = this.EntityStore.GetEntityAsync(key, partitionKey).Result;
+            var storeEntity = this.EntityStore.GetEntityAsync(key, partitionKey, default).Result;
+            Assert.AreNotEqual(default, storeEntity);
 
             this.CompareEntities(storeEntity, testEntity);
 
@@ -228,7 +230,7 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             // edit and insert it again (should error out)
             // ================================================================================            
             this.ChangeRandomFields(storeEntity);
-            Assert.ThrowsException<IOException>(() => this.EntityStore.InsertEntityAsync(storeEntity).Wait());
+            Assert.ThrowsException<AggregateException>(() => this.EntityStore.InsertEntityAsync(storeEntity).Wait());
         }
 
         /// <summary>
@@ -243,7 +245,7 @@ namespace ThingsLibrary.Entity.Tests.Integration.Base
             // ================================================================================
             // update it (should error because it doesn't exist)
             // ================================================================================
-            Assert.ThrowsException<IOException>(() => this.EntityStore.UpdateEntityAsync(testEntity).Wait());
+            Assert.ThrowsException<AggregateException>(() => this.EntityStore.UpdateEntityAsync(testEntity).Wait());
         }
 
 

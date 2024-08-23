@@ -1,5 +1,6 @@
 ﻿using DotNet.Testcontainers.Builders;
-using ThingsLibrary.Testing.Containers;
+using Microsoft.Extensions.Configuration;
+using ThingsLibrary.Testing.Environment;
 
 namespace ThingsLibrary.Testing.Extensions
 {

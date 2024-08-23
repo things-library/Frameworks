@@ -1,6 +1,6 @@
-﻿using Starlight.Entity.AzureTable;
+﻿using ThingsLibrary.Entity.AzureTable;
 
-namespace Starlight.Entity.Tests.Integration.AzureTable.TestData
+namespace ThingsLibrary.Entity.Tests.Integration.AzureTable.TestData
 {
     public class TestClass : EntityItem
     {

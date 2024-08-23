@@ -1,14 +1,7 @@
-﻿
-using Serilog;
+﻿using ThingsLibrary.Entity.AzureTable;
 
-using Starlight.Entity.Tests.Integration.Base;
-using Starlight.Entity.Types;
 
-using Starlight.Entity.AzureTable;
-using Starlight.Testing.Containers;
-using Starlight.Testing.Extensions;
-
-namespace Starlight.Entity.Tests.Integration.AzureTable
+namespace ThingsLibrary.Entity.Tests.Integration.AzureTable
 {
     [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
     public class AzureTests //: Base.IBaseTests
@@ -21,65 +14,53 @@ namespace Starlight.Entity.Tests.Integration.AzureTable
 
         #region --- Provider ---
 
-        private static IContainer TestContainer { get; set; }
-
-        private static void Init()
-        {
-            var configuration = Settings.GetConfigurationRoot();
-
-            var connectionString = configuration.GetConnectionString("Azure");
-            if (string.IsNullOrEmpty(connectionString)) 
-            {
-                // get a test container to use for our tests            
-                var testContainerSection = configuration.GetSection("TestContainer");
-                if (testContainerSection.Exists())
-                {                    
-                    var containerConfig = testContainerSection.Get<TestContainerOptions>();
-
-                    Log.Information("+ Starting test docker container...");
-                    var container = containerConfig.GetContainerBuilder().Build();
-
-                    container.StartAsync().Wait();
-
-                    TestContainer = container;
-                    connectionString = "UseDevelopmentStorage=true";                    
-                }
-            }
-            else
-            {
-                Log.Information("= Existing storage instance provided for testing...");
-            }
-
-            if (!string.IsNullOrEmpty(connectionString))
-            {
-                var entityStore = new EntityStore<Base.TestData.TestClass>(connectionString, TableName);
-                EntityTester = new EntityStoreTester<Base.TestData.TestClass>(entityStore);
-
-                var nativeEntityStore = new EntityStore<TestData.TestClass>(connectionString, TableName + "Native");
-                NativeEntityTester = new EntityStoreTester<TestData.TestClass>(nativeEntityStore);
-            }
-        }
+        private static TestEnvironment TestEnvironment { get; set; }
 
         // ======================================================================
         // Called once before ALL tests
         // ======================================================================
         [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
+        public static async Task ClassInitialize(TestContext testContext)
         {
-            // load it up so we don't run into a theading issue
-            Init();
+            TestEnvironment = new TestEnvironment();
+
+            // if we have no connection string we have nothing to test
+            if (string.IsNullOrWhiteSpace(TestEnvironment.ConnectionString))
+            {
+                Console.WriteLine("NO CONNECTION STRING TO USE FOR TESTING.");
+                return;
+            }
+
+            // start test environment
+            await TestEnvironment.StartAsync();
+
+            // create our objects we are going to test
+            var entityStore = new EntityStore<Base.TestData.TestClass>(TestEnvironment.ConnectionString, TableName);
+            EntityTester = new EntityStoreTester<Base.TestData.TestClass>(entityStore);
+
+            var nativeEntityStore = new EntityStore<TestData.TestClass>(TestEnvironment.ConnectionString, TableName + "Native");
+            NativeEntityTester = new EntityStoreTester<TestData.TestClass>(nativeEntityStore);
         }
 
         // ======================================================================
         // Called once AFTER all tests
         // ======================================================================
         [ClassCleanup]
-        public static void ClassCleanup()
+        public static async Task ClassCleanup()
         {
-            EntityTester?.EntityStore.DeleteStoreAsync().Wait();
-            NativeEntityTester?.EntityStore.DeleteStoreAsync().Wait();
+            await TestEnvironment.DisposeAsync();
 
-            //TestContainer?.DisposeAsync();
+            // if we aren't using a test container, clean up our test bucket
+
+            if (EntityTester?.EntityStore != null)
+            {
+                await EntityTester.EntityStore.DeleteStoreAsync();
+            }
+
+            if (NativeEntityTester?.EntityStore != null)
+            {
+                await NativeEntityTester.EntityStore?.DeleteStoreAsync();
+            }
         }
 
         public static bool IgnoreTests()

@@ -17,7 +17,7 @@ global using DotNet.Testcontainers.Containers;
 // LOCAL
 // ================================================================================
 global using ThingsLibrary.Testing.Attributes;
-global using ThingsLibrary.Testing.Containers;
+global using ThingsLibrary.Testing.Environment;
 global using ThingsLibrary.Testing.Extensions;
 
 global using ThingsLibrary.Storage;
