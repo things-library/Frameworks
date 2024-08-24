@@ -1,4 +1,3 @@
-using MongoDB.Driver.Core.Configuration;
 using ThingsLibrary.Entity.Mongo;
 using ThingsLibrary.Entity.Mongo.Models;
 
