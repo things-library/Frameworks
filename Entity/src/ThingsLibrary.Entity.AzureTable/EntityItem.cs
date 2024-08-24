@@ -13,7 +13,7 @@ public class EntityItem : ITableEntity
     public string PartitionKey { get; set; } = string.Empty;
 
     [Key, Required]
-    public string RowKey { get; set; } 
+    public string RowKey { get; set; } = string.Empty;
 
     [Timestamp]
     public DateTimeOffset? Timestamp { get; set; }

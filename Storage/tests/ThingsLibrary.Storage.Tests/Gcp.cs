@@ -1,6 +1,6 @@
 using CloudProvider = ThingsLibrary.Storage.Gcp;
 
-namespace Starlight.Cloud.File.Tests
+namespace ThingsLibrary.Storage.Tests
 {    
     [TestClass, ExcludeFromCodeCoverage]
     public class Gcp

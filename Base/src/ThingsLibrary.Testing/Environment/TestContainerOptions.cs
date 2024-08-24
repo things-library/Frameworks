@@ -1,4 +1,4 @@
-﻿namespace ThingsLibrary.Testing.Containers
+﻿namespace ThingsLibrary.Testing.Environment
 {
     /// <summary>
     /// Simple wrapper for the Testcontainers objects to allow appSettings style configuration of a container instead of code only approach
@@ -6,6 +6,11 @@
     /// <remarks><see href="https://github.com/testcontainers/testcontainers-dotnet"/></remarks>
     public class TestContainerOptions
     {
+        /// <summary>
+        /// Connection String Variable to use
+        /// </summary>
+        public string ConnectionStringVariable { get; init; } = string.Empty;
+
         /// <summary>
         /// Image Path to container image
         /// </summary>        
@@ -24,6 +29,6 @@
         /// <summary>
         /// Environment Variables
         /// </summary>        
-        public Dictionary<string, string> Environment { get; init; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Environment { get; init; } = new Dictionary<string, string>();        
     }
 }

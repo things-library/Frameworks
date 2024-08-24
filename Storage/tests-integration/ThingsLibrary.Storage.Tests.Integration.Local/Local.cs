@@ -9,24 +9,19 @@
 
 //        #region --- Provider ---
 
-//        private static void Init()
-//        {
-//            var configuration = typeof(LocalTests).GetConfigurationRoot();
-
-//            var connectionString = configuration.GetConnectionString("Local_TestStorage");
-//            if (string.IsNullOrEmpty(connectionString)) { return; }
-            
-//            // set up the static properties
-//            FileStore = new Loc.FileStore(connectionString, BucketName);
-//        }
-
 //        // ======================================================================
 //        // Called once before ALL tests
 //        // ======================================================================
 //        [ClassInitialize]
 //        public static void ClassInitialize(TestContext testContext)
 //        {
-//            Init();
+//            var configuration = typeof(LocalTests).GetConfigurationRoot();
+
+//            var connectionString = configuration.GetConnectionString("Local_TestStorage");
+//            if (string.IsNullOrEmpty(connectionString)) { return; }
+
+//            // set up the static properties
+//            FileStore = new Loc.FileStore(connectionString, BucketName);
 //        }
 
 //        // ======================================================================

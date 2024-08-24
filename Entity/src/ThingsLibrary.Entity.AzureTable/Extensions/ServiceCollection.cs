@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace ThingsLibrary.Entity.AzureTable
+﻿namespace ThingsLibrary.Entity.AzureTable
 {
     public static class ServiceCollectionExtensions
     {

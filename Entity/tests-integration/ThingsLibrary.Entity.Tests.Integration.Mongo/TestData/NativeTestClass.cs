@@ -1,6 +1,6 @@
-﻿using Starlight.Attributes;
+﻿using ThingsLibrary.Attributes;
 
-namespace Starlight.Entity.Tests.Integration.Mongo.TestData
+namespace ThingsLibrary.Entity.Tests.Integration.Mongo.TestData
 {
     public class TestClass
     {

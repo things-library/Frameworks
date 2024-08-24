@@ -19,7 +19,7 @@ global using Microsoft.VisualStudio.TestTools.UnitTesting;
 // LOCAL
 // ================================================================================
 global using ThingsLibrary.Testing.Attributes;
-global using ThingsLibrary.Testing.Containers;
+global using ThingsLibrary.Testing.Environment;
 
 global using ThingsLibrary.Storage;
 global using ThingsLibrary.Storage.Interfaces;

@@ -48,7 +48,7 @@
         /// <param name="key">Key</param>        
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
-        Task<T> GetEntityAsync(object key, object partitionKey, CancellationToken cancellationToken = default);
+        public Task<T> GetEntityAsync(object key, object partitionKey, T defaultValue, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Get all entities from store

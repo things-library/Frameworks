@@ -1,4 +1,6 @@
-﻿namespace ThingsLibrary.Storage.Tests.Integration.Aws
+﻿using ThingsLibrary.Testing.Environment;
+
+namespace ThingsLibrary.Storage.Tests.Integration.Aws
 {
     [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
     public class AwsTests : IBaseTests
@@ -9,33 +11,7 @@
 
         #region --- Provider ---
 
-        private static IContainer TestContainer { get; set; }
-
-        private static async Task Init()
-        {
-            var configuration = typeof(AwsTests).GetConfigurationRoot();
-
-            var connectionString = configuration.GetConnectionString("AWS_TestStorage");
-            if (string.IsNullOrEmpty(connectionString)) { return; }
-
-            // get a test container to use for our tests            
-            var testContainerSection = configuration.GetSection("TestContainer");
-            if (testContainerSection.Exists())
-            {
-                var containerConfig = testContainerSection.Get<TestContainerOptions>();
-                TestContainer = containerConfig
-                    .GetContainerBuilder()
-                    .Build();
-
-                Console.Write("Starting docker container...");
-                await TestContainer.StartAsync().ConfigureAwait(false);
-
-                Console.WriteLine("Done");
-            }
-
-            // set up the static properties
-            FileStore = new Aw.FileStore(connectionString, BucketName);
-        }
+        private static TestEnvironment TestEnvironment { get; set; }
 
         // ======================================================================
         // Called once before ALL tests
@@ -43,7 +19,20 @@
         [ClassInitialize]
         public static async Task ClassInitialize(TestContext testContext)
         {
-            await Init();
+            TestEnvironment = new TestEnvironment();
+
+            // if we have no connection string we have nothing to test
+            if (string.IsNullOrWhiteSpace(TestEnvironment.ConnectionString))
+            {
+                Console.WriteLine("NO CONNECTION STRING TO USE FOR TESTING.");
+                return;
+            }
+
+            // start test environment
+            await TestEnvironment.StartAsync();
+
+            // set up the static properties
+            FileStore = new Aw.FileStore(TestEnvironment.ConnectionString, BucketName);
         }
 
         // ======================================================================
@@ -52,12 +41,10 @@
         [ClassCleanup]
         public static async Task ClassCleanup()
         {
+            await TestEnvironment.DisposeAsync();
+
             // if we aren't using a test container, clean up our test bucket
-            if (TestContainer != null)
-            {
-                await TestContainer.DisposeAsync();
-            }
-            else if (FileStore != null)
+            if (TestEnvironment.TestContainer == null)           
             {
                 //TODO: FileStore.DeleteStore();
             }

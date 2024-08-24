@@ -1,12 +1,4 @@
 using ThingsLibrary.Entity.Interfaces;
-
-/* Unmerged change from project 'ThingsLibrary.Entity.Tests.Integration (net6.0)'
-Before:
-using System.IO;
-After:
-using ThingsLibrary.Entity.Tests.Integration.Base.TestData;
-using System.IO;
-*/
 using ThingsLibrary.Entity.Tests.Integration.Base.TestData;
 using System.IO;
 using System.Reflection;

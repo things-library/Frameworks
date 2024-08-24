@@ -1,9 +1,7 @@
 ﻿using System.Collections.Concurrent;
 
 using ThingsLibrary.DataType.Extensions;
-using ThingsLibrary.Entity.Interfaces;
 using ThingsLibrary.Entity.Mongo.Models;
-using ThingsLibrary.Entity.Types;
 
 namespace ThingsLibrary.Entity.Mongo
 {
@@ -332,13 +330,13 @@ namespace ThingsLibrary.Entity.Mongo
         }
 
         /// <inheritdoc />
-        public async Task<T> GetEntityAsync(object key, object partitionKey, CancellationToken cancellationToken = default)
+        public async Task<T> GetEntityAsync(object key, object partitionKey, T defaultValue, CancellationToken cancellationToken = default)
         {
             //TODO: Log.Information("GET Entity: {EntityKey}", key);
 
             var filter = this.GetKeyFilter(key, partitionKey);
 
-            return await this.Collection.Find(filter).FirstOrDefaultAsync(cancellationToken);
+            return await this.Collection.Find(filter).FirstOrDefaultAsync(cancellationToken) ?? defaultValue;
         }
 
         /// <inheritdoc />

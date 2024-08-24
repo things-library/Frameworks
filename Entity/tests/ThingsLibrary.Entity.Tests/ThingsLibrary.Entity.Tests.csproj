@@ -14,6 +14,8 @@
 
 	<ItemGroup>
 	  <Compile Remove="Gcp.cs" />
+	  <Compile Remove="Local.cs" />
+	  <Compile Remove="Mongo.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,9 +33,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Testing\ThingsLibrary.Testing.csproj" />
 	  <ProjectReference Include="..\..\src\ThingsLibrary.Entity.AzureTable\ThingsLibrary.Entity.AzureTable.csproj" />
-	  <ProjectReference Include="..\..\src\ThingsLibrary.Entity.Local\ThingsLibrary.Entity.Local.csproj" />
-	  <ProjectReference Include="..\..\src\ThingsLibrary.Entity.Mongo\ThingsLibrary.Entity.Mongo.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Entity\ThingsLibrary.Entity.csproj" />
 	</ItemGroup>
 
 </Project>
