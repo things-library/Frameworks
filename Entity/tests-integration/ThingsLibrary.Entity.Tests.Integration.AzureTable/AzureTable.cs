@@ -48,7 +48,10 @@ namespace ThingsLibrary.Entity.Tests.Integration.AzureTable
         [ClassCleanup]
         public static async Task ClassCleanup()
         {
-            await TestEnvironment.DisposeAsync();
+            if (TestEnvironment != null)
+            {
+                await TestEnvironment.DisposeAsync();
+            }
 
             // if we aren't using a test container, clean up our test bucket
 

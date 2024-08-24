@@ -47,19 +47,21 @@
             if (!testEnvironmentSection.Exists()) { throw new ArgumentException("Unable to find test environment section in configuration details."); }
 
             var environmentOptions = testEnvironmentSection.Get<TestEnvironmentOptions>() ?? throw new ArgumentException("Unable deserialize test environment object in configuration details.");
-
-            this.ConnectionString = this.Configuration.GetConnectionString(environmentOptions.ConnectionStringVariable) ?? string.Empty;
             
-            this.ContainerOptions = environmentOptions.TestContainer;
+            this.ConnectionString = this.Configuration.GetConnectionString(environmentOptions.ConnectionStringVariable) ?? string.Empty;
+            if (string.IsNullOrEmpty(this.ConnectionString)) { return; }
 
+            this.UseExistingContainer = environmentOptions.UseExistingContainer;
+            this.ContainerOptions = environmentOptions.TestContainer;
+            
             // make sure the directory exists (especially as we might make the container use it)
             Directory.CreateDirectory(this.TempPath);
 
-            if (this.ContainerOptions != null)
+            if (!this.UseExistingContainer && this.ContainerOptions != null)
             {
                 this.TestContainer = this.ContainerOptions
-                    .GetContainerBuilder()
-                    .Build();
+                .GetContainerBuilder()
+                .Build();
             }            
         }        
 
