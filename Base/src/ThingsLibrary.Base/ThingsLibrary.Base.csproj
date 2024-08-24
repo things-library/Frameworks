@@ -21,6 +21,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ThingsLibrary.Schema.Library" Version="0.2.6" />
+		<PackageReference Include="ThingsLibrary.Schema.Library" Version="0.2.7" />
 	</ItemGroup>
 </Project>
