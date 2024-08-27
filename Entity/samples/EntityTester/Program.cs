@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace CloudEntityTester
+namespace EntityTester
 {
     internal static class Program
     {

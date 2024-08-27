@@ -1,13 +1,12 @@
-﻿using Core.Cloud.Storage.File;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
-namespace CloudFileTester
+namespace FileTester
 {
     public class AppSettings
     {
         private IConfigurationRoot Configuration { get; set; }
 
-        public List<FileStoreSettings> FileStoreSettings { get; set; }
+        public List<FileStoreOptions> FileStoreSettings { get; set; }
 
         public AppSettings(IConfigurationRoot configuration)
         {
@@ -17,15 +16,22 @@ namespace CloudFileTester
         public void Load()
         {
             var section = this.Configuration.GetSection("FileStores");
-            this.FileStoreSettings = section.Get<List<FileStoreSettings>>();
+            this.FileStoreSettings = section.Get<List<FileStoreOptions>>();
+
+            foreach(var options in this.FileStoreSettings)
+            {
+                options.ConnectionString = this.Configuration.GetConnectionString(options.ConnectionStringVariable);
+            }
         }
     }
 
-    public class FileStoreSettings
+    public class FileStoreOptions
     {
-        public FileStoreType Type { get; set; }
+        public string Type { get; set; }
         public string BucketName { get; set; }
-        public string Connection { get; set; }
+        public string ConnectionStringVariable { get; set; }
+
+        public string ConnectionString { get; set; }
 
         public override string ToString() => $"{this.Type} ({this.BucketName})";
     }

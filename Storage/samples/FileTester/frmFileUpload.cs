@@ -1,10 +1,10 @@
-﻿using CloudFileTester.Framework;
-using CloudFileTester.Framework.Extensions;
+﻿using FileTester.Framework;
+using FileTester.Framework.Extensions;
 using Core.Cloud.Storage.File;
 using System.Net;
 using System.Timers;
 
-namespace CloudFileTester
+namespace FileTester
 {
     public partial class frmFileUpload : Form
     {

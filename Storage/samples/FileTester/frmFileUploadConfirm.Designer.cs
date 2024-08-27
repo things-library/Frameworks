@@ -1,4 +1,4 @@
-﻿namespace CloudFileTester
+﻿namespace FileTester
 {
     partial class frmFileUploadConfirm
     {

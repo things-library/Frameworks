@@ -1,4 +1,4 @@
-﻿namespace CloudFileTester.Framework
+﻿namespace FileTester.Framework
 {
     public class HttpClientTransferWithProgress : IDisposable
     {

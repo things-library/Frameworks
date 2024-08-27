@@ -32,8 +32,4 @@
 	  <ProjectReference Include="..\ThingsLibrary.Base\ThingsLibrary.Base.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Containers\" />
-	</ItemGroup>
-
 </Project>

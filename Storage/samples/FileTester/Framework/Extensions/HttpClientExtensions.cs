@@ -1,4 +1,4 @@
-﻿namespace CloudFileTester.Framework.Extensions
+﻿namespace FileTester.Framework.Extensions
 {
     public static class HttpClientExtensions
     {

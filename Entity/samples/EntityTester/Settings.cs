@@ -1,16 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-using Core.Cloud.Data.Entity;
-using System.Text.Json.Serialization;
 using System.Diagnostics;
+using ThingsLibrary.Entity.Types;
 
-namespace CloudEntityTester
+namespace EntityTester
 {
     public class AppSettings
     {
         private IConfigurationRoot Configuration { get; set; }
 
-        public List<CloudEntitySettings> CloudEntitySettings { get; set; }
+        public List<EntityStoreOptions> EntityStoreOptions { get; set; }
 
         public AppSettings(IConfigurationRoot configuration)
         {
@@ -19,20 +18,28 @@ namespace CloudEntityTester
 
         public void Load()
         {
-            var section = this.Configuration.GetSection("CloudEntities");
-            this.CloudEntitySettings = section.Get<List<CloudEntitySettings>>();
+            var section = this.Configuration.GetSection("StoreEntities");
+            this.EntityStoreOptions = section.Get<List<EntityStoreOptions>>();
+
+            // go get the secrets
+            foreach(var options in this.EntityStoreOptions)
+            {
+                options.ConnectionString = Configuration.GetConnectionString(options.ConnectionStringVariable);
+            }
         }
     }
 
     [DebuggerDisplay("{Type} ({TableName})")]
-    public class CloudEntitySettings
+    public class EntityStoreOptions
     {        
-        public EntityStoreType Type { get; set; }
+        public string Type { get; set; }
              
         public string TableName { get; set; }
              
-        public string Connection { get; set; }
+        public string ConnectionStringVariable { get; set; }
 
-        public override string ToString() => $"{this.Type} ({this.TableName})";
+        public string ConnectionString { get; set; }
+
+        public override string ToString() => $"{this.Type} ({this.TableName})";        
     }
 }

@@ -3,9 +3,9 @@
 using Humanizer;
 
 using Core.Cloud.Storage.File;
-using CloudFileTester.Framework.Extensions;
+using FileTester.Framework.Extensions;
 
-namespace CloudFileTester
+namespace FileTester
 {
     public partial class frmFileProperties : Form
     {

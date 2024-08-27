@@ -4,14 +4,17 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		
+
 		<IsPackable>true</IsPackable>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Entity.Mongo</PackageId>
 		<ProductName>ThingsLibrary.Entity.Mongo</ProductName>
-		<Title>Cloud Entity Framework Library</Title>
+		<Title>Mongo Entity Database Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>
@@ -19,11 +22,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MongoDB.Driver" Version="2.28.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.28.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ThingsLibrary.Entity\ThingsLibrary.Entity.csproj" />
+		<ProjectReference Include="..\ThingsLibrary.Entity\ThingsLibrary.Entity.csproj" />
 	</ItemGroup>
 
 </Project>

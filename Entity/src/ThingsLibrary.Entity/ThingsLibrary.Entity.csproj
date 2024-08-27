@@ -10,7 +10,7 @@
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Entity</PackageId>
 		<ProductName>ThingsLibrary.Entity</ProductName>
-		<Title>Cloud Entity Framework Library</Title>
+		<Title>Entity Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>
@@ -22,12 +22,6 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />		
-	</ItemGroup>
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.3" />		
-	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.Base.csproj" />
 	</ItemGroup>

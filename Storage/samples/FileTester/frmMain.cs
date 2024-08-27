@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace CloudFileTester
+namespace FileTester
 {
     public partial class frmMain : Form
     {
@@ -48,7 +48,7 @@ namespace CloudFileTester
 
             try
             {
-                this.CurrentBucket = this.GetFileStore(this.cboEntityStore.SelectedItem as FileStoreSettings);
+                this.CurrentBucket = this.GetFileStore(this.cboEntityStore.SelectedItem as FileStoreOptions);
                 
                 this.ManualRefresh();
 
@@ -87,16 +87,16 @@ namespace CloudFileTester
         }
 
 
-        private IFileStore GetFileStore(FileStoreSettings storeSettings)
+        private IFileStore GetFileStore(FileStoreOptions storeSettings)
         {
-            if (storeSettings.Type == FileStoreType.Azure_Blob)
+            if (storeSettings.Type == "Azure_Blob")
             {
-                return new Az.FileStore(storeSettings.Connection, storeSettings.BucketName);
+                return new Az.FileStore(storeSettings.ConnectionString, storeSettings.BucketName);
             }
-            else if (storeSettings.Type == FileStoreType.GCP_Storage)
-            {
-                return new Gc.FileStore(storeSettings.Connection, storeSettings.BucketName);
-            }
+            //else if (storeSettings.Type == "GCP_Storage")
+            //{
+            //    return new Gc.FileStore(storeSettings.ConnectionString, storeSettings.BucketName);
+            //}
             else
             {
                 MessageBox.Show(this, $"Unknown Store Type '{storeSettings.Type}'", "Invalid Type", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -142,18 +142,18 @@ namespace CloudFileTester
 
         private void mnuFilePopupDownload_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var cloudFile = this.lsvFiles.SelectedItems[0].Tag as ICloudFile;
+            //try
+            //{
+            //    var fileItem = this.lsvFiles.SelectedItems[0].Tag as IFileItem;
 
-                var downloadUrl = this.CurrentBucket.GetDownloadUrl(cloudFile, 60);
+            //    var downloadUrl = this.CurrentBucket.GetDownloadUrl(fileItem, 60);
                                 
-                this.OpenUrl(downloadUrl);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, $"Error Getting Download Url.\r\n\r\nError: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }            
+            //    this.OpenUrl(downloadUrl);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(this, $"Error Getting Download Url.\r\n\r\nError: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}            
         }
 
         private void OpenUrl(string url)
@@ -196,7 +196,7 @@ namespace CloudFileTester
 
             try
             {
-                var cloudFile = this.lsvFiles.SelectedItems[0].Tag as ICloudFile;
+                var cloudFile = this.lsvFiles.SelectedItems[0].Tag as IFileItem;
 
                 this.CurrentBucket.DeleteFile(cloudFile.FilePath);                
             }
@@ -211,10 +211,10 @@ namespace CloudFileTester
 
         private void mnuFilePopupProperties_Click(object sender, EventArgs e)
         {
-            var cloudFile = this.lsvFiles.SelectedItems[0].Tag as ICloudFile;
+            //var cloudFile = this.lsvFiles.SelectedItems[0].Tag as IFileItem;
 
-            var frmProperties = new frmFileProperties(this.CurrentBucket, cloudFile.FilePath);
-            frmProperties.ShowDialog(this);
+            //var frmProperties = new frmFileProperties(this.CurrentBucket, cloudFile.FilePath);
+            //frmProperties.ShowDialog(this);
         }
 
         #endregion
@@ -250,12 +250,12 @@ namespace CloudFileTester
 
         private void ProcessUploadPaths(List<string> paths)
         {
-            //TODO:
-            var frm = new frmFileUploadConfirm(this.CurrentBucket, paths, "TestFolderPath");
-            var result = frm.ShowDialog(this);
-            if(result != DialogResult.OK) { return; }
+            ////TODO:
+            //var frm = new frmFileUploadConfirm(this.CurrentBucket, paths, "TestFolderPath");
+            //var result = frm.ShowDialog(this);
+            //if(result != DialogResult.OK) { return; }
 
-            this.RefreshFiles();
+            //this.RefreshFiles();
         }
 
         private void lsvFiles_KeyDown(object sender, KeyEventArgs e)
@@ -269,41 +269,41 @@ namespace CloudFileTester
 
         private void btnFileUpload_Click(object sender, EventArgs e)
         {
-            var result = this.openFileDialog1.ShowDialog();
-            if(result != DialogResult.OK) { return; }            
-            if(this.openFileDialog1.FileNames.Length == 0) { return; }
+            //var result = this.openFileDialog1.ShowDialog();
+            //if(result != DialogResult.OK) { return; }            
+            //if(this.openFileDialog1.FileNames.Length == 0) { return; }
 
-            var frm = new frmFileUploadConfirm(this.CurrentBucket, this.openFileDialog1.FileNames, $"{DateTime.Now:yyyy-MM-dd}");
-            result = frm.ShowDialog(this);
+            //var frm = new frmFileUploadConfirm(this.CurrentBucket, this.openFileDialog1.FileNames, $"{DateTime.Now:yyyy-MM-dd}");
+            //result = frm.ShowDialog(this);
 
-            // refresh regardless of being cancelled or something
-            this.RefreshFiles();
+            //// refresh regardless of being cancelled or something
+            //this.RefreshFiles();
         }
 
         private void btnFileDownload_Click(object sender, EventArgs e)
         {
-            if(this.lsvFiles.SelectedItems.Count == 0) 
-            {
-                MessageBox.Show(this, "No items selected to download.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            //if(this.lsvFiles.SelectedItems.Count == 0) 
+            //{
+            //    MessageBox.Show(this, "No items selected to download.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
 
-            var result = this.folderBrowserDialog1.ShowDialog(this);
-            if(result != DialogResult.OK) { return; }
+            //var result = this.folderBrowserDialog1.ShowDialog(this);
+            //if(result != DialogResult.OK) { return; }
 
-            var cloudFiles = new List<CloudFile>();
-            foreach(var item in this.lsvFiles.SelectedItems)
-            {
-                var listItem = item as ListViewItem;
+            //var cloudFiles = new List<FileItem>();
+            //foreach(var item in this.lsvFiles.SelectedItems)
+            //{
+            //    var listItem = item as ListViewItem;
 
-                var cloudFile = listItem.Tag as CloudFile;
+            //    var cloudFile = listItem.Tag as FileItem;
 
-                cloudFile.LocalFilePath = Path.Combine(this.folderBrowserDialog1.SelectedPath, cloudFile.FileName);
-                cloudFiles.Add(cloudFile);
-            }            
+            //    cloudFile.LocalFilePath = Path.Combine(this.folderBrowserDialog1.SelectedPath, cloudFile.FileName);
+            //    cloudFiles.Add(cloudFile);
+            //}            
 
-            var frm = new frmFileDownload(this.CurrentBucket, cloudFiles);
-            result = frm.ShowDialog(this);
+            //var frm = new frmFileDownload(this.CurrentBucket, cloudFiles);
+            //result = frm.ShowDialog(this);
             
             //TODO: show folder path where files downloaded to
         }

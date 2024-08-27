@@ -2,13 +2,13 @@ using Microsoft.Extensions.Logging;
 
 //using Gc = ThingsLibrary.Entity.GCP;
 using Az = ThingsLibrary.Entity.AzureTable;
-using Le = ThingsLibrary.Entity.Local;
+//using Le = ThingsLibrary.Entity.Local;
 
-using ThingsLibrary.Entity;
 using Azure.Data.Tables;
 using ThingsLibrary.Entity.Interfaces;
+using ThingsLibrary.Schema.Library;
 
-namespace CloudEntityTester
+namespace EntityTester
 {
     public partial class frmMain : Form
     {
@@ -16,7 +16,7 @@ namespace CloudEntityTester
 
         private AppSettings AppSettings { get; set; }
 
-        private IEntityStoreFactory CurrentStore { get; set; }
+        private IEntityStore<ItemDto> CurrentStore { get; set; }
         private ITableEntity CurrentEntity { get; set; }
 
         public frmMain(AppSettings appSettings)
@@ -28,7 +28,7 @@ namespace CloudEntityTester
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            this.cboEntityStore.DataSource = this.AppSettings.CloudEntitySettings;
+            this.cboEntityStore.DataSource = this.AppSettings.EntityStoreOptions;
             //this.cboEntityStore.DisplayMember = "Name";
 
             this.ManualRefresh();
@@ -83,7 +83,7 @@ namespace CloudEntityTester
 
             try
             {
-                this.CurrentStore = this.GetEntityStore(this.cboEntityStore.SelectedItem as CloudEntitySettings);                                
+                this.CurrentStore = this.GetEntityStore(this.cboEntityStore.SelectedItem as EntityStoreOptions);                                
                 this.CurrentEntity = new CloudEntity();
                 
                 this.ManualRefresh();
@@ -198,20 +198,20 @@ namespace CloudEntityTester
             this.grpEntity.Enabled = true;            
         }
 
-        private IEntityStore GetEntityStore(CloudEntitySettings storeSettings)
+        private IEntityStore GetEntityStore(EntityStoreOptions storeSettings)
         {
-            if (storeSettings.Type == EntityStoreType.Azure_Table)
+            if (storeSettings.Type == "Azure_Table")
             {
-                return new Az.EntityStore(storeSettings.Connection, storeSettings.TableName);
+                return new Az.EntityStore(storeSettings.ConnectionString, storeSettings.TableName);
             }
-            else if (storeSettings.Type == EntityStoreType.GCP_DataStore)
-            {
-                return new Gc.EntityStore(storeSettings.Connection, storeSettings.TableName);
-            }
-            else if (storeSettings.Type == EntityStoreType.Local)
-            {
-                return new Le.EntityStore(storeSettings.Connection, storeSettings.TableName);
-            }
+            //else if (storeSettings.Type == EntityStoreType.GCP_DataStore)
+            //{
+            //    return new Gc.EntityStore(storeSettings.ConnectionString, storeSettings.TableName);
+            //}
+            //else if (storeSettings.Type == "Local")
+            //{
+            //    return new Le.EntityStore(storeSettings.ConnectionString, storeSettings.TableName);
+            //}
             else
             {
                 MessageBox.Show(this, $"Unknown Store Type '{storeSettings.Type}'", "Invalid Type", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -238,21 +238,21 @@ namespace CloudEntityTester
 
             if (this.CurrentEntity.Id == default)
             {
-                this.txtInstanceId.Text = "";
-                this.txtInstanceId.ReadOnly = false;
+                this.txtPartitionKey.Text = "";
+                this.txtPartitionKey.ReadOnly = false;
 
-                this.txtEntityId.Text = "";
-                this.txtEntityId.ReadOnly = false;
+                this.txtRowKey.Text = "";
+                this.txtRowKey.ReadOnly = false;
 
                 this.btnEntityDelete.Enabled = false;
             }
             else
             {
-                this.txtInstanceId.Text = this.CurrentEntity.InstanceId;
-                this.txtInstanceId.ReadOnly = true;
+                this.txtPartitionKey.Text = this.CurrentEntity.InstanceId;
+                this.txtPartitionKey.ReadOnly = true;
 
-                this.txtEntityId.Text = this.CurrentEntity.Id;
-                this.txtEntityId.ReadOnly = true;
+                this.txtRowKey.Text = this.CurrentEntity.Id;
+                this.txtRowKey.ReadOnly = true;
 
                 this.btnEntityDelete.Enabled = true;
             }
@@ -358,16 +358,16 @@ namespace CloudEntityTester
 
         private void txtEntityId_Leave(object sender, EventArgs e)
         {
-            if (this.txtEntityId.ReadOnly) { return; }
+            if (this.txtRowKey.ReadOnly) { return; }
 
-            this.CurrentEntity.Id = this.txtEntityId.Text.Trim();
+            this.CurrentEntity.Id = this.txtRowKey.Text.Trim();
         }
 
         private void txtInstanceId_Leave(object sender, EventArgs e)
         {
-            if (this.txtInstanceId.ReadOnly) { return; }
+            if (this.txtPartitionKey.ReadOnly) { return; }
 
-            this.CurrentEntity.InstanceId = this.txtInstanceId.Text.Trim();
+            this.CurrentEntity.InstanceId = this.txtPartitionKey.Text.Trim();
         }
     }
 }

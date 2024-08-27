@@ -2,20 +2,39 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>		
+		<TargetFramework>net8.0-windows</TargetFramework>		
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<UserSecretsId>3d8401d6-4fce-44dd-a922-15951d37d587</UserSecretsId>
+		
+		<UserSecretsId>70000007-7000-7000-7000-700000000007</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<ProductName>CloudFileTester</ProductName>
-		<Title>Cloud File Tester Utility</Title>
+		<ProductName>FileTester</ProductName>
+		<Title>File Tester Utility</Title>
 		<Description>This is the testing utility that uses the Cloud File Libraries</Description>
 
 		<Authors>Mark Lanning</Authors>
-		<Company>Core Services</Company>
+		<Company>Starlight Software</Company>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="frmFileDownload.cs" />
+	  <Compile Remove="frmFileDownload.designer.cs" />
+	  <Compile Remove="frmFileProperties.cs" />
+	  <Compile Remove="frmFileProperties.designer.cs" />
+	  <Compile Remove="frmFileUpload.cs" />
+	  <Compile Remove="frmFileUpload.designer.cs" />
+	  <Compile Remove="frmFileUploadConfirm.cs" />
+	  <Compile Remove="frmFileUploadConfirm.Designer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Remove="frmFileDownload.resx" />
+	  <EmbeddedResource Remove="frmFileProperties.resx" />
+	  <EmbeddedResource Remove="frmFileUpload.resx" />
+	  <EmbeddedResource Remove="frmFileUploadConfirm.resx" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Humanizer.Core" Version="2.14.1" />
@@ -25,8 +44,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Starlight.Storage.Azure\Starlight.Storage.Azure.csproj" />
-	  <ProjectReference Include="..\..\src\Starlight.Storage.Local\Starlight.Storage.Local.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Storage.Azure\ThingsLibrary.Storage.Azure.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Storage.Local\ThingsLibrary.Storage.Local.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

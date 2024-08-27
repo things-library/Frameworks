@@ -1,7 +1,6 @@
 ﻿using Azure.Data.Tables;
-using ThingsLibrary.Entity;
 
-namespace CloudEntityTester
+namespace EntityTester
 {
     public partial class frmEntityPropertyAdd : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace CloudEntityTester
+﻿namespace EntityTester
 {
     partial class frmEntityPropertyAdd
     {

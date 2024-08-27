@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace CloudFileTester
+namespace FileTester
 {
     internal static class Program
     {

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "CloudEntityTester": {
+    "EntityTester": {
         "commandName": "Project",
         "environmentVariables": {
             "GOOGLE_APPLICATION_CREDENTIALS": "C:\\dev\\starlight-63997b53380d.json"

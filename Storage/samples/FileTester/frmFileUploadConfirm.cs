@@ -1,7 +1,7 @@
-﻿using CloudFileTester.Framework.Extensions;
+﻿using FileTester.Framework.Extensions;
 using Core.Cloud.Storage.File;
 
-namespace CloudFileTester
+namespace FileTester
 {
     public partial class frmFileUploadConfirm : Form
     {
