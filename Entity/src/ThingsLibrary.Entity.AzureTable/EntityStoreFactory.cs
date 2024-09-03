@@ -6,7 +6,7 @@
         public EntityStoreType StoreType => EntityStoreType.Azure_Table;
 
 
-        private string StorageConnectionString { get; set; }
+        private string ConnectionString { get; set; }
 
         /// <summary>
         /// Azure Table Service Client
@@ -19,14 +19,14 @@
         /// <param name="storageConnectionString">Connection String</param>
         public EntityStoreFactory(string storageConnectionString)
         {
-            this.StorageConnectionString = storageConnectionString;
-            this.TableServiceClient = new Az.TableServiceClient(this.StorageConnectionString);            
+            this.ConnectionString = storageConnectionString;
+            this.TableServiceClient = new Az.TableServiceClient(this.ConnectionString);            
         }
 
         /// <inheritdoc />
         public IEntityStore<T> GetStore<T>(string name) where T : class
         {
-            return new EntityStore<T>(this.StorageConnectionString, name);        
+            return new EntityStore<T>(this.ConnectionString, name);        
         }
 
         /// <inheritdoc />

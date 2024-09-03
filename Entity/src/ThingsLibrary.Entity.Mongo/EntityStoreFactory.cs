@@ -1,8 +1,4 @@
-﻿using System.Security.Authentication;
-
-using ThingsLibrary.Entity.Interfaces;
-using ThingsLibrary.Entity.Mongo.Models;
-using ThingsLibrary.Entity.Types;
+﻿using ThingsLibrary.Entity.Mongo.Models;
 
 namespace ThingsLibrary.Entity.Mongo;
 
@@ -59,9 +55,7 @@ public class EntityStoreFactory : IEntityStoreFactory
     /// <exception cref="ArgumentNullException"></exception>
     public virtual IEntityStore<T> GetStore<T>(string databaseName, string name) where T : class
     {
-        _ = Guard.Argument(name, nameof(name))
-           .NotEmpty()
-           .NotNull();
+        ArgumentNullException.ThrowIfNullOrEmpty(name);
 
         ValidateDatabaseName(databaseName);
 
@@ -102,13 +96,8 @@ public class EntityStoreFactory : IEntityStoreFactory
     /// <inheritdoc />
     public async Task DeleteStoreAsync(string databaseName, string name, CancellationToken cancellationToken = default)
     {
-        _ = Guard.Argument(databaseName, nameof(databaseName))
-           .NotEmpty()
-           .NotNull();
-
-        _ = Guard.Argument(name, nameof(name))
-           .NotEmpty()
-           .NotNull();
+        ArgumentNullException.ThrowIfNullOrEmpty(databaseName);
+        ArgumentNullException.ThrowIfNullOrEmpty(name);
 
         var client = this.GetClient();
 
@@ -134,7 +123,7 @@ public class EntityStoreFactory : IEntityStoreFactory
     /// <exception cref="ArgumentNullException">Invalid parameters</exception>
     public void DeleteDatabase(string databaseName, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrEmpty(databaseName)) { throw new ArgumentNullException(nameof(databaseName)); }
+        ArgumentNullException.ThrowIfNullOrEmpty(databaseName);
 
         var client = this.GetClient();
 
@@ -156,9 +145,7 @@ public class EntityStoreFactory : IEntityStoreFactory
     /// <exception cref="ArgumentException">When name is not valid</exception>
     public static void ValidateDatabaseName(string name)
     {
-        _ = Guard.Argument(name, nameof(name))
-            .NotEmpty()
-            .NotNull();
+        ArgumentNullException.ThrowIfNullOrEmpty(name);
 
         // Invalid Characters: /."*< >:|?$
 
@@ -189,10 +176,9 @@ public class EntityStoreFactory : IEntityStoreFactory
     /// </remarks>
     public static void ValidateCollectionName(string name)
     {
-        _ = Guard.Argument(name, nameof(name))
-            .NotEmpty()
-            .NotNull()
-            .ThrowIf(argument => argument.Value.StartsWith("system."), argument => new ArgumentException("Name can not begin with 'system.'"));
+        ArgumentNullException.ThrowIfNullOrEmpty(name);
+
+        if (name.StartsWith("system.")) { throw new ArgumentException("Name can not begin with 'system.'");  }
                 
         // validate name        
         //if (!name.All(c => char.IsLetterOrDigit(c))) { throw new ArgumentException($"Table name '{name}' can only be alphanumeric characters.", nameof(name)); }
