@@ -18,11 +18,11 @@
         //    return dataContext;
         //}
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        //    //Example: modelBuilder.Entity<Movie>().ToCollection("movies");
-        //}
+            //Example: modelBuilder.Entity<Movie>().ToCollection("movies");
+        }
     }
 }

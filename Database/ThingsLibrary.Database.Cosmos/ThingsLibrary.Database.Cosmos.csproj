@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="8.0.8" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThingsLibrary.Database\ThingsLibrary.Database.csproj" />
+    <ProjectReference Include="..\src\ThingsLibrary.Database\ThingsLibrary.Database.csproj" />
   </ItemGroup>
 
 </Project>

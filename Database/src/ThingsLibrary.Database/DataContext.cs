@@ -38,18 +38,10 @@
         /// </summary>
         /// <param name="options"></param>
         public DataContext(DbContextOptions options) : base(options)
-        {
+        {                        
             // turn off change tracking as we want to have a light weight processing system
             this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder options)
-        //{
-        //    //TODO:            
-        //    Console.WriteLine("OnConfiguring()");
-        //    //optionsBuilder.EnableSensitiveDataLogging();
-        //}
-
 
         /// <summary>
         /// On Model Creating
@@ -167,7 +159,7 @@
             {
                 ConnectionString = connectionString
             };
-
+            
             LogDatabaseSettings(logger, builder);
         }
 

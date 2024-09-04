@@ -1,106 +1,57 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using ThingsLibrary.Database.Base;
-using ThingsLibrary.DataType;
-
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace ThingsLibrary.Database.Tests.Integration.TestData
 {
-    [ExcludeFromCodeCoverage]
-    [Table("test_class"), Index(nameof(IndexProperty), IsUnique = true)]    
-    public class TestClass : EntityBase
+    public class TestClass
     {
-        //[PartitionKey]
-        //public string PartitionKey { get; set; } = string.Empty;
+        public string PartitionKey { get; set; } = string.Empty;
+        public Guid RowKey { get; set; }
 
-        //[Key]
-        //public Guid Id { get; set; } = SequentialGuid.NewGuid();
-
-        //[Timestamp]        
-        //public DateTime Timestamp { get; private set; } = DateTime.UtcNow;
-
-        [Column("guid_nullable_value")]
-        public Guid? GuidNullableValue { get; set; }
+        public Guid? GuidNullibleValue { get; set; }
 
         // 8bit
-        [Column("byte_value")]
         public byte ByteValue { get; set; }
-        
-        [Column("byte_nullable_value")]
-        public byte? ByteNullableValue { get; set; }
+        public byte? ByteNullibleValue { get; set; }
 
         // 16bit
-        [Column("short_value")]
         public short ShortValue { get; set; }
-
-        [Column("short_nullable_value")]
-        public short? ShortNullableValue { get; set; }
+        public short? ShortNullibleValue { get; set; }
 
         // 32bit
-        [Column("int_value")]
         public int IntValue { get; set; }
-        
-        [Column("int_nullable_value")]
-        public int? IntNullableValue { get; set; }
+        public int? IntNullibleValue { get; set; }
 
         // 64bit
-        [Column("long_value")]
         public long LongValue { get; set; }
-        
-        [Column("long_nullable_value")]
-        public long? LongNullableValue { get; set; }
+        public long? LongNullibleValue { get; set; }
 
-        [Column("double_value")]
         public double DoubleValue { get; set; }
+        public double? DoubleNullibleValue { get; set; }
 
-        [Column("double_nullable_value")]
-        public double? DoubleNullableValue { get; set; }
-
-        [Column("float_value")]
         public float FloatValue { get; set; }
-
-        [Column("float_nullable_value")]
-        public float? FloatNullableValue { get; set; }
+        public float? FloatNullibleValue { get; set; }
 
         // ASCII
-        [Column("string_value")]
         public string StringValue { get; set; } = string.Empty;
 
-        [Column("string_nullable_value")]
-        public string? StringNullableValue { get; set; }
-
         // BOOL
-        [Column("bool_value")]
         public bool BoolValue { get; set; }
-
-        [Column("bool_nullable_value")]
-        public bool? BoolNullableValue { get; set; }
+        public bool? BoolNullibleValue { get; set; }
 
         // DATE 
-        [Column("datetime_value")]
         public DateTime DateTimeValue { get; set; }
+        public DateTime? DateTimeNullibleValue { get; set; }
 
-        [Column("datetime_nullable_value")]
-        public DateTime? DateTimeNullableValue { get; set; }
-
-        [Column("datetimeoffset_value")]
         public DateTimeOffset DateTimeOffsetValue { get; set; }
-
-        [Column("datetimeoffset_nullable_value")]
-        public DateTimeOffset? DateTimeOffsetNullableValue { get; set; }
-
-        [Column("index_field")]
-        public Guid IndexProperty { get; set; } = SequentialGuid.NewGuid();
+        public DateTimeOffset? DateTimeOffsetNullibleValue { get; set; }
 
 
         public static TestClass Get() => new TestClass
         {
             PartitionKey = "Partition1",
-            Id = new Guid("99999999-9999-9999-9999-999999999991"), //.ToString(),
+            RowKey = new Guid("99999999-9999-9999-9999-999999999991"), //.ToString(),
 
-            GuidNullableValue = new Guid("99999999-9999-9999-9999-999999999992"),
+            GuidNullibleValue = new Guid("99999999-9999-9999-9999-999999999992"),
 
             //ByteValue = 12,
             //ByteNullibleValue = 13,
@@ -109,35 +60,35 @@ namespace ThingsLibrary.Database.Tests.Integration.TestData
             //ShortNullibleValue = 1234,
 
             IntValue = 99999991,
-            IntNullableValue = 99999992,
+            IntNullibleValue = 99999992,
 
             LongValue = 123456789012,
-            LongNullableValue = 123456789013,
+            LongNullibleValue = 123456789013,
 
             DoubleValue = 2345678890.12345,
-            DoubleNullableValue = 345678890.2345,
+            DoubleNullibleValue = 345678890.2345,
 
             FloatValue = 345678890.12345f,
-            FloatNullableValue = 45678890.2345f,
+            FloatNullibleValue = 45678890.2345f,
 
             StringValue = "String1234567890",
 
             BoolValue = true,
-            BoolNullableValue = false,
+            BoolNullibleValue = false,
 
             DateTimeValue = new DateTime(2000, 1, 2, 3, 4, 5, DateTimeKind.Utc),    //UTC kind required
-            DateTimeNullableValue = new DateTime(2001, 1, 2, 3, 4, 5, DateTimeKind.Utc),    //UTC kind required
+            DateTimeNullibleValue = new DateTime(2001, 1, 2, 3, 4, 5, DateTimeKind.Utc),    //UTC kind required
 
             DateTimeOffsetValue = new DateTimeOffset(2002, 1, 2, 3, 4, 5, 6, TimeSpan.FromHours(2)),
-            DateTimeOffsetNullableValue = new DateTimeOffset(2003, 1, 2, 3, 4, 5, 6, TimeSpan.FromHours(5))
+            DateTimeOffsetNullibleValue = new DateTimeOffset(2003, 1, 2, 3, 4, 5, 6, TimeSpan.FromHours(5))
         };
 
         public static TestClass GetNulled() => new TestClass
         {
             PartitionKey = "Partition2",
-            Id = new Guid("99999999-9999-9999-9999-999999999991"), //.ToString(),
+            RowKey = new Guid("99999999-9999-9999-9999-999999999991"), //.ToString(),
 
-            GuidNullableValue = null,
+            GuidNullibleValue = null,
 
             //ByteValue = 12,
             //ByteNullibleValue = null,
@@ -146,32 +97,31 @@ namespace ThingsLibrary.Database.Tests.Integration.TestData
             //ShortNullibleValue = null,
 
             IntValue = 99999991,
-            IntNullableValue = null,
+            IntNullibleValue = null,
 
             LongValue = 123456789012,
-            LongNullableValue = null,
+            LongNullibleValue = null,
 
             DoubleValue = 2345678890.12345,
-            DoubleNullableValue = null,
+            DoubleNullibleValue = null,
 
             FloatValue = 345678890.12345f,
-            FloatNullableValue = null,
+            FloatNullibleValue = null,
 
             StringValue = null,
 
             BoolValue = true,
-            BoolNullableValue = null,
+            BoolNullibleValue = null,
 
             DateTimeValue = new DateTime(2000, 1, 2, 3, 4, 5, DateTimeKind.Utc),
-            DateTimeNullableValue = null,
+            DateTimeNullibleValue = null,
 
             DateTimeOffsetValue = new DateTimeOffset(2002, 1, 2, 3, 4, 5, 6, TimeSpan.FromHours(2)),
-            DateTimeOffsetNullableValue = null
+            DateTimeOffsetNullibleValue = null,
         };
     }
 
     [ExcludeFromCodeCoverage]
-    [Table("test_inherited_class")]
     public class TestInheritedClass : TestClass
     {
         public int SecondIntValue { get; set; }
@@ -184,9 +134,9 @@ namespace ThingsLibrary.Database.Tests.Integration.TestData
         public static TestInheritedClass GetInherited() => new TestInheritedClass
         {
             PartitionKey = "Partition3",
-            Id = new Guid("99999999-9999-9999-9999-999999999991"), //.ToString(),
+            RowKey = new Guid("99999999-9999-9999-9999-999999999991"), //.ToString(),
 
-            GuidNullableValue = new Guid("99999999-9999-9999-9999-999999999992"),
+            GuidNullibleValue = new Guid("99999999-9999-9999-9999-999999999992"),
 
             //ByteValue = 12,
             //ByteNullibleValue = 13,
@@ -195,33 +145,31 @@ namespace ThingsLibrary.Database.Tests.Integration.TestData
             //ShortNullibleValue = 1234,
 
             IntValue = 99999991,
-            IntNullableValue = 99999992,
+            IntNullibleValue = 99999992,
 
             LongValue = 123456789012,
-            LongNullableValue = 123456789013,
+            LongNullibleValue = 123456789013,
 
             DoubleValue = 2345678890.12345,
-            DoubleNullableValue = 345678890.2345,
+            DoubleNullibleValue = 345678890.2345,
 
             FloatValue = 345678890.12345f,
-            FloatNullableValue = 45678890.2345f,
+            FloatNullibleValue = 45678890.2345f,
 
             StringValue = "String1234567890",
 
             BoolValue = true,
-            BoolNullableValue = false,
+            BoolNullibleValue = false,
 
             DateTimeValue = new DateTime(2000, 1, 2, 3, 4, 5, DateTimeKind.Utc),
-            DateTimeNullableValue = new DateTime(2001, 1, 2, 3, 4, 5, DateTimeKind.Utc),
+            DateTimeNullibleValue = new DateTime(2001, 1, 2, 3, 4, 5, DateTimeKind.Utc),
 
             DateTimeOffsetValue = new DateTimeOffset(2002, 1, 2, 3, 4, 5, 6, TimeSpan.FromHours(2)),
-            DateTimeOffsetNullableValue = new DateTimeOffset(2003, 1, 2, 3, 4, 5, 6, TimeSpan.FromHours(5)),
+            DateTimeOffsetNullibleValue = new DateTimeOffset(2003, 1, 2, 3, 4, 5, 6, TimeSpan.FromHours(5)),
 
             SecondStringValue = "Gamgee",
             SecondIntValue = 4321,
-            SecondDateTimeNullibleValue = new DateTime(1999, 1, 2, 3, 4, 5, DateTimeKind.Utc),
-
-            IndexProperty = SequentialGuid.NewGuid()
+            SecondDateTimeNullibleValue = new DateTime(1999, 1, 2, 3, 4, 5, DateTimeKind.Utc)
         };
     }
 }
