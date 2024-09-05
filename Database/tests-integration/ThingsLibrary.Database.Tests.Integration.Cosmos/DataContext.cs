@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson;
-using MongoDB.Driver;
+using Microsoft.Extensions.Options;
 
-namespace ThingsLibrary.Database.Tests.Integration.Mongo
+namespace ThingsLibrary.Database.Tests.Integration.Cosmos
 {
-    internal class DataContext : Database.Mongo.DataContext
+    internal class DataContext : Database.Cosmos.DataContext
     {        
         //public DbSet<TestData.TestClass> TestClasses { get; set; }
 
@@ -12,15 +11,9 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
 
         public DataContext(DbContextOptions options) : base(options)
         {
-            //nothing
-            BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;   
+            //nothing            
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder options)
-        //{
-        //    base.OnConfiguring(options);
-        //}
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -34,16 +27,20 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
             modelBuilder.Entity<TestData.TestInheritedClass>(builder => {
                 builder.HasKey(entity => entity.Id);
                 builder.HasIndex(x => x.PartitionKey);
-                builder.Property(x => x.UpdatedOn)                    
-                    .ValueGeneratedOnAddOrUpdate();
+                //builder.Property(x => x.Timestamp);
             });
 
         }
 
-        public static DataContext Create(IMongoDatabase database)
+        public static DataContext Create(string connectionString, string databaseName)
         {
+            //options.UseCosmos(
+            //        "https://homiostorage.table.core.windows.net/",
+            //        "{Account Key}",
+            //        databaseName: "{name of storage account}"));
+
             return new(new DbContextOptionsBuilder<DataContext>()
-                .UseMongoDB(database.Client, database.DatabaseNamespace.DatabaseName)
+                .UseCosmos("https://iqtechdev.table.core.windows.net/", "KOMr3Bt/ZCuj3O3PAyL1ZVHTGFb5OUPAFcW6x7JIcQCCJZsvLFYNit1uwLF2QxAq4T4F+WvkrWJK+AStk7reeA==", databaseName)
                 .Options);
         }
     }

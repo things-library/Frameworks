@@ -26,11 +26,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\src\ThingsLibrary.Database.Cosmos\ThingsLibrary.Database.Cosmos.csproj" />
 		<ProjectReference Include="..\ThingsLibrary.Database.Tests.Integration\ThingsLibrary.Database.Tests.Integration.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>

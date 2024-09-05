@@ -1,7 +1,7 @@
 ﻿namespace ThingsLibrary.Interfaces
 {
     /// <summary>
-    /// Basic Interface making sure the class has a standard 'Name' field
+    /// Basic Interface making sure the class has a standard 'Key' field
     /// </summary>
     public interface IKey
     {
