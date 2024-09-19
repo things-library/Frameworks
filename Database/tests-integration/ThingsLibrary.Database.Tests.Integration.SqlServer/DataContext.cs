@@ -1,20 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ThingsLibrary.Database.Tests.Integration.Cosmos
+namespace ThingsLibrary.Database.Tests.Integration.SqlServer
 {
     [ExcludeFromCodeCoverage]
-    internal class DataContext : Database.Cosmos.DataContext
+    public class DataContext : Database.DataContext
     {        
-        //public DbSet<TestData.TestClass> TestClasses { get; set; }
-
         public DbSet<TestData.TestInheritedClass> TestInheritedClasses { get; set; }
 
-        public DataContext(DbContextOptions options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            //nothing            
+            //nothing   
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -30,6 +28,7 @@ namespace ThingsLibrary.Database.Tests.Integration.Cosmos
                 builder.HasIndex(x => x.PartitionKey);
                 //builder.Property(x => x.Timestamp);
             });
-        }
+
+        }        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ThingsLibrary.Metrics;
+using ThingsLibrary.Schema.Library.Extensions;
 
 namespace ThingsLibrary.Services
 {
@@ -151,7 +152,7 @@ namespace ThingsLibrary.Services
                 }
             }
 
-            var rootMetrics = new ItemDto("instance", this.InstanceId.ToString());
+            var rootMetrics = new ItemDto("instance", this.InstanceId.ToString(), $"instance_{this.InstanceId}".ToKey());
             rootMetrics.Add(new Dictionary<string, string>()
             {
                 // APP Metrics
@@ -165,7 +166,7 @@ namespace ThingsLibrary.Services
             });
 
             //assembly metrics
-            var assemblyItem = new ItemDto("assembly", this.Assembly.Name(), this.Assembly.Namespace());
+            var assemblyItem = new ItemDto("assembly", this.Assembly.Name(), this.Assembly.Namespace().ToKey());
             assemblyItem.Add(new Dictionary<string, string>()
             {
                 { "name", this.Assembly.Name()},
@@ -184,7 +185,7 @@ namespace ThingsLibrary.Services
             rootMetrics.Attach(assemblyItem);
 
             // machine metrics
-            var machineItem = new ItemDto("machine", MachineMetrics.MachineName());
+            var machineItem = new ItemDto("machine", MachineMetrics.MachineName(), MachineMetrics.MachineName().ToKey());
             machineItem.Add(new Dictionary<string, string>()
             {
                 { "name", MachineMetrics.MachineName() },

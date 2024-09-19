@@ -1,5 +1,5 @@
 ﻿namespace ThingsLibrary.Database
-{   
+{
     // ====================================================================================
     // RELATIONAL DATABASE MIGRATIONS:
     // Good Info: https://code-maze.com/migrations-and-seed-data-efcore/
@@ -18,20 +18,11 @@
     /// <summary>
     /// This is the main database context
     /// </summary>
-    public class DataContext : DbContext
-    {        
+    public abstract class DataContext : DbContext
+    {
         // Resources:
         //  https://www.learnentityframeworkcore.com/configuration/fluent-api     
         //  https://entityframeworkcore.com/knowledge-base/36354127/ef-core-implementing-table-per-concrete-type-with-fluent-mapping-of-abstract-base-class
-
-        ///// <summary>
-        ///// Constructor
-        ///// </summary>
-        //public DataContext() : base()
-        //{
-        //    // turn off change tracking as we want to have a light weight processing system
-        //    this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-        //}
 
         /// <summary>
         /// Constructor
@@ -39,8 +30,7 @@
         /// <param name="options"></param>
         public DataContext(DbContextOptions options) : base(options)
         {
-            // turn off change tracking as we want to have a light weight processing system
-            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //nothing
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -64,18 +54,18 @@
             // include all of the services fluent API configurations
             var baseAssembly = typeof(DataContext).Assembly;
 
-            Console.WriteLine($"= Applying {baseAssembly.GetName().Name} ({baseAssembly.GetName().Version}) Configurations...");
+            Log.Information($"= Applying {baseAssembly.GetName().Name} ({baseAssembly.GetName().Version}) Configurations...");
             modelBuilder.ApplyConfigurationsFromAssembly(baseAssembly);
 
             var assembly = this.GetType().Assembly;
             if (assembly != baseAssembly)
             {
-                Console.WriteLine($"= Applying {assembly.GetName().Name} ({assembly.GetName().Version}) Configurations...");
+                Log.Information($"= Applying {assembly.GetName().Name} ({assembly.GetName().Version}) Configurations...");
                 modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             }
 
             //turn off default OnDelete:cascade
-            Console.WriteLine($"= Restricting Delete behaviors...");
+            Log.Information($"= Restricting Delete behaviors...");
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
@@ -101,11 +91,11 @@
             }
 
             // create indexes for the Indexes tagged on the entity
-            var indexAttributes = (Attributes.IndexAttribute[])Attribute.GetCustomAttributes(type, typeof(Attributes.IndexAttribute));
-            foreach (var indexAttribute in indexAttributes)
-            {
-                builder.HasIndex(indexAttribute.PropertyNames.ToArray());
-            }
+            //var indexAttributes = (Attributes.IndexAttribute[])Attribute.GetCustomAttributes(type, typeof(Attributes.IndexAttribute));
+            //foreach (var indexAttribute in indexAttributes)
+            //{
+            //    builder.HasIndex(indexAttribute.PropertyNames.ToArray());
+            //}
         }
 
 
@@ -180,14 +170,24 @@
             // EXAMPLES:
             //   server=(localdb)\\mssqllocaldb;database=WeatherService;trusted_connection=true;
             //   server=localhost;database=WeatherService;User ID=sa;Password=P@ssw0rd!;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+            //   DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=KOMr==;EndpointSuffix=core.windows.net",
+            //   Server=localhost;Port=5432;Database=test;User Id=user;Password=Test123!;
 
+            // SQL Server Variables            
+            if (builder.ContainsKey("server")) { logger.LogInformation("== Server: {DatabaseServer}", builder["server"]); }
+            if (builder.ContainsKey("database")) { logger.LogInformation("== Database: {DatabaseName}", builder["database"]); }
+            if (builder.ContainsKey("User ID")) { logger.LogInformation("== User: {UserId}", builder["User ID"]); }
+
+            // SQL Server Variables
             if (builder.ContainsKey("Data Source")) { logger.LogInformation("== Data Source: {DataSource}", builder["Data Source"]); }
             if (builder.ContainsKey("Initial Catalog")) { logger.LogInformation("== Database: {DatabaseCatelog}", builder["Initial Catalog"]); }
             if (builder.ContainsKey("Integrated Security")) { logger.LogInformation("== Integrated Security: {IntegratedSecurity}", builder["Integrated Security"]); }
+            
+            // Cosmos
+            if (builder.ContainsKey("AccountName")) { logger.LogInformation("== Account Name: {AccountName}", builder["AccountName"]); }
 
-            if (builder.ContainsKey("server")) { logger.LogInformation("== Server: {DatabaseServer}", builder["server"]); }
-            if (builder.ContainsKey("database")) { logger.LogInformation("== Database: {DatabaseName}", builder["database"]); }   
-            if (builder.ContainsKey("User ID")) { logger.LogInformation("== User: {UserId}", builder["User ID"]); }            
+            // Postgres
+
         }
-    }
+}
 }

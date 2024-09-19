@@ -1,20 +1,19 @@
-using MongoDB.Driver.Core.Configuration;
-using MongoDB.Driver;
 using System.Diagnostics.CodeAnalysis;
+using ThingsLibrary.Database.Tests.Integration.Base;
 using ThingsLibrary.Testing.Attributes;
 using ThingsLibrary.Testing.Environment;
 
-namespace ThingsLibrary.Database.Tests.Integration.Mongo
+namespace ThingsLibrary.Database.Tests.Integration.SqlServer
 {
     [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
-    public class MongoTests
+    public class SqlServerTests
     {        
         #region --- Provider ---
 
         private static TestEnvironment TestEnvironment { get; set; }
-
-        private static MongoClient MongoClient { get; set; }
-        private static DataContext? DB { get; set; }
+                
+        private static DataContext DB { get; set; }
+        
 
         // ======================================================================
         // Called once before ALL tests
@@ -34,11 +33,9 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
             // start test environment
             await TestEnvironment.StartAsync();
 
-            MongoTests.MongoClient = new MongoClient(TestEnvironment.ConnectionString);
-
-            DB = DataContext.Create(MongoTests.MongoClient.GetDatabase("testdatabase"));
-            
-            DB.Database.EnsureCreated();            
+            //DB = DataContext.Create(TestEnvironment.ConnectionString);
+            //DB.Database.EnsureDeleted();        //clean up for bad run last time (if exists)
+            //DB.Database.EnsureCreated();
         }
 
         // ======================================================================
@@ -47,12 +44,15 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
         [ClassCleanup]
         public static async Task ClassCleanup()
         {
+            // nothing to clean up
+            if(TestEnvironment == null) { return; }
+
             await TestEnvironment.DisposeAsync();
 
             // if we aren't using a test container, clean up our test bucket
-            if (TestEnvironment.TestContainer == null)
+            if (TestEnvironment.TestContainer == null && DB != null)
             {
-                
+                await DB.Database.EnsureDeletedAsync();    // deletes the test database
             }
         }
         
@@ -64,18 +64,13 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
         #endregion
 
         [TestMethod]
-        public void InsertFetch()
+        public void Inherited_AddUpdateDelete()
         {
-            var testData = TestData.TestClass.Get();
+            var entityTester = new EntityTester<TestData.TestInheritedClass>(DB, DB.TestInheritedClasses);
 
-            DB!.TestClasses.Add(testData);
+            var expectedData = TestData.TestInheritedClass.GetInherited();
 
-            DB.SaveChanges();
-
-            var testData2 = DB.TestClasses.SingleOrDefault(x => x.RowKey == testData.RowKey);
-            Assert.IsNotNull(testData2);
-
+            Assert.IsTrue(entityTester.AddUpdateDelete(expectedData));
         }
-        
     }
 }

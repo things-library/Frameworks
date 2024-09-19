@@ -8,6 +8,6 @@
         /// <summary>
         /// Data Partition Key
         /// </summary>
-        public string PartitionKey { get; set; }
+        public string PartitionKey { get; }
     }
 }

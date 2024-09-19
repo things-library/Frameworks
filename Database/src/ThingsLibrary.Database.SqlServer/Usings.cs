@@ -14,10 +14,16 @@ global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Configuration;
-
 global using Microsoft.Extensions.DependencyInjection;
+
+global using Microsoft.Data.SqlClient;
 
 // ================================================================================
 // THIRD PARTY
 // ================================================================================
 global using Serilog;
+
+// ================================================================================
+// LOCAL
+// ================================================================================
+global using ThingsLibrary.Services.Extensions;

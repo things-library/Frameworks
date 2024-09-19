@@ -1,5 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
-
+using ThingsLibrary.Database.Cosmos;
 using ThingsLibrary.Database.Tests.Integration.Base;
 using ThingsLibrary.Testing.Attributes;
 using ThingsLibrary.Testing.Environment;
@@ -34,7 +35,10 @@ namespace ThingsLibrary.Database.Tests.Integration.Cosmos
             // start test environment
             await TestEnvironment.StartAsync();
 
-            DB = DataContext.Create(TestEnvironment.ConnectionString, "testdatabase");
+            var contextBuilder = DataContext.Parse<DataContext>(TestEnvironment.ConnectionString, "testdatabase");
+
+            DB = new DataContext(contextBuilder.Options);
+            
             await DB.Database.EnsureCreatedAsync();
         }
 
@@ -51,7 +55,7 @@ namespace ThingsLibrary.Database.Tests.Integration.Cosmos
 
             // if we aren't using a test container, clean up our test bucket
             if (TestEnvironment.TestContainer == null && DB != null)
-            {
+            {                
                 await DB.Database.EnsureDeletedAsync();    // deletes the test database
             }
         }        
@@ -63,33 +67,45 @@ namespace ThingsLibrary.Database.Tests.Integration.Cosmos
 
         #endregion
 
+        //[TestMethod]
+        //public void InsertFetch()
+        //{
+        //    var entityTester = new EntityTester<TestData.TestInheritedClass>(DB, DB.TestInheritedClasses);
+
+        //    var expectedData = TestData.TestInheritedClass.GetInherited();
+
+        //    // Insert
+        //    DB!.TestInheritedClasses.Add(expectedData);
+        //    DB.SaveChanges(true);
+
+        //    // clear all tracked entities
+        //    DB.ChangeTracker.Clear();
+
+        //    var compareData = DB.TestInheritedClasses.SingleOrDefault(x => x.Id == expectedData.Id);
+        //    Assert.IsNotNull(compareData);
+
+        //    compareData.UpdatedOn = DateTime.UtcNow;
+
+        //    // Insert
+        //    DB!.TestInheritedClasses.Update(compareData);
+        //    DB.SaveChanges();
+
+        //    // Fetch
+        //    compareData = DB.TestInheritedClasses.SingleOrDefault(x => x.Id == expectedData.Id);
+        //    Assert.IsNotNull(compareData);
+
+        //    entityTester.CompareEntities(compareData, expectedData);
+        //}
+
         [TestMethod]
-        public void InsertFetch()
+        public void Inherited_AddUpdateDelete()
         {
             var entityTester = new EntityTester<TestData.TestInheritedClass>(DB, DB.TestInheritedClasses);
 
             var expectedData = TestData.TestInheritedClass.GetInherited();
 
-            // Insert
-            DB!.TestInheritedClasses.Add(expectedData);
-            DB.SaveChanges(true);
-
-            // clear all tracked entities
-            DB.ChangeTracker.Clear();
-
-            var compareData = DB.TestInheritedClasses.SingleOrDefault(x => x.Id == expectedData.Id);
-            compareData.UpdatedOn = DateTime.UtcNow;
-
-            // Insert
-            DB!.TestInheritedClasses.Update(compareData);
-            DB.SaveChanges();
-
-            // Fetch
-            compareData = DB.TestInheritedClasses.SingleOrDefault(x => x.Id == expectedData.Id);
-            Assert.IsNotNull(compareData);
-
-            entityTester.CompareEntities(compareData, expectedData);
+            Assert.IsTrue(entityTester.AddUpdateDelete(expectedData));
         }
-        
+
     }
 }

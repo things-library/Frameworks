@@ -28,7 +28,7 @@
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static string TryGetConnectionString(this IConfiguration configuration, string? connectionStringName, bool isRequired = true)
+        public static string TryGetConnectionString(this IConfiguration configuration, string connectionStringName)
         {
             if (string.IsNullOrEmpty(connectionStringName)) { throw new ArgumentNullException(nameof(connectionStringName)); }
 
@@ -56,20 +56,11 @@
             if (string.IsNullOrEmpty(connectionString))
             {
                 Log.Warning("Connection string '{ConnectionStringName}' not found!", connectionStringName);
+                throw new ArgumentException($"Unable to find connection string '{connectionStringName}'");
+            }
 
-                if (isRequired)
-                {
-                    throw new ArgumentException($"Unable to find connection string '{connectionStringName}'");
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-            else
-            {
-                return connectionString;
-            }
+
+            return connectionString;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using ThingsLibrary.Testing.Environment;
-
-namespace ThingsLibrary.Storage.Tests.Integration.Azure
+﻿namespace ThingsLibrary.Storage.Tests.Integration.Azure
 {
     [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
     public class AzureTests : IBaseTests
@@ -41,6 +39,8 @@ namespace ThingsLibrary.Storage.Tests.Integration.Azure
         [ClassCleanup]
         public static async Task ClassCleanup()
         {
+            if(TestEnvironment == null) { return; }
+            
             await TestEnvironment.DisposeAsync();
 
             // if we aren't using a test container, clean up our test bucket

@@ -1,6 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace ThingsLibrary.Database.Tests
 {
-    [TestClass]
+    [TestClass, ExcludeFromCodeCoverage]
     public class UnitTest1
     {
         [TestMethod]

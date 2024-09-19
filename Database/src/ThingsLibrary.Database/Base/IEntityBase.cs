@@ -1,24 +1,11 @@
-﻿namespace ThingsLibrary.Database.Base
+﻿using ThingsLibrary.Interfaces;
+
+namespace ThingsLibrary.Database.Base
 {
-    public interface IEntityBase
-    {
+    public interface IEntityBase : IId, IPartitionKey, IRevisionNumber, ILastEditDate
+    {        
         /// <summary>
-        /// Data Partition Key
-        /// </summary>        
-        public string PartitionKey { get; }
-
-        /// <summary>
-        /// Record ID
-        /// </summary>        
-        public Guid Id { get; }
-
-        /// <summary>
-        /// Record Updated DateTime
-        /// </summary>        
-        public DateTimeOffset UpdatedOn { get; }
-
-        /// <summary>
-        /// Record Created DateTime
+        /// Record Created DateTime (UTC)
         /// </summary>
         public DateTimeOffset CreatedOn { get; }
     }

@@ -11,10 +11,10 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
     {        
         #region --- Provider ---
 
-        private static TestEnvironment TestEnvironment { get; set; }
+        private static TestEnvironment? TestEnvironment { get; set; }
 
-        private static MongoClient MongoClient { get; set; }
-        private static DataContext DB { get; set; }
+        private static MongoClient? MongoClient { get; set; }
+        private static DataContext? DB { get; set; }
         
 
         // ======================================================================
@@ -37,8 +37,9 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
 
             MongoTests.MongoClient = new MongoClient(TestEnvironment.ConnectionString);
 
-            DB = DataContext.Create(MongoTests.MongoClient.GetDatabase("testdatabase"));            
-            DB.Database.EnsureCreated();            
+            DB = DataContext.Create(MongoTests.MongoClient.GetDatabase("testdatabase"));
+            DB.Database.EnsureDeleted();        //clean up for bad run last time (if exists)
+            DB.Database.EnsureCreated();
         }
 
         // ======================================================================
@@ -48,7 +49,7 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
         public static async Task ClassCleanup()
         {
             // nothing to clean up
-            if(TestEnvironment == null) { return; }
+            if (TestEnvironment == null) { return; }
 
             await TestEnvironment.DisposeAsync();
 
@@ -93,6 +94,8 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
         [TestMethod]
         public void Inherited_AddUpdateDelete()
         {
+            ArgumentNullException.ThrowIfNull(DB);
+
             var entityTester = new EntityTester<TestData.TestInheritedClass>(DB, DB.TestInheritedClasses);
 
             var expectedData = TestData.TestInheritedClass.GetInherited();

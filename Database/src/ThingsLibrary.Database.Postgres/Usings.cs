@@ -21,3 +21,9 @@ global using Microsoft.Extensions.DependencyInjection;
 // THIRD PARTY
 // ================================================================================
 global using Serilog;
+global using Npgsql;
+
+// ================================================================================
+// LOCAL
+// ================================================================================
+global using ThingsLibrary.Services.Extensions;

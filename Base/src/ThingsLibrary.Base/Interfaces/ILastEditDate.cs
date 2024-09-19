@@ -3,11 +3,11 @@
     /// <summary>
     /// Basic Interface making sure the class has a standard 'PartitionKey' field
     /// </summary>
-    public interface IRevisionNumber
+    public interface ILastEditDate
     {
         /// <summary>
-        /// Data Partition Key
+        /// DateTime (UTC) of last record edit
         /// </summary>
-        public int Revision { get; set; }
+        public DateTimeOffset UpdatedOn { get; set; }
     }
 }

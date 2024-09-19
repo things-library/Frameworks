@@ -1,24 +1,40 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using ThingsLibrary.Attributes;
-using ThingsLibrary.DataType;
-
-namespace ThingsLibrary.Database.Base
+﻿namespace ThingsLibrary.Database.Base
 {
+    /// <summary>
+    /// Base set of properties to standarize some basic foundational data.
+    /// </summary>
     public class EntityBase : IEntityBase
     {
-        [PartitionKey]        
+        //NOTE: Primitive types must have a setter not INIT to work with Mongo
+
+        /// <summary>
+        /// Data Partition Key
+        /// </summary>
+        [Column("PartitionKey"), PartitionKey]        
         public string PartitionKey { get; set; } = string.Empty;
 
-        [Key]
+        /// <summary>
+        /// UUID Key
+        /// </summary>        
+        [Column("Id"), Key]
         public Guid Id { get; set; } = SequentialGuid.NewGuid();
 
-        [RevisionNumber]
-        public int Version { get; set; } = 0;
+        /// <summary>
+        /// Revision Number
+        /// </summary>
+        [Column("Revision"), RevisionNumber]
+        public int Revision { get; set; } = 0;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTimeOffset UpdatedOn { get; set; } = DateTimeOffset.Now;
+        /// <summary>
+        /// Record Timestamp
+        /// </summary>
+        [Column("LastUpdatedOn"), LastEditDate, Required]
+        public DateTimeOffset UpdatedOn { get; set; } = DateTimeOffset.UtcNow;
 
-        public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.Now;
+        /// <summary>
+        /// Record Created Timestamp
+        /// </summary>
+        [Column("CreatedOn"), Required]
+        public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
     }
 }

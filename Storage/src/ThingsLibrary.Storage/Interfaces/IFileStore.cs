@@ -81,9 +81,9 @@
         /// <summary>
         /// Get Files based on cloud file Path
         /// </summary>
-        /// <param name="cloudFolderPath"></param>
+        /// <param name="pathPrefix">File Path Prefix</param>
         /// <returns></returns>
-        public IEnumerable<IFileItem> GetFiles(string cloudFolderPath);
+        public IEnumerable<IFileItem> GetFiles(string pathPrefix);
 
         /// <summary>
         /// Upload file to path

@@ -1,4 +1,7 @@
-﻿namespace ThingsLibrary.Testing.Environment
+﻿using Docker.DotNet.Models;
+using System.Diagnostics;
+
+namespace ThingsLibrary.Testing.Environment
 {
     public class TestEnvironment
     {
@@ -59,6 +62,13 @@
 
             if (!this.UseExistingContainer && this.ContainerOptions != null)
             {
+                //Check to make sure docker is even running
+                if (!this.IsDockerRunning())
+                {
+                    Console.WriteLine("DOCKER DAEMON NOT RUNNING!");
+                    return;
+                }
+
                 this.TestContainer = this.ContainerOptions
                 .GetContainerBuilder()
                 .Build();
@@ -80,6 +90,33 @@
 
             //TODO: do any other test environment things
         }
+
+        public bool IsDockerRunning()
+        {
+
+            try
+            {
+                var info = new ProcessStartInfo() 
+                {
+                    FileName = "docker", 
+                    Arguments = "ps", 
+                    RedirectStandardOutput = true 
+                };
+                
+                using (var process = Process.Start(info))
+                {                    
+                    if (process is null) { return false; }
+                    process.WaitForExit(TimeSpan.FromSeconds(10));
+
+                    // exit code = 0 is success
+                    return (process.ExitCode == 0);
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }        
 
         #region --- Cleanup / Dispose ---
 
