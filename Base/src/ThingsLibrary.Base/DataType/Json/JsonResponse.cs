@@ -1,4 +1,11 @@
-﻿using ThingsLibrary.DataType.Extensions;
+﻿// ================================================================================
+// <copyright file="JsonResponse.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using ThingsLibrary.DataType.Extensions;
 using ThingsLibrary.DataType.Json.Converters;
 using System.Net;
 

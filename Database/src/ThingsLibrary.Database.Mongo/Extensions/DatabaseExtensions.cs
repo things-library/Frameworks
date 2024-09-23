@@ -1,4 +1,11 @@
-﻿using MongoDB.Bson;
+﻿// ================================================================================
+// <copyright file="DatabaseExtensions.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using MongoDB.Bson;
 
 namespace ThingsLibrary.Database.Mongo.Extensions
 {
@@ -39,7 +46,6 @@ namespace ThingsLibrary.Database.Mongo.Extensions
             return services;
         }
 
-
         /// <summary>
         /// Parse connection string and return data contect options
         /// </summary>        
@@ -65,7 +71,9 @@ namespace ThingsLibrary.Database.Mongo.Extensions
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(connectionString);
 
-            builder.UseMongoDB(connectionString, databaseName);
+            builder
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .UseMongoDB(connectionString, databaseName);
         }
     }
 }

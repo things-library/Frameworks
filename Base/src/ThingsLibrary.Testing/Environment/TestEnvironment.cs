@@ -1,4 +1,10 @@
-﻿using Docker.DotNet.Models;
+﻿// ================================================================================
+// <copyright file="TestEnvironment.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
 using System.Diagnostics;
 
 namespace ThingsLibrary.Testing.Environment
@@ -41,7 +47,7 @@ namespace ThingsLibrary.Testing.Environment
         {
             // get the configuration information
             this.Configuration = new ConfigurationBuilder()
-               .AddJsonFile("appsettings.json", optional: false)
+               .AddJsonFile("appsettings.json", optional: false)               
                .AddUserSecrets(Assembly.GetCallingAssembly()!)
                .Build();
 
@@ -78,9 +84,9 @@ namespace ThingsLibrary.Testing.Environment
         /// <summary>
         /// Start Test Environment
         /// </summary>
-        public async Task StartAsync()
+        public virtual async Task StartAsync()
         {            
-            if(this.TestContainer != null && this.UseExistingContainer)
+            if(this.TestContainer != null && !this.UseExistingContainer)
             {
                 Console.Write("Starting docker container...");
                 await this.TestContainer.StartAsync().ConfigureAwait(false);
@@ -124,7 +130,7 @@ namespace ThingsLibrary.Testing.Environment
         /// Clean up our test environment
         /// </summary>
         /// <returns></returns>
-        public async Task DisposeAsync()
+        public virtual async Task DisposeAsync()
         {
             // we already called this
             if (this.IsDisposed) { return; }
@@ -139,6 +145,7 @@ namespace ThingsLibrary.Testing.Environment
 
             this.IsDisposed = true;
         }
+
 
         public bool IsDisposed { get; set; }
 

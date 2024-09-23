@@ -1,27 +1,17 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace ThingsLibrary.Database.Postgres
+﻿namespace ThingsLibrary.Database.Postgres
 {
-    [ExcludeFromCodeCoverage]
-    public class DataContext : Database.DataContext
+    public static class DataContextUtils
     {
-        public DataContext(DbContextOptions options) : base(options)
-        {
-            //nothing
-        }
-
-        #region --- Static --- 
-
-        public static DataContext Create<TContext>(string connectionString) where TContext : DbContext
+        public static TContext Create<TContext>(string connectionString) where TContext : Database.DataContext
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(connectionString);
 
-            var contextBuilder = DataContext.Parse<TContext>(connectionString);
+            var contextBuilder = Parse<TContext>(connectionString);
 
-            return new(contextBuilder.Options);
+            return new TContext(contextBuilder);
         }
 
-        public static DbContextOptionsBuilder Parse<TContext>(string connectionString) where TContext : DbContext
+        public static DbContextOptions<TContext> Parse<TContext>(string connectionString) where TContext : DbContext
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(connectionString);
 
@@ -30,11 +20,9 @@ namespace ThingsLibrary.Database.Postgres
                 builder.MigrationsAssembly(typeof(TContext).Assembly.FullName);
                 builder.CommandTimeout((int)TimeSpan.FromSeconds(30).TotalSeconds);
 
-                builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);                
+                builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 builder.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
-            });
+            }).Options;
         }
-
-        #endregion
     }
 }

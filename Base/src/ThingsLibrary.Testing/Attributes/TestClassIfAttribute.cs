@@ -1,4 +1,11 @@
-﻿namespace ThingsLibrary.Testing.Attributes
+﻿// ================================================================================
+// <copyright file="TestClassIfAttribute.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Testing.Attributes
 {
     // Source: https://matt.kotsenas.com/posts/ignoreif-mstest
 

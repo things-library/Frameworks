@@ -1,18 +1,25 @@
-﻿namespace ThingsLibrary.Storage
+﻿// ================================================================================
+// <copyright file="FileItem.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Storage
 {
     public class FileItem : ItemDto, IFileItem
     {
         /// <inheritdoc />        
-        public string FilePath => this["resource_key"];
+        public string Path => this["resource_key"];
 
         /// <inheritdoc />
-        public string FileName => this.Name;
+        public string Name => this.Name;
         
         /// <inheritdoc />
-        public long FileSize => this.Get<long>("file_size", 0);
+        public long Size => this.Get<long>("file_size", 0);
 
         /// <inheritdoc />
-        public double FileSizeMB => this.FileSize / (double)1048576;     //(1024x1024) == bytes to megs
+        public double SizeMB => this.Size / (double)1048576;     //(1024x1024) == bytes to megs
 
         /// <inheritdoc />
         public string ContentType => this["content_type"];
@@ -53,8 +60,8 @@
 
         public FileItem(string resourcePath)
         {
-            this.Key = Path.GetFileName(resourcePath);
-            this.Name = Path.GetFileName(resourcePath);
+            this.Key = System.IO.Path.GetFileName(resourcePath);
+            this.Name = System.IO.Path.GetFileName(resourcePath);
 
             // keep track of the entire resource path
             this.Attributes["resource_key"] = resourcePath;

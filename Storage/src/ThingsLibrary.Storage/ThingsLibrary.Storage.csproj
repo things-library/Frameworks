@@ -4,7 +4,9 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 
-		<IsPackable>false</IsPackable>		
+		<IsPackable>false</IsPackable>
+
+		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup>

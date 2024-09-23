@@ -1,4 +1,11 @@
-﻿using DotNet.Testcontainers.Builders;
+﻿// ================================================================================
+// <copyright file="TestContainerOptions.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using DotNet.Testcontainers.Builders;
 using ThingsLibrary.Testing.Environment;
 
 namespace ThingsLibrary.Testing.Extensions

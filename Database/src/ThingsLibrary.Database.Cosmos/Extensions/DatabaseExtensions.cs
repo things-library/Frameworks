@@ -34,9 +34,7 @@
         {
             ArgumentNullException.ThrowIfNullOrEmpty(parameterName);
 
-            var connectionString = configuration.TryGetConnectionString(parameterName, false);
-
-            if (string.IsNullOrEmpty(connectionString)) { throw new ArgumentException($"Unable to find {parameterName}"); }
+            var connectionString = configuration.TryGetConnectionString(parameterName);
 
             // verify a SQL connection can be established before continuing            
             //using (var connection = new SqlConnection(connectionString))

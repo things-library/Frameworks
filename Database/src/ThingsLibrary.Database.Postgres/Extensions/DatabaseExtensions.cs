@@ -10,12 +10,11 @@
         /// <param name="environmentName">Environment name for connection string prefix</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public static IServiceCollection AddDatabasePostgres<TContext>(this IServiceCollection services, IConfiguration configuration, string environmentName) where TContext : DbContext
+        public static IServiceCollection AddDatabasePostgres<TContext>(this IServiceCollection services, IConfiguration configuration, string parameterName) where TContext : Database.DataContext
         {
-            var parameterName = $"{environmentName}_MongoDatabase";
-            var connectionString = configuration.TryGetConnectionString(parameterName, false);
+            ArgumentNullException.ThrowIfNullOrEmpty(parameterName);
 
-            if (string.IsNullOrEmpty(connectionString)) { throw new ArgumentException($"Unable to find {parameterName}"); }
+            var connectionString = configuration.TryGetConnectionString(parameterName);
 
             // verify a SQL connection can be established before continuing            
             using (var connection = new NpgsqlConnection(connectionString))
@@ -31,6 +30,27 @@
 
             // allow chaining
             return services;
+        }
+
+        /// <summary>
+        /// Configure the DataContext based on the connection string
+        /// </summary>
+        /// <typeparam name="TContext">Data Context</typeparam>
+        /// <param name="builder">Data Context Options Builder</param>
+        /// <param name="connectionString">Connection String</param>
+        public static void Configure<TContext>(this DbContextOptionsBuilder builder, string connectionString) where TContext : Database.DataContext
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(connectionString);
+
+            builder
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .UseNpgsql(connectionString, builder =>
+                {
+                    builder.MigrationsAssembly(typeof(TContext).Assembly.FullName);
+                    builder.CommandTimeout((int)TimeSpan.FromSeconds(30).TotalSeconds);
+
+                    builder.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
+                });
         }
     }
 }

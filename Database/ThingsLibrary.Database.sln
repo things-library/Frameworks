@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Services", ".
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Database", "src\ThingsLibrary.Database\ThingsLibrary.Database.csproj", "{D8841003-2DDA-4D5A-B0B8-772EAC981B3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Database.Tests.Integration.SqlServer", "tests-integration\ThingsLibrary.Database.Tests.Integration.SqlServer\ThingsLibrary.Database.Tests.Integration.SqlServer.csproj", "{FF8D9FAF-896D-4F37-AE1E-369D18D628B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Database.Tests.Integration.SqlServer", "tests-integration\ThingsLibrary.Database.Tests.Integration.SqlServer\ThingsLibrary.Database.Tests.Integration.SqlServer.csproj", "{FF8D9FAF-896D-4F37-AE1E-369D18D628B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Database.Tests.Integration.Postgres", "tests-integration\ThingsLibrary.Database.Tests.Integration.Postgres\ThingsLibrary.Database.Tests.Integration.Postgres.csproj", "{A01BF182-D3CA-42C9-9F87-215C2886D010}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{FF8D9FAF-896D-4F37-AE1E-369D18D628B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF8D9FAF-896D-4F37-AE1E-369D18D628B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF8D9FAF-896D-4F37-AE1E-369D18D628B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A01BF182-D3CA-42C9-9F87-215C2886D010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01BF182-D3CA-42C9-9F87-215C2886D010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01BF182-D3CA-42C9-9F87-215C2886D010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01BF182-D3CA-42C9-9F87-215C2886D010}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{5A7A47B7-8C2A-4F8F-9F0C-AE86C37C843D} = {48D763BE-5112-4A94-AA2F-140576D50DD4}
 		{D8841003-2DDA-4D5A-B0B8-772EAC981B3F} = {FC1D0EA4-C6B2-423D-8009-A113373D959A}
 		{FF8D9FAF-896D-4F37-AE1E-369D18D628B4} = {928CEC5B-82AD-49EA-9C25-5692112F96D0}
+		{A01BF182-D3CA-42C9-9F87-215C2886D010} = {928CEC5B-82AD-49EA-9C25-5692112F96D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CF34144-3CDD-4955-B934-A5278D7A1139}

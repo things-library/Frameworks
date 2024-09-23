@@ -1,4 +1,11 @@
-﻿using ThingsLibrary.Metrics;
+﻿// ================================================================================
+// <copyright file="AppService.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using ThingsLibrary.Metrics;
 using ThingsLibrary.Schema.Library.Extensions;
 
 namespace ThingsLibrary.Services
@@ -237,8 +244,10 @@ namespace ThingsLibrary.Services
             // get new heartbeat
             var memory = MemoryMetrics.GetSnapshot();
 
+            var dateTime = DateTimeOffset.UtcNow;
+
             // since we are going to the trouble keep track of it
-            var memoryItem = new ItemDto("instance_hb", "") { Date = DateTime.Now };
+            var memoryItem = new ItemDto("instance_hb", "Instance Heartbeat", $"hb_{dateTime.ToUnixTimeSeconds}") { Date = DateTime.Now };
 
             memoryItem.Add(new Dictionary<string, string>()
             {       

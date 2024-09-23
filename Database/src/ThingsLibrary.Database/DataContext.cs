@@ -1,8 +1,16 @@
-﻿namespace ThingsLibrary.Database
+﻿// ================================================================================
+// <copyright file="DataContext.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Database
 {
     // ====================================================================================
     // RELATIONAL DATABASE MIGRATIONS:
     // Good Info: https://code-maze.com/migrations-and-seed-data-efcore/
+    // Good Info: https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli
     // ====================================================================================
     // PM>  Add-Migration -Project {{SERVICE_NAME}}.Infrastructure -Startup {{SERVICE_NAME}}.Infrastructure {{NAME}}
     // ====================================================================================
@@ -14,6 +22,7 @@
     // ====================================================================================
     // PM>  SqlLocalDb info MSSqlLocalDB
     // ==================================================================================== 
+    // dotnet ef migrations script --idempotent
 
     /// <summary>
     /// This is the main database context
