@@ -245,6 +245,30 @@ namespace ThingsLibrary.DataType.Extensions
         }
 
         /// <summary>
+        /// Copy the public properties of one class object to the other class object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static void CopyPropertyValues<TEntity>(this TEntity source, TEntity target) where TEntity : class
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(target);
+
+            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (property.CanRead && property.CanWrite)
+                {
+                    object? value = property.GetValue(source);
+                    property.SetValue(target, value);
+                }
+            }
+        }
+
+        /// <summary>
         /// Get the key values from the instance delimited by the delimiter char
         /// </summary>
         /// <param name="instance">Class Instance</param>

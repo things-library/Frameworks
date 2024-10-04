@@ -6,8 +6,9 @@
 // ================================================================================
 
 using System.Net;
+using ThingsLibrary.DataType.Extensions;
 
-namespace ThingsLibrary.DataType.Json
+namespace ThingsLibrary.DataType
 {
     /// <summary>
     /// Create a standarized error response that can be seen by a user as well as processed by backend systems.
@@ -29,9 +30,9 @@ namespace ThingsLibrary.DataType.Json
     ///    }
     ///}
     /// </example>
-    [DisplayName("JsonResponse")]
-    [DebuggerDisplay("StatusCode = {StatusCode}, Title = {Title}")]
-    public class JsonResponseList<TEntity> : JsonResponse
+    [DisplayName("ActionResponse")]
+    [DebuggerDisplay("StatusCode = {StatusCode}, DisplayMessage = {DisplayMessage}")]
+    public class ActionResponseList<TEntity> : ActionResponse
     {
         #region --- PagedList ---
 
@@ -79,12 +80,11 @@ namespace ThingsLibrary.DataType.Json
         [JsonPropertyName("items")]
         [Display(Name = "Items"), Required]
         public IEnumerable<TEntity> Data { get; init; } = [];
-
-               
+                       
         /// <summary>
         /// Json List Response
         /// </summary>
-        public JsonResponseList() 
+        public ActionResponseList() 
         { 
             //nothing
         }
@@ -92,17 +92,11 @@ namespace ThingsLibrary.DataType.Json
         /// <summary>
         /// Convert json response to JsonResponseList
         /// </summary>
-        /// <param name="jsonResponse"></param>
-        public JsonResponseList(JsonResponse jsonResponse)
+        /// <param name="response"></param>
+        public ActionResponseList(ActionResponse response)
         {
-            this.Type = jsonResponse.Type;
-            this.StatusCode = jsonResponse.StatusCode;
-            this.Title = jsonResponse.Title;
-
-            this.ErrorDetails = jsonResponse.ErrorDetails;
-            this.Errors = jsonResponse.Errors;
-
-            this.TraceId = jsonResponse.TraceId;
+            //TODO: Need to test this
+            this.CopyPropertyValues(response);
         }
 
         /// <summary>
@@ -112,7 +106,7 @@ namespace ThingsLibrary.DataType.Json
         /// <param name="pageSize">Page Size</param>
         /// <param name="count">Total Items In Set</param>
         /// <param name="data">Collection of items for the page</param>
-        public JsonResponseList(IEnumerable<TEntity> data, int page, int pageSize, int count)
+        public ActionResponseList(IEnumerable<TEntity> data, int page, int pageSize, int count)
         {
             var type = typeof(TEntity);
             this.Type = $"{type.Namespace}.{type.Name}";
@@ -127,7 +121,7 @@ namespace ThingsLibrary.DataType.Json
         /// Takes the entire dataset results
         /// </summary>
         /// <param name="data">Collection of Items</param>
-        public JsonResponseList(IEnumerable<TEntity> data)
+        public ActionResponseList(IEnumerable<TEntity> data)
         {
             var type = typeof(TEntity);
             this.Type = $"{type.Namespace}.{type.Name}";
@@ -143,11 +137,9 @@ namespace ThingsLibrary.DataType.Json
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
         /// <param name="title">User Friendly Title</param>
-        public JsonResponseList(HttpStatusCode statusCode, string title, string? errorMessage = null)
+        public ActionResponseList(HttpStatusCode statusCode, string title, string? errorMessage = null) : base(statusCode, title, errorMessage)
         {
-            this.StatusCode = statusCode;
-            this.Title = title;
-            this.ErrorMessage = errorMessage ?? string.Empty;
+            //nothing
         }
 
         /// <summary>
@@ -157,59 +149,27 @@ namespace ThingsLibrary.DataType.Json
         /// <param name="title">User Friendly Title</param>
         /// <param name="errorFieldName">Field/property that is causing this message</param>
         /// <param name="fieldErrorMessage">Error message</param>
-        public JsonResponseList(HttpStatusCode statusCode, string title, string errorFieldName, string fieldErrorMessage)
+        public ActionResponseList(HttpStatusCode statusCode, string title, string errorFieldName, string fieldErrorMessage) : base(statusCode, title, errorFieldName, fieldErrorMessage)
         {
-            this.StatusCode = statusCode;
-            this.Title = title;
-
-            this.Errors.Add(errorFieldName, fieldErrorMessage);
+            //nothing
         }
 
         /// <summary>
         /// Create json response based on exception
         /// </summary>
         /// <param name="exception"></param>
-        public JsonResponseList(Exception exception)
+        public ActionResponseList(Exception exception) : base(exception)
         {
-            this.StatusCode = HttpStatusCode.InternalServerError;
-            this.Title = exception.Message;
-            this.ErrorDetails = exception.ToString();            
+            //nothing
         }
 
         /// <summary>
         /// Create Json Response based on validation results
         /// </summary>
         /// <param name="results">Validation Results</param>
-        public JsonResponseList(ICollection<ValidationResult> results)
+        public ActionResponseList(ICollection<ValidationResult> results) : base(results)
         {
-            // nothing to see folks
-            if (results == null) { return; }
-            if (results.Count == 0) { return; }
-
-            this.StatusCode = HttpStatusCode.BadRequest;
-            this.Title = "Validation errors occurred.";
-
-            this.Errors = [];
-            foreach (var result in results)
-            {
-                this.Errors.Add(string.Join(';', result.MemberNames), result.ErrorMessage ?? "Validation Error");
-            }
-        }
-
-        /// <summary>
-        /// Create Json Response based on validation results
-        /// </summary>
-        /// <param name="validationResults">Validation Results</param>
-        /// <param name="statusCode">Status Code to use if validation errors have occured</param>
-        public JsonResponseList(Dictionary<string, string> validationResults, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
-        {
-            this.StatusCode = statusCode;
-
-            if (validationResults.Count > 0) 
-            {
-                this.Title = "Validation errors occurred.";
-                this.Errors = validationResults;
-            }            
-        }        
+            //nothing
+        }            
     }
 }

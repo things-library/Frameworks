@@ -482,7 +482,7 @@ namespace ThingsLibrary.Security.OAuth2
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<JsonResponse<Dictionary<string, string>>> GetUserInfo(string accessToken)
+        public async Task<ActionResponse<Dictionary<string, string>>> GetUserInfo(string accessToken)
         {
             if (string.IsNullOrEmpty(accessToken)) { throw new ArgumentNullException(accessToken); }
 
@@ -523,7 +523,7 @@ namespace ThingsLibrary.Security.OAuth2
             }
             catch(Exception ex)
             {
-                return new JsonResponse<Dictionary<string, string>>(ex);
+                return new ActionResponse<Dictionary<string, string>>(ex);
             }
         }
 

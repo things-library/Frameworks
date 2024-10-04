@@ -304,7 +304,7 @@ namespace ThingsLibrary.Storage.Azure
         }
 
         /// <inheritdoc/>
-        public string GetDownloadUrl(string cloudFilePath, double ttlMinutes)
+        public string GetDownloadUrl(string cloudFilePath, double ttlSeconds)
         {
             Log.Debug("Getting cloud file path for '{cloudFilePath}'...", cloudFilePath);
 
@@ -319,7 +319,7 @@ namespace ThingsLibrary.Storage.Azure
                 BlobName = blobClient.Name,
                 Resource = "b",
                 StartsOn = DateTimeOffset.UtcNow.AddMinutes(-1),
-                ExpiresOn = DateTimeOffset.UtcNow.AddMinutes(ttlMinutes)
+                ExpiresOn = DateTimeOffset.UtcNow.AddSeconds(ttlSeconds)
             };
 
             // Specify read permissions for the SAS.

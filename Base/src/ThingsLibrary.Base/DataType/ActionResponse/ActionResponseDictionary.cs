@@ -9,7 +9,7 @@ using ThingsLibrary.DataType.Json.Converters;
 using ThingsLibrary.Interfaces;
 using System.Net;
 
-namespace ThingsLibrary.DataType.Json
+namespace ThingsLibrary.DataType
 {
     /// <summary>
     /// Create a standarized error response that can be seen by a user as well as processed by backend systems.
@@ -31,9 +31,9 @@ namespace ThingsLibrary.DataType.Json
     ///    }
     ///}
     /// </example>
-    [DisplayName("JsonResponse")]
-    [DebuggerDisplay("StatusCode = {StatusCode}, Title = {Title}")]
-    public class JsonResponseDictionary<TEntity> : JsonResponse where TEntity : IKey
+    [DisplayName("ActionResponse")]
+    [DebuggerDisplay("StatusCode = {StatusCode}, DisplayMessage = {DisplayMessage}")]
+    public class ActionResponseDictionary<TEntity> : ActionResponse where TEntity : IKey
     {
         #region --- PagedList ---
 
@@ -83,7 +83,7 @@ namespace ThingsLibrary.DataType.Json
         public Dictionary<string, TEntity> Data { get; init; } = [];
 
                 
-        public JsonResponseDictionary() 
+        public ActionResponseDictionary() 
         { 
             //nothing
         }
@@ -95,7 +95,7 @@ namespace ThingsLibrary.DataType.Json
         /// <param name="pageSize">Page Size</param>
         /// <param name="count">Total Items In Set</param>
         /// <param name="data">Collection of items for the page</param>
-        public JsonResponseDictionary(Dictionary<string, TEntity> data, int page, int pageSize, int count)
+        public ActionResponseDictionary(Dictionary<string, TEntity> data, int page, int pageSize, int count)
         {
             var type = typeof(TEntity);
             this.Type = $"{type.Namespace}.{type.Name}";
@@ -110,7 +110,7 @@ namespace ThingsLibrary.DataType.Json
         /// Takes the entire dataset results
         /// </summary>
         /// <param name="data">Collection of Items</param>
-        public JsonResponseDictionary(Dictionary<string, TEntity> data)
+        public ActionResponseDictionary(Dictionary<string, TEntity> data)
         {
             var type = typeof(TEntity);
             this.Type = $"{type.Namespace}.{type.Name}";
@@ -125,58 +125,40 @@ namespace ThingsLibrary.DataType.Json
         /// Create Json Response
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
-        /// <param name="title">User Friendly Title</param>
-        public JsonResponseDictionary(HttpStatusCode statusCode, string title, string? errorMessage = null)
-        {
-            this.StatusCode = statusCode;
-            this.Title = title;
-            this.ErrorMessage = errorMessage ?? string.Empty;
+        /// <param name="displayMessage">User Friendly Title</param>
+        public ActionResponseDictionary(HttpStatusCode statusCode, string displayMessage, string? errorMessage = null) : base(statusCode, displayMessage, errorMessage)
+        {            
+            //nothing
         }
 
         /// <summary>
         /// Create a Json Response
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
-        /// <param name="title">User Friendly Title</param>
+        /// <param name="displayMessage">User Friendly Title</param>
         /// <param name="errorFieldName">Field/property that is causing this message</param>
         /// <param name="fieldErrorMessage">Error message</param>
-        public JsonResponseDictionary(HttpStatusCode statusCode, string title, string errorFieldName, string fieldErrorMessage)
-        {
-            this.StatusCode = statusCode;
-            this.Title = title;
-
-            this.Errors.Add(errorFieldName, fieldErrorMessage);
+        public ActionResponseDictionary(HttpStatusCode statusCode, string displayMessage, string errorFieldName, string fieldErrorMessage) : base(statusCode, displayMessage, errorFieldName, fieldErrorMessage)
+        {        
+            //nothing
         }
 
         /// <summary>
         /// Create json response based on exception
         /// </summary>
         /// <param name="exception"></param>
-        public JsonResponseDictionary(Exception exception)
+        public ActionResponseDictionary(Exception exception) : base(exception)
         {
-            this.StatusCode = HttpStatusCode.InternalServerError;
-            this.Title = exception.Message;
-            this.ErrorDetails = exception.ToString();            
+            //nothing            
         }
 
         /// <summary>
         /// Create Json Response based on validation results
         /// </summary>
         /// <param name="results">Validation Results</param>
-        public JsonResponseDictionary(ICollection<ValidationResult> results)
+        public ActionResponseDictionary(ICollection<ValidationResult> results) : base(results)
         {
-            if (results == null) { return; }
-            if (results.Count == 0) { return; }
-
-            this.StatusCode = HttpStatusCode.BadRequest;
-            this.Title = "Validation errors occurred.";
-
-            this.Errors = [];
-            foreach (var result in results)
-            {
-                if(result == null) { continue; }
-                this.Errors.Add(string.Join(';', result.MemberNames), result.ErrorMessage ?? string.Empty);
-            }
+            //nothing
         }
 
         /// <summary>
@@ -184,13 +166,13 @@ namespace ThingsLibrary.DataType.Json
         /// </summary>
         /// <param name="validationResults">Validation Results</param>
         /// <param name="statusCode">Status Code to use if validation errors have occured</param>
-        public JsonResponseDictionary(Dictionary<string, string> validationResults, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
+        public ActionResponseDictionary(Dictionary<string, string> validationResults, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
         {
             this.StatusCode = statusCode;
 
             if (validationResults?.Count  > 0) 
             {
-                this.Title = "Validation errors occurred.";
+                this.DisplayMessage = "Validation errors occurred.";
                 this.Errors = validationResults;
             }            
         }        

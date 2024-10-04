@@ -8,8 +8,9 @@
 using ThingsLibrary.DataType.Extensions;
 using ThingsLibrary.DataType.Json.Converters;
 using System.Net;
+using System;
 
-namespace ThingsLibrary.DataType.Json
+namespace ThingsLibrary.DataType
 {
     /// <summary>
     /// Create a standarized error response that can be seen by a user as well as processed by backend systems.
@@ -17,12 +18,11 @@ namespace ThingsLibrary.DataType.Json
     /// <example>
     ///{
     ///    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-    ///    "title": "One or more validation errors occurred.",
+    ///    "message": "One or more validation errors occurred.",
     ///    "status": 400,
     ///    "traceId": "00-4204121a29a8b9a00530169dfcb3994a-4e55e621efeebd22-00",
     ///    "isError": true,
-    ///    "isSuccess": false,
-    ///    "errorMessage": "Division by zero error in queue record 1451",
+    ///    "isSuccess": false,    
     ///    "errors": {
     ///        "Key": [
     ///            "The Key field is required."
@@ -33,27 +33,27 @@ namespace ThingsLibrary.DataType.Json
     ///    }
     ///}
     /// </example>
-    [DisplayName("JsonResponse")]
-    [DebuggerDisplay("StatusCode = {StatusCode}, Title = {Title}")]
-    public class JsonResponse
+    [DisplayName("ActionResponse")]
+    [DebuggerDisplay("StatusCode = {StatusCode}, DisplayMessage = {DisplayMessage}")]
+    public class ActionResponse
     {
         /// <summary>
-        /// Data type of the response
+        /// Data type of the 'data' field if present
         /// </summary>
         [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string Type { get; init; } = string.Empty;
-
-        /// <summary>
-        /// User friendly message of what happened
-        /// </summary>
-        [JsonPropertyName("title"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// Http status code of the response
         /// </summary>
         [JsonPropertyName("status")]
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
+
+        /// <summary>
+        /// User friendly message of what happened
+        /// </summary>
+        [JsonPropertyName("message"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public string DisplayMessage { get; set; } = string.Empty;
 
         /// <summary>
         /// The request trace ID
@@ -69,30 +69,26 @@ namespace ThingsLibrary.DataType.Json
         public string ErrorCode { get; init; } = string.Empty;
 
         /// <summary>
-        /// Error listing with key that could tie to a field on the provided DTO data model
+        /// Error listing with key that could tie to a field on the provided DTO data model (customer/user readible)
         /// </summary>
         [JsonPropertyName("errors"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, string> Errors { get; init; } = []; // new Dictionary<string, string>();
-
+        public Dictionary<string, string> Errors { get; init; } = [];
+                
         /// <summary>
-        /// Error message not meant for the user to see (aka: ex.Message)
+        /// Machine exception details
         /// </summary>
-        [JsonPropertyName("errorMessage"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public string ErrorMessage { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Detailed error details such as stack trace (aka: ex.ToString())
-        /// </summary>
-        [JsonPropertyName("errorDetails"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public string ErrorDetails { get; init; } = string.Empty;
-
+        [JsonPropertyName("exception")]
+        public ActionException? Exception { get; set; }
+        
         /// <summary>
         /// If the response is in a error state
         /// </summary>
         [JsonPropertyName("isError"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]        
         public bool IsError => ((int)this.StatusCode < 200 || (int)this.StatusCode >= 300);
 
-
+        /// <summary>
+        /// Simple check on the response status
+        /// </summary>
         [JsonPropertyName("isSuccess")]
         public bool IsSuccessStatusCode
         {
@@ -102,7 +98,7 @@ namespace ThingsLibrary.DataType.Json
         /// <summary>
         /// Json Response
         /// </summary>
-        public JsonResponse() 
+        public ActionResponse() 
         { 
             //nothing
         }
@@ -111,9 +107,9 @@ namespace ThingsLibrary.DataType.Json
         /// Create Json Response
         /// </summary>        
         /// <param name="title">User Friendly Title</param>
-        public JsonResponse(string title)
+        public ActionResponse(string title)
         {            
-            this.Title = title;
+            this.DisplayMessage = title;
         }
 
         /// <summary>
@@ -121,24 +117,27 @@ namespace ThingsLibrary.DataType.Json
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
         /// <param name="title">User Friendly Title</param>
-        public JsonResponse(HttpStatusCode statusCode, string title, string? errorMessage = null)
+        public ActionResponse(HttpStatusCode statusCode, string displayMessage, string? errorMessage = null)
         {
             this.StatusCode = statusCode;
-            this.Title = title;
-            this.ErrorMessage = errorMessage ?? string.Empty;
+            this.DisplayMessage = displayMessage;
+            if (!string.IsNullOrEmpty(errorMessage))
+            {                
+                this.Exception = new ActionException(errorMessage);
+            }            
         }
 
         /// <summary>
         /// Create a Json Response
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
-        /// <param name="title">User Friendly Title</param>
+        /// <param name="displayMessage">User Friendly Title</param>
         /// <param name="errorFieldName">Field/property that is causing this message</param>
         /// <param name="fieldErrorMessage">Error message</param>
-        public JsonResponse(HttpStatusCode statusCode, string title, string errorFieldName, string fieldErrorMessage)
+        public ActionResponse(HttpStatusCode statusCode, string displayMessage, string errorFieldName, string fieldErrorMessage)
         {
             this.StatusCode = statusCode;
-            this.Title = title;
+            this.DisplayMessage = displayMessage;
 
             this.Errors.Add(errorFieldName, fieldErrorMessage);
         }
@@ -147,31 +146,30 @@ namespace ThingsLibrary.DataType.Json
         /// Create json response based on exception
         /// </summary>
         /// <param name="exception"></param>
-        public JsonResponse(Exception exception)
+        public ActionResponse(Exception exception, string? displayMessage = null)
         {
             this.StatusCode = HttpStatusCode.InternalServerError;
-            this.Title = exception.Message;
-            this.ErrorDetails = exception.ToString();            
+            this.DisplayMessage = (string.IsNullOrEmpty(displayMessage) ? exception.Message : displayMessage);
+            this.Exception = new ActionException(exception);
+            this.Errors.Add("exception", exception.Message);
         }
 
         /// <summary>
         /// Create Json Response based on validation results
         /// </summary>
         /// <param name="results">Validation Results</param>
-        public JsonResponse(ICollection<ValidationResult> results)
+        public ActionResponse(ICollection<ValidationResult> results)
         {
+            if (results == null) { return; }
+            if (results.Count == 0) { return; }
+
             this.StatusCode = HttpStatusCode.BadRequest;
+            this.DisplayMessage = "One or more validation errors occurred.";
 
-            this.Title = "One or more validation errors occurred.";
 
-            if (results.Count > 0)
-            {
-                // show the first error as the main error.                
-                this.Title = results.First().ErrorMessage ?? "Validation Error";
-                
-                this.Errors = new Dictionary<string, string>(results.Count);
-                results.ForEach(result => this.Errors.Add(string.Join(';', result.MemberNames), $"{result.ErrorMessage}"));                
-            }            
-        }
+            // show the first error as the main error.   
+            this.Errors = [];
+            results.ForEach(result => this.Errors.Add(string.Join(';', result.MemberNames), $"{result.ErrorMessage}"));
+        }        
     }
 }

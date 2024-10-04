@@ -67,9 +67,9 @@ namespace ThingsLibrary.Storage.Interfaces
         /// Get Download url
         /// </summary>
         /// <param name="cloudFilePath">Cloud File Path</param>
-        /// <param name="ttlMinutes">Shared token time length in minutes</param>
+        /// <param name="ttlSeconds">Shared token time length in seconds</param>
         /// <returns></returns>
-        public string GetDownloadUrl(string cloudFilePath, double ttlMinutes);
+        public string GetDownloadUrl(string cloudFilePath, double ttlSeconds);
 
         /// <summary>
         /// Get cloud file details for cloud file path

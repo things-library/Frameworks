@@ -6,8 +6,9 @@
 // ================================================================================
 
 using System.Net;
+using ThingsLibrary.DataType.Extensions;
 
-namespace ThingsLibrary.DataType.Json
+namespace ThingsLibrary.DataType
 {
     /// <summary>
     /// Create a standardized error response that can be seen by a user as well as processed by backend systems.
@@ -29,14 +30,14 @@ namespace ThingsLibrary.DataType.Json
     ///    }
     ///}
     /// </example>
-    [DisplayName("JsonResponse")]
-    [DebuggerDisplay("StatusCode = {StatusCode}, Title = {Title}")]
-    public class JsonResponse<TEntity> : JsonResponse
+    [DisplayName("ActionResponse")]
+    [DebuggerDisplay("StatusCode = {StatusCode}, DisplayMessage = {DisplayMessage}")]
+    public class ActionResponse<TEntity> : ActionResponse
     {
         [JsonPropertyName("data")]
         public TEntity? Data { get; set; }
                 
-        public JsonResponse() 
+        public ActionResponse() 
         { 
             //nothing
         }
@@ -45,13 +46,13 @@ namespace ThingsLibrary.DataType.Json
         /// Create Json Response
         /// </summary>
         /// <param name="data">Data</param>        
-        public JsonResponse(TEntity data, string title = "Success")
+        public ActionResponse(TEntity data, string title = "Success")
         {
             var type = typeof(TEntity);
             this.Type = $"{type.Namespace}.{type.Name}";
             
             this.StatusCode = HttpStatusCode.OK;
-            this.Title = title;
+            this.DisplayMessage = title;
 
             this.Data = data;
         }
@@ -61,89 +62,48 @@ namespace ThingsLibrary.DataType.Json
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
         /// <param name="title">User Friendly Title</param>
-        public JsonResponse(HttpStatusCode statusCode, string title, string? errorMessage = null)
+        public ActionResponse(HttpStatusCode statusCode, string displayMessage, string? errorMessage = null) : base(statusCode, displayMessage, errorMessage)
         {
-            this.StatusCode = statusCode;
-            this.Title = title;
-
-            this.ErrorMessage = errorMessage ?? string.Empty;
+            //nothing
         }
 
         /// <summary>
         /// Create a Json Response
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
-        /// <param name="title">User Friendly Title</param>
+        /// <param name="displayMessage">User Friendly Title</param>
         /// <param name="errorFieldName">Field/property that is causing this message</param>
         /// <param name="fieldErrorMessage">Error message</param>
-        public JsonResponse(HttpStatusCode statusCode, string title, string errorFieldName, string fieldErrorMessage)
+        public ActionResponse(HttpStatusCode statusCode, string displayMessage, string errorFieldName, string fieldErrorMessage) : base(statusCode, displayMessage, errorFieldName, fieldErrorMessage)
         {
-            this.StatusCode = statusCode;
-            this.Title = title;
-
-            this.Errors.Add(errorFieldName, fieldErrorMessage);
+            //nothing
         }
 
         /// <summary>
         /// Create json response based on exception
         /// </summary>
         /// <param name="exception"></param>
-        public JsonResponse(Exception exception)
+        public ActionResponse(Exception exception, string? displayMessage = null) : base(exception, displayMessage)
         {
-            this.StatusCode = HttpStatusCode.InternalServerError;
-            this.Title = exception.Message;
-            this.ErrorDetails = exception.ToString();            
+            //nothing
         }
 
         /// <summary>
         /// Create Json Response based on validation results
         /// </summary>
         /// <param name="results">Validation Results</param>
-        public JsonResponse(ICollection<ValidationResult> results)
+        public ActionResponse(ICollection<ValidationResult> results) : base(results)
         {
-            // nothing to see here folks
-            if (results.Count == 0) { return; }
-
-            this.StatusCode = HttpStatusCode.BadRequest;
-            this.Title = "Validation errors occurred.";
-
-            this.Errors = [];
-            foreach (var result in results)
-            {
-                this.Errors.Add(string.Join(';', result.MemberNames), result.ErrorMessage ?? "Validation Error");
-            }
-        }
-
-        /// <summary>
-        /// Create Json Response based on validation results
-        /// </summary>
-        /// <param name="validationResults">Validation Results</param>
-        /// <param name="statusCode">Status Code to use if validation errors have occured</param>
-        public JsonResponse(Dictionary<string, string> validationResults, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
-        {
-            this.StatusCode = statusCode;
-
-            if (validationResults.Count > 0) 
-            {
-                this.Title = "Validation errors occurred.";
-                this.Errors = validationResults;
-            }            
+            //nothing
         }
 
         /// <summary>
         /// Initialize using json response object
         /// </summary>
         /// <param name="jsonResponse"></param>
-        public JsonResponse(JsonResponse jsonResponse)
+        public ActionResponse(ActionResponse jsonResponse)
         {
-            this.Type = jsonResponse.Type;
-            this.StatusCode = jsonResponse.StatusCode;
-            this.Title = jsonResponse.Title;
-
-            this.ErrorDetails = jsonResponse.ErrorDetails;
-            this.Errors = jsonResponse.Errors;
-
-            this.TraceId = jsonResponse.TraceId;
+            jsonResponse.CopyPropertyValues(this);
         }
     }
 }

@@ -198,8 +198,8 @@ namespace ThingsLibrary.Services
                 { "name", MachineMetrics.MachineName() },
                 { "cpu_count", $"{MachineMetrics.CpuCount()}" },
                 { "os_version", MachineMetrics.OsVersion() },
-                { "ip_address", string.Join("; ", MachineMetrics.LocalIPAddresses()) },
-                { "mac_address", string.Join("; ", MachineMetrics.MacAddresses()) },
+                { "ip_address", string.Join(";", MachineMetrics.LocalIPAddresses()) },
+                { "mac_address", string.Join(";", MachineMetrics.MacAddresses()) },
                 { "timezone", TimeZoneInfo.Local.DisplayName }
             });
             rootMetrics.Attach(machineItem);

@@ -7,7 +7,7 @@
 
 namespace ThingsLibrary.DataType
 {
-    [DebuggerDisplay("Title: {Title}, Active: {Active}, Url: {Url}")]
+    [DebuggerDisplay("DisplayMessage: {DisplayMessage}, Active: {Active}, Url: {Url}")]
     public class Breadcrumb
     {
         [JsonPropertyName("title")]

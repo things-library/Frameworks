@@ -5,6 +5,8 @@
 // </copyright>
 // ================================================================================
 
+using ThingsLibrary.Schema.Library.Extensions;
+
 namespace ThingsLibrary.Storage
 {
     public class FileItem : ItemDto, IFileItem
@@ -12,9 +14,6 @@ namespace ThingsLibrary.Storage
         /// <inheritdoc />        
         public string Path => this["resource_key"];
 
-        /// <inheritdoc />
-        public string Name => this.Name;
-        
         /// <inheritdoc />
         public long Size => this.Get<long>("file_size", 0);
 
@@ -60,7 +59,7 @@ namespace ThingsLibrary.Storage
 
         public FileItem(string resourcePath)
         {
-            this.Key = System.IO.Path.GetFileName(resourcePath);
+            this.Key = System.IO.Path.GetFileName(resourcePath).ToKey();
             this.Name = System.IO.Path.GetFileName(resourcePath);
 
             // keep track of the entire resource path
