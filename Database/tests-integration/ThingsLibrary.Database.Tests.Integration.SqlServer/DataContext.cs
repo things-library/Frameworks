@@ -39,8 +39,8 @@ namespace ThingsLibrary.Database.Tests.Integration.SqlServer
         }        
     }
 
-    public static DataContext Create(string connectionString)
-    {
-        return new DataContext(DataContextUtils.Parse<DataContext>(connectionString));
-    }
+    //public static DataContext Create(string connectionString)
+    //{
+    //    return new DataContext(DataContextUtils.Parse<DataContext>(connectionString));
+    //}
 }

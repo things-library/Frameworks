@@ -89,7 +89,7 @@ namespace ThingsLibrary.Storage.Tests.Integration.Base
             var cloudFile = fileStore.GetFile(cloudFilePath);
 
             Assert.AreEqual(md5, cloudFile.ContentMD5);
-            Assert.AreEqual(Path.GetFileName(filePath), cloudFile.FileName);
+            Assert.AreEqual(Path.GetFileName(filePath), cloudFile.Name);
 
             // ======================================================================
             // DOWNLOAD FILE
@@ -144,7 +144,7 @@ namespace ThingsLibrary.Storage.Tests.Integration.Base
             var cloudFile = fileStore.GetFile(cloudFilePath);
 
             Assert.AreEqual(md5, cloudFile.ContentMD5);
-            Assert.AreEqual(Path.GetFileName(filePath), cloudFile.FileName);
+            Assert.AreEqual(Path.GetFileName(filePath), cloudFile.Name);
 
             // ======================================================================
             // DOWNLOAD FILE
