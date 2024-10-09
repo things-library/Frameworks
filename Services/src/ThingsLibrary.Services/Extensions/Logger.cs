@@ -34,7 +34,7 @@ namespace ThingsLibrary.Services.Extensions
                 Log.Warning("Default Serilog Logger Initalized.");
             }
 
-            services.AddLogging(configure => configure.AddSerilog(Log.Logger));
+            services.AddLogging(loggerBuilder => loggerBuilder.AddSerilog(Log.Logger));
 
             // for chaining
             return services;

@@ -9,10 +9,11 @@ using MongoDB.Driver;
 using System.Diagnostics.CodeAnalysis;
 using ThingsLibrary.Database.Tests.Integration.Base;
 using ThingsLibrary.Testing.Attributes;
+using ThingsLibrary.Testing.Environment;
 
 namespace ThingsLibrary.Database.Tests.Integration.Mongo
 {
-    [TestClassIf, IgnoreIf(nameof(DbTestEnvironment.IgnoreTests)), ExcludeFromCodeCoverage]
+    [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
     public class ServerTests
     {    
         public static DatabaseTestingEnvironment DbTestEnvironment { get; set; } = new DatabaseTestingEnvironment();
@@ -21,7 +22,7 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
 
         private static MongoClient? MongoClient { get; set; }
         private static DataContext? DB { get; set; }
-        
+
         // ======================================================================
         // Called once before ALL tests
         // ======================================================================
@@ -30,10 +31,12 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
         {
             await DbTestEnvironment.StartAsync();
 
-            ServerTests.MongoClient = new MongoClient(DbTestEnvironment.ConnectionString);
+            // see if we have any reason to just exit and ignore tests
+            if (DbTestEnvironment.IgnoreTests()) { return; }
 
+            ServerTests.MongoClient = new MongoClient(DbTestEnvironment.ConnectionString);
             ServerTests.DB = DataContext.Create(ServerTests.MongoClient.GetDatabase("testdatabase"));
-            
+
             DbTestEnvironment.DB = ServerTests.DB;
             //DbTestEnvironment.DB.Database.EnsureDeleted();        //clean up for bad run last time (if exists)
             DbTestEnvironment.DB.Database.EnsureCreated();
@@ -47,10 +50,15 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
         {
             await DbTestEnvironment.DisposeAsync();
         }
-        
+
+        public static bool IgnoreTests()
+        {
+            return (DB == null);
+        }
+
         #endregion
 
-        [TestMethod]
+        [TestMethodIf]
         public void Inherited_AddUpdateDelete()
         {
             ArgumentNullException.ThrowIfNull(DB);

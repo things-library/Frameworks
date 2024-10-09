@@ -99,7 +99,6 @@ namespace ThingsLibrary.Testing.Environment
 
         public bool IsDockerRunning()
         {
-
             try
             {
                 var info = new ProcessStartInfo() 
@@ -122,7 +121,25 @@ namespace ThingsLibrary.Testing.Environment
             {
                 return false;
             }
-        }        
+        } 
+        
+        public bool IgnoreTests()
+        {
+            // if we have no connection string we have nothing to test
+            if (string.IsNullOrWhiteSpace(this.ConnectionString))
+            {
+                Console.WriteLine("NO CONNECTION STRING TO USE FOR TESTING.");
+                return true;
+            }
+
+            if (!this.UseExistingContainer && this.TestContainer == null)
+            {
+                Console.WriteLine("NO TEST CONTAINER INITIALIZED TO USE FOR TESTING.");
+                return true;
+            }
+
+            return false;
+        }
 
         #region --- Cleanup / Dispose ---
 

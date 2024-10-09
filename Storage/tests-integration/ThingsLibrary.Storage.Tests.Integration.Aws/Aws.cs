@@ -11,7 +11,7 @@ namespace ThingsLibrary.Storage.Tests.Integration.Aws
 
         #region --- Provider ---
 
-        private static TestEnvironment TestEnvironment { get; set; }
+        private static TestEnvironment TestEnvironment { get; set; } = new TestEnvironment();
 
         // ======================================================================
         // Called once before ALL tests
@@ -19,18 +19,12 @@ namespace ThingsLibrary.Storage.Tests.Integration.Aws
         [ClassInitialize]
         public static async Task ClassInitialize(TestContext testContext)
         {
-            TestEnvironment = new TestEnvironment();
-
-            // if we have no connection string we have nothing to test
-            if (string.IsNullOrWhiteSpace(TestEnvironment.ConnectionString))
-            {
-                Console.WriteLine("NO CONNECTION STRING TO USE FOR TESTING.");
-                return;
-            }
-
             // start test environment
             await TestEnvironment.StartAsync();
 
+            // see if we have any reason to just exit and ignore tests
+            if (TestEnvironment.IgnoreTests()) { return; }
+                        
             // set up the static properties
             FileStore = new Aw.FileStore(TestEnvironment.ConnectionString, BucketName);
         }

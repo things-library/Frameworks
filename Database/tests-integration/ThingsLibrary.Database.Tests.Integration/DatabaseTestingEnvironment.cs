@@ -47,11 +47,6 @@ namespace ThingsLibrary.Database.Tests.Integration
             {
                 await DB.Database.EnsureDeletedAsync();    // deletes the test database
             }
-        }
-
-        public bool IgnoreTests()
-        {
-            return (DB == null);
-        }
+        }        
     }
 }

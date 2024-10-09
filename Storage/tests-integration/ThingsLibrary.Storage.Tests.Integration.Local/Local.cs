@@ -17,8 +17,11 @@
 //        {
 //            var configuration = typeof(LocalTests).GetConfigurationRoot();
 
-//            var connectionString = configuration.GetConnectionString("Local_TestStorage");
-//            if (string.IsNullOrEmpty(connectionString)) { return; }
+//            // start test environment
+//            await TestEnvironment.StartAsync();
+
+//            // see if we have any reason to just exit and ignore tests
+//            if (TestEnvironment.IgnoreTests()) { return; }
 
 //            // set up the static properties
 //            FileStore = new Loc.FileStore(connectionString, BucketName);

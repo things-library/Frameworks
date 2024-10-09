@@ -5,54 +5,67 @@
 // </copyright>
 // ================================================================================
 
-//using System.Diagnostics.CodeAnalysis;
-//using ThingsLibrary.Database.Tests.Integration.Base;
-//using ThingsLibrary.Testing.Attributes;
-//using ThingsLibrary.Testing.Environment;
+using System.Diagnostics.CodeAnalysis;
+using ThingsLibrary.Database.Tests.Integration.Base;
+using ThingsLibrary.Testing.Attributes;
+using ThingsLibrary.Testing.Environment;
 
-//namespace ThingsLibrary.Database.Tests.Integration.SqlServer
-//{
-//    [TestClassIf, IgnoreIf(nameof(Base.ServerTests.IgnoreTests)), ExcludeFromCodeCoverage]
-//    public class ServerTests
-//    {        
-//        #region --- Provider ---
-       
-//        private static DataContext DB { get; set; }
-        
+namespace ThingsLibrary.Database.Tests.Integration.SqlServer
+{
+    [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
+    public class ServerTests
+    {
+        public static DatabaseTestingEnvironment DbTestEnvironment { get; set; } = new DatabaseTestingEnvironment();
 
-//        // ======================================================================
-//        // Called once before ALL tests
-//        // ======================================================================
-//        [ClassInitialize]
-//        public static async Task ClassInitialize(TestContext testContext)
-//        {
-//            await Base.ServerTests.ClassInitialize(testContext);
+        #region --- Provider ---
 
-//            //DB = DataContext.Create(TestEnvironment.ConnectionString);
-//            //DB.Database.EnsureDeleted();        //clean up for bad run last time (if exists)
-//            //DB.Database.EnsureCreated();
-//        }
+        private static DataContext? DB { get; set; }
 
-//        // ======================================================================
-//        // Called once AFTER all tests
-//        // ======================================================================
-//        [ClassCleanup]
-//        public static async Task ClassCleanup()
-//        {
-//            await Base.ServerTests.ClassCleanup();
-//        }
-        
+        // ======================================================================
+        // Called once before ALL tests
+        // ======================================================================
+        [ClassInitialize]
+        public static async Task ClassInitialize(TestContext testContext)
+        {
+            await DbTestEnvironment.StartAsync();
 
-//        #endregion
+            // see if we have any reason to just exit and ignore tests
+            if (DbTestEnvironment.IgnoreTests()) { return; }
 
-//        [TestMethod]
-//        public void Inherited_AddUpdateDelete()
-//        {
-//            var entityTester = new EntityTester<TestData.TestInheritedClass>(DataContext, DataContext.TestInheritedClasses);
 
-//            var expectedData = TestData.TestInheritedClass.GetInherited();
+            ServerTests.DB = DataContext.Create(DbTestEnvironment.ConnectionString);
 
-//            Assert.IsTrue(entityTester.AddUpdateDelete(expectedData));
-//        }
-//    }
-//}
+            DbTestEnvironment.DB = ServerTests.DB;
+            //DbTestEnvironment.DB.Database.EnsureDeleted();        //clean up for bad run last time (if exists)
+            DbTestEnvironment.DB.Database.EnsureCreated();
+        }
+
+        // ======================================================================
+        // Called once AFTER all tests
+        // ======================================================================
+        [ClassCleanup]
+        public static async Task ClassCleanup()
+        {
+            await DbTestEnvironment.DisposeAsync();
+        }
+
+        public static bool IgnoreTests()
+        {
+            return (DB == null);
+        }
+
+        #endregion
+
+        [TestMethodIf]
+        public void Inherited_AddUpdateDelete()
+        {
+            ArgumentNullException.ThrowIfNull(DB);
+
+            var entityTester = new EntityTester<TestData.TestInheritedClass>(DB, DB.TestInheritedClasses);
+
+            var expectedData = TestData.TestInheritedClass.GetInherited();
+
+            Assert.IsTrue(entityTester.AddUpdateDelete(expectedData));
+        }
+    }
+}
