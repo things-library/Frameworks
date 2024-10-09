@@ -1,11 +1,16 @@
-﻿using System.Text.RegularExpressions;
+﻿// ================================================================================
+// <copyright file="FileStore.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using System.Text.RegularExpressions;
 
 using Azure.Storage;
 using Azure.Storage.Sas;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-
-using Serilog;
 
 using ThingsLibrary.Storage.Azure.Extensions;
 
@@ -15,8 +20,8 @@ namespace ThingsLibrary.Storage.Azure
     {        
         #region --- Transfer Events ---
 
-        public event EventHandler<Events.TransferProgressChangedEventArgs> TransferProgressChanged;
-        public event EventHandler<Events.TransferCompleteEventArgs> TransferComplete;
+        public event EventHandler<Events.TransferProgressChangedEventArgs>? TransferProgressChanged;
+        public event EventHandler<Events.TransferCompleteEventArgs>? TransferComplete;
 
         private void OnTransferProgressChanged(long totalBytesTransferred, long totalBytesToTransfer)
         {
@@ -24,19 +29,19 @@ namespace ThingsLibrary.Storage.Azure
             var raiseEvent = this.TransferProgressChanged;
 
             // Event will be null if there are no subscribers
-            if (raiseEvent != null)
+            if (raiseEvent != null && this.TransferProgressChanged != null)
             {
                 this.TransferProgressChanged(this, new Events.TransferProgressChangedEventArgs(totalBytesTransferred, totalBytesToTransfer));
             }
         }
 
-        private void OnTransferComplete(Exception error, bool cancelled)
+        private void OnTransferComplete(Exception? error, bool cancelled)
         {
             // Make a temporary copy of the event to avoid possibility of a race condition if the last subscriber unsubscribes immediately after the null check and before the event is raised.
             var raiseEvent = this.TransferProgressChanged;
 
             // Event will be null if there are no subscribers
-            if (raiseEvent != null)
+            if (raiseEvent != null && this.TransferComplete != null)
             {
                 this.TransferComplete(this, new Events.TransferCompleteEventArgs(error, cancelled));
             }
@@ -48,7 +53,7 @@ namespace ThingsLibrary.Storage.Azure
         // INTERFACE
         // ================================================================================
         /// <inheritdoc/>
-        public string BucketName { get; private set; }
+        public string BucketName { get; private set; } = string.Empty;
 
         /// <inheritdoc/>
         public FileStoreType StorageType { get; init; } = FileStoreType.Azure_Blob;
@@ -117,7 +122,8 @@ namespace ThingsLibrary.Storage.Azure
 
         #region --- File ---
 
-        public IFileItem GetFile(string cloudFilePath)
+        /// <inheritdoc/>
+        public IFileItem? GetFile(string cloudFilePath)
         {
             Log.Debug("Getting File: '{CloudFilePath}'...", cloudFilePath);
 
@@ -129,6 +135,7 @@ namespace ThingsLibrary.Storage.Azure
             return blobClient.ToCloudFile();
         }
 
+        /// <inheritdoc/>
         public IEnumerable<IFileItem> GetFileVersions(string cloudFilePath)
         {
             Log.Debug("Getting File Versions: '{CloudFilePath}'...", cloudFilePath);
@@ -139,22 +146,23 @@ namespace ThingsLibrary.Storage.Azure
             return blobs.Select(x => x.ToCloudFile());            
         }
 
-        public IEnumerable<IFileItem> GetFiles(string cloudFolderPath)
+        /// <inheritdoc/>
+        public IEnumerable<IFileItem> GetFiles(string pathPrefix)
         {
             // tack it on if it is missing
-            if (!string.IsNullOrEmpty(cloudFolderPath) && !cloudFolderPath.EndsWith("/"))
+            if (!string.IsNullOrEmpty(pathPrefix) && !pathPrefix.EndsWith("/"))
             {
-                cloudFolderPath += "/";
+                pathPrefix += "/";
             }
 
-            Log.Debug("Getting Cloud Files For Prefix: '{CloudFolderPath}'...", cloudFolderPath);
+            Log.Debug("Getting Cloud Files For Prefix: '{CloudFolderPath}'...", pathPrefix);
 
-            var blobs = this.AzureContainerClient.GetBlobs(BlobTraits.None, BlobStates.None, cloudFolderPath, this.CancellationToken);
+            var blobs = this.AzureContainerClient.GetBlobs(BlobTraits.None, BlobStates.None, pathPrefix, this.CancellationToken);
 
             return blobs.Select(x => x.ToCloudFile());
         }
-         
 
+        /// <inheritdoc/>
         public void UploadFile(string localFilePath, string cloudFilePath)
         {
             if (!System.IO.File.Exists(localFilePath))
@@ -170,6 +178,7 @@ namespace ThingsLibrary.Storage.Azure
             this.UploadFile(fileStream, cloudFilePath);
         }
 
+        /// <inheritdoc/>
         public void UploadFile(Stream stream, string cloudFilePath)
         {
             var contentLength = stream.Length;
@@ -235,12 +244,7 @@ namespace ThingsLibrary.Storage.Azure
             this.OnTransferComplete(null, false);
         }
 
-        /// <summary>
-        /// Download file to local file
-        /// </summary>
-        /// <param name="cloudFilePath">Cloud File Path</param>
-        /// <param name="localFilePath">Local File Path</param>
-        /// <exception cref="FileNotFoundException">If blob is not found</exception>
+        /// <inheritdoc/>
         public void DownloadFile(string cloudFilePath, string localFilePath)
         {
             // Get a reference to a blob
@@ -253,12 +257,7 @@ namespace ThingsLibrary.Storage.Azure
             blobClient.DownloadTo(localFilePath, this.CancellationToken);
         }
 
-        /// <summary>
-        /// Download file to the provided stream
-        /// </summary>
-        /// <param name="cloudFilePath">Cloud File Path</param>
-        /// <param name="stream">Stream to use</param>
-        /// <exception cref="FileNotFoundException">If no blob is found</exception>
+        /// <inheritdoc/>
         public void DownloadFile(string cloudFilePath, Stream stream)
         {
             // Get a reference to a blob
@@ -293,6 +292,7 @@ namespace ThingsLibrary.Storage.Azure
             this.OnTransferComplete(null, (this.CancellationToken.IsCancellationRequested));           
         }
 
+        /// <inheritdoc/>
         public void DeleteFile(string cloudFilePath)
         {
             Log.Debug("Deleting Cloud File '{cloudFilePath}'...", cloudFilePath);
@@ -303,7 +303,8 @@ namespace ThingsLibrary.Storage.Azure
                 cancellationToken: this.CancellationToken);
         }
 
-        public string GetDownloadUrl(string cloudFilePath, double ttlMinutes)
+        /// <inheritdoc/>
+        public string GetDownloadUrl(string cloudFilePath, double ttlSeconds)
         {
             Log.Debug("Getting cloud file path for '{cloudFilePath}'...", cloudFilePath);
 
@@ -318,7 +319,7 @@ namespace ThingsLibrary.Storage.Azure
                 BlobName = blobClient.Name,
                 Resource = "b",
                 StartsOn = DateTimeOffset.UtcNow.AddMinutes(-1),
-                ExpiresOn = DateTimeOffset.UtcNow.AddMinutes(ttlMinutes)
+                ExpiresOn = DateTimeOffset.UtcNow.AddSeconds(ttlSeconds)
             };
 
             // Specify read permissions for the SAS.

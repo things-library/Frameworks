@@ -9,7 +9,7 @@ namespace ThingsLibrary.Tests.DataType
         [TestMethod]
         public void Constructor()
         {
-            var title = "Test Title";
+            var title = "Test Message";
             var url = "/something/something2";
             var isActive = true;
 

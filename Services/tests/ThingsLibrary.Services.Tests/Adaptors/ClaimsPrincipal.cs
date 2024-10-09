@@ -1,6 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace ThingsLibrary.Services.Tests.Adaptors
 {
-    [TestClass]
+    [TestClass, ExcludeFromCodeCoverage]
     public class ClaimsPrincipalTests
     {
         [TestMethod]

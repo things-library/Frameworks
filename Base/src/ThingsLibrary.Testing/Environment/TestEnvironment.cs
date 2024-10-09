@@ -1,4 +1,13 @@
-﻿namespace ThingsLibrary.Testing.Environment
+﻿// ================================================================================
+// <copyright file="TestEnvironment.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using System.Diagnostics;
+
+namespace ThingsLibrary.Testing.Environment
 {
     public class TestEnvironment
     {
@@ -38,7 +47,7 @@
         {
             // get the configuration information
             this.Configuration = new ConfigurationBuilder()
-               .AddJsonFile("appsettings.json", optional: false)
+               .AddJsonFile("appsettings.json", optional: false)               
                .AddUserSecrets(Assembly.GetCallingAssembly()!)
                .Build();
 
@@ -59,6 +68,13 @@
 
             if (!this.UseExistingContainer && this.ContainerOptions != null)
             {
+                //Check to make sure docker is even running
+                if (!this.IsDockerRunning())
+                {
+                    Console.WriteLine("DOCKER DAEMON NOT RUNNING!");
+                    return;
+                }
+
                 this.TestContainer = this.ContainerOptions
                 .GetContainerBuilder()
                 .Build();
@@ -68,9 +84,9 @@
         /// <summary>
         /// Start Test Environment
         /// </summary>
-        public async Task StartAsync()
+        public virtual async Task StartAsync()
         {            
-            if(this.TestContainer != null && this.UseExistingContainer)
+            if(this.TestContainer != null && !this.UseExistingContainer)
             {
                 Console.Write("Starting docker container...");
                 await this.TestContainer.StartAsync().ConfigureAwait(false);
@@ -81,13 +97,57 @@
             //TODO: do any other test environment things
         }
 
+        public bool IsDockerRunning()
+        {
+            try
+            {
+                var info = new ProcessStartInfo() 
+                {
+                    FileName = "docker", 
+                    Arguments = "ps", 
+                    RedirectStandardOutput = true 
+                };
+                
+                using (var process = Process.Start(info))
+                {                    
+                    if (process is null) { return false; }
+                    process.WaitForExit(TimeSpan.FromSeconds(10));
+
+                    // exit code = 0 is success
+                    return (process.ExitCode == 0);
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        } 
+        
+        public bool IgnoreTests()
+        {
+            // if we have no connection string we have nothing to test
+            if (string.IsNullOrWhiteSpace(this.ConnectionString))
+            {
+                Console.WriteLine("NO CONNECTION STRING TO USE FOR TESTING.");
+                return true;
+            }
+
+            if (!this.UseExistingContainer && this.TestContainer == null)
+            {
+                Console.WriteLine("NO TEST CONTAINER INITIALIZED TO USE FOR TESTING.");
+                return true;
+            }
+
+            return false;
+        }
+
         #region --- Cleanup / Dispose ---
 
         /// <summary>
         /// Clean up our test environment
         /// </summary>
         /// <returns></returns>
-        public async Task DisposeAsync()
+        public virtual async Task DisposeAsync()
         {
             // we already called this
             if (this.IsDisposed) { return; }
@@ -102,6 +162,7 @@
 
             this.IsDisposed = true;
         }
+
 
         public bool IsDisposed { get; set; }
 

@@ -1,4 +1,11 @@
-﻿using ThingsLibrary.DataType;
+﻿// ================================================================================
+// <copyright file="OAuth2Client.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using ThingsLibrary.DataType;
 using ThingsLibrary.DataType.Json;
 using ThingsLibrary.Security.OAuth2.Extensions;
 using System.Text.Json.Serialization.Metadata;
@@ -475,7 +482,7 @@ namespace ThingsLibrary.Security.OAuth2
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<JsonResponse<Dictionary<string, string>>> GetUserInfo(string accessToken)
+        public async Task<ActionResponse<Dictionary<string, string>>> GetUserInfo(string accessToken)
         {
             if (string.IsNullOrEmpty(accessToken)) { throw new ArgumentNullException(accessToken); }
 
@@ -516,7 +523,7 @@ namespace ThingsLibrary.Security.OAuth2
             }
             catch(Exception ex)
             {
-                return new JsonResponse<Dictionary<string, string>>(ex);
+                return new ActionResponse<Dictionary<string, string>>(ex);
             }
         }
 

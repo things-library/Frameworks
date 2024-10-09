@@ -1,4 +1,11 @@
-﻿using System.Runtime.CompilerServices;
+﻿// ================================================================================
+// <copyright file="FileStore.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 using LiteDB;
@@ -121,7 +128,7 @@ namespace ThingsLibrary.Storage.Local
             this.DataCollection = this.DataContext.GetCollection<FileItem>(bucketName);
 
             // make sure we can do quick lookups
-            this.DataCollection.EnsureIndex(x => x.FilePath);
+            this.DataCollection.EnsureIndex(x => x.Path);
 
             // see if we need to populate database
             if (!this.IsDatabasePopulated())
@@ -186,7 +193,7 @@ namespace ThingsLibrary.Storage.Local
 
             var prefix = $"{Path.GetDirectoryName(cloudFilePath)}/~revisions/{Path.GetFileNameWithoutExtension(cloudFilePath)}~Rev";
 
-            return this.DataCollection.Find(x => x.FilePath.StartsWith(prefix));
+            return this.DataCollection.Find(x => x.Path.StartsWith(prefix));
         }
 
         /// <inheritdoc/>
@@ -228,7 +235,7 @@ namespace ThingsLibrary.Storage.Local
             cloudFile = this.GenerateCloudFile(storageFilePath);
 
             //add / update cloud file to database
-            this.DataCollection.Upsert(new BsonValue(cloudFile.FilePath.ToLower()), cloudFile);
+            this.DataCollection.Upsert(new BsonValue(cloudFile.Path.ToLower()), cloudFile);
         }
 
         /// <inheritdoc/>
@@ -243,7 +250,7 @@ namespace ThingsLibrary.Storage.Local
             var cloudFile = this.GetCloudFile(cloudFilePath);
             if (cloudFile == null) { throw new FileNotFoundException(); }
 
-            var storageFilePath = this.GetStorageFilePath(cloudFile.FilePath);
+            var storageFilePath = this.GetStorageFilePath(cloudFile.Path);
 
             System.IO.File.Copy(storageFilePath, localFilePath, true);
         }
@@ -254,7 +261,7 @@ namespace ThingsLibrary.Storage.Local
             var cloudFile = this.GetCloudFile(cloudFilePath);
             if (cloudFile == null) { throw new FileNotFoundException(); }
 
-            var storageFilePath = this.GetStorageFilePath(cloudFile.FilePath);
+            var storageFilePath = this.GetStorageFilePath(cloudFile.Path);
             if (!System.IO.File.Exists(storageFilePath)) { throw new FileNotFoundException($"File not found at: {storageFilePath}"); }
 
             var buffer = new byte[4096];
@@ -282,7 +289,7 @@ namespace ThingsLibrary.Storage.Local
             }
 
             // delete the file
-            var storageFilePath = this.GetStorageFilePath(cloudFile.FilePath);
+            var storageFilePath = this.GetStorageFilePath(cloudFile.Path);
 
             if (System.IO.File.Exists(storageFilePath))
             {
@@ -408,7 +415,7 @@ namespace ThingsLibrary.Storage.Local
             cloudFile = this.GenerateCloudFile(storageFilePath);
 
             //add cloud file to database
-            this.DataCollection.Upsert(new BsonValue(cloudFile.FilePath.ToLower()), cloudFile);            
+            this.DataCollection.Upsert(new BsonValue(cloudFile.Path.ToLower()), cloudFile);            
         }
 
         private string GetOrCreateDatabasePath()
@@ -489,7 +496,7 @@ namespace ThingsLibrary.Storage.Local
         /// <param name="cloudFile">Cloud file we want to create a reivison file of</param>        
         private void CreateRevisionFile(FileItem cloudFile)
         {
-            var storageFilePath = Path.Combine(this.BucketDirectoryPath, cloudFile.FilePath);
+            var storageFilePath = Path.Combine(this.BucketDirectoryPath, cloudFile.Path);
 
             var revisionsFolderPath = this.GetOrCreateRevisionsPath(storageFilePath);
             var revisionFilePath = Path.Combine(revisionsFolderPath, $"{Path.GetFileNameWithoutExtension(storageFilePath)}~Rev{DateTimeOffset.Now.ToUnixTimeSeconds()}{Path.GetExtension(storageFilePath)}");

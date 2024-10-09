@@ -1,4 +1,11 @@
-﻿using System.IO.Compression;
+﻿// ================================================================================
+// <copyright file="Zip.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using System.IO.Compression;
 
 namespace ThingsLibrary.IO.Compression
 {

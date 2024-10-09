@@ -5,6 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<IsPackable>false</IsPackable>
+
+		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -15,16 +17,17 @@
 
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>
+		<UserSecretsId>c322c373-9127-49c0-aaaf-5146d92ac2a2</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />		
 		<PackageReference Include="Serilog" Version="4.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.Base.csproj" />
+	  <ProjectReference Include="..\..\..\Services\src\ThingsLibrary.Services\ThingsLibrary.Services.csproj" />
 	</ItemGroup>
 
 </Project>

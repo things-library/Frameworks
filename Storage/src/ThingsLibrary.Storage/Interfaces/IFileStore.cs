@@ -1,4 +1,11 @@
-﻿namespace ThingsLibrary.Storage.Interfaces
+﻿// ================================================================================
+// <copyright file="IFileStore.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Storage.Interfaces
 {
     public interface IFileStore
     {
@@ -60,9 +67,9 @@
         /// Get Download url
         /// </summary>
         /// <param name="cloudFilePath">Cloud File Path</param>
-        /// <param name="ttlMinutes">Shared token time length in minutes</param>
+        /// <param name="ttlSeconds">Shared token time length in seconds</param>
         /// <returns></returns>
-        public string GetDownloadUrl(string cloudFilePath, double ttlMinutes);
+        public string GetDownloadUrl(string cloudFilePath, double ttlSeconds);
 
         /// <summary>
         /// Get cloud file details for cloud file path
@@ -81,9 +88,9 @@
         /// <summary>
         /// Get Files based on cloud file Path
         /// </summary>
-        /// <param name="cloudFolderPath"></param>
+        /// <param name="pathPrefix">File Path Prefix</param>
         /// <returns></returns>
-        public IEnumerable<IFileItem> GetFiles(string cloudFolderPath);
+        public IEnumerable<IFileItem> GetFiles(string pathPrefix);
 
         /// <summary>
         /// Upload file to path

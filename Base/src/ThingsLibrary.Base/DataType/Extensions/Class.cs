@@ -1,4 +1,11 @@
-﻿using ThingsLibrary.Attributes;
+﻿// ================================================================================
+// <copyright file="Class.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using ThingsLibrary.Attributes;
 using System.Reflection;
 
 namespace ThingsLibrary.DataType.Extensions
@@ -235,6 +242,30 @@ namespace ThingsLibrary.DataType.Extensions
             }
 
             return keyList;
+        }
+
+        /// <summary>
+        /// Copy the public properties of one class object to the other class object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static void CopyPropertyValues<TEntity>(this TEntity source, TEntity target) where TEntity : class
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(target);
+
+            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (property.CanRead && property.CanWrite)
+                {
+                    object? value = property.GetValue(source);
+                    property.SetValue(target, value);
+                }
+            }
         }
 
         /// <summary>

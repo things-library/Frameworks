@@ -10,3 +10,22 @@ This library is the base library that has no dependencies and contains a lot of 
 ## DataType.Json.Schema
 
 This library is focused around providing Json Schema compliant tools.
+
+
+
+## Inheritance Tree
+
+* Schema
+  * Base
+    * Services
+      * Database
+        * Cosmos
+        * Mongo
+        * Postgres
+        * SqlServer
+      * Storage
+        * Azure
+        * AWS
+        * GCP
+        * Local
+    * Testing

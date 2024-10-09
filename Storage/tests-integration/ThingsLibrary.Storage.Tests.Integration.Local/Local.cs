@@ -1,4 +1,11 @@
-﻿//namespace ThingsLibrary.Storage.Tests.Integration.Local
+﻿// ================================================================================
+// <copyright file="Local.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+//namespace ThingsLibrary.Storage.Tests.Integration.Local
 //{
 //    [TestClassIf, IgnoreIf(nameof(IgnoreTests)), ExcludeFromCodeCoverage]
 //    public class LocalTests : Base.IBaseTests
@@ -17,8 +24,11 @@
 //        {
 //            var configuration = typeof(LocalTests).GetConfigurationRoot();
 
-//            var connectionString = configuration.GetConnectionString("Local_TestStorage");
-//            if (string.IsNullOrEmpty(connectionString)) { return; }
+//            // start test environment
+//            await TestEnvironment.StartAsync();
+
+//            // see if we have any reason to just exit and ignore tests
+//            if (TestEnvironment.IgnoreTests()) { return; }
 
 //            // set up the static properties
 //            FileStore = new Loc.FileStore(connectionString, BucketName);

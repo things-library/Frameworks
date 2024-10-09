@@ -1,5 +1,11 @@
-﻿using Azure.Storage.Blobs;
-using ThingsLibrary.Storage.Interfaces;
+﻿// ================================================================================
+// <copyright file="FileStores.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using Azure.Storage.Blobs;
 
 namespace ThingsLibrary.Storage.Azure
 {
