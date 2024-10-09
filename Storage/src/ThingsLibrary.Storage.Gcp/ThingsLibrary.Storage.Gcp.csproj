@@ -5,6 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		
 		<IsPackable>true</IsPackable>
+
+		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -18,7 +20,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Google.Apis.Storage.v1" Version="1.68.0.3518" />
+		<PackageReference Include="Google.Apis.Storage.v1" Version="1.68.0.3554" />
 		<PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />		
 	</ItemGroup>
 
