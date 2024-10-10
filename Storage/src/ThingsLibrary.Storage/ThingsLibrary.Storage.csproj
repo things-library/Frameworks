@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 
-		<IsPackable>false</IsPackable>
+		<IsPackable>true</IsPackable>
 
 		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
 	</PropertyGroup>
@@ -16,8 +16,7 @@
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>
-		<Company>Starlight Software Co.</Company>
-		<UserSecretsId>c322c373-9127-49c0-aaaf-5146d92ac2a2</UserSecretsId>
+		<Company>Starlight Software Co.</Company>		
 	</PropertyGroup>
 
 	<ItemGroup>
