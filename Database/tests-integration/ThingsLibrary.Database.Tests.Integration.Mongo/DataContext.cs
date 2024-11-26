@@ -19,7 +19,7 @@ namespace ThingsLibrary.Database.Tests.Integration.Mongo
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
+            //BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
         }
                 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

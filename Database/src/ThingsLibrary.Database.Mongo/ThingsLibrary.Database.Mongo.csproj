@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>true</IsPackable>
@@ -23,8 +23,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MongoDB.Driver" Version="2.29.0" />
-		<PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.1.1" />
+		<PackageReference Include="MongoDB.Driver" Version="3.0.0" />
+		<PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
