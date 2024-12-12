@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 15
     
     env:      
-      SOLUTION_PATH: './ThingsLibrary.Frameworks.Deploy.sln'
+      SOLUTION_PATH: './ThingsLibrary.Frameworks.sln'
 
     steps:    
     - name: Checkout

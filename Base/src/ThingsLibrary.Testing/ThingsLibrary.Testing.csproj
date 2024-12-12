@@ -12,7 +12,7 @@
 		<PackageDescription>Things Library testing framework libraries and wrappers.</PackageDescription>
 		
 		<ProductName>ThingsLibrary.Testing</ProductName>
-		<Title>Testing Library</Title>
+		<Title>Things Library Testing Framework Library</Title>		
 		<Description>This is the testing library that adds test container capabilities</Description>
 
 		<Authors>Mark Lanning</Authors>
@@ -29,7 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ThingsLibrary.Base\ThingsLibrary.Base.csproj" />
+	  <ProjectReference Include="..\ThingsLibrary.Base\ThingsLibrary.csproj" />
 	</ItemGroup>
 
 </Project>

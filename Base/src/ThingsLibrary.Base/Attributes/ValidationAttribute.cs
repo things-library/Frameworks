@@ -27,7 +27,7 @@ namespace ThingsLibrary.Attributes
                     }
                     else
                     {
-                        return new ValidationResult($"The {validationContext.MemberName} field is required.", new List<string> { validationContext.MemberName });
+                        return new ValidationResult($"The {validationContext.MemberName} field is required.", [validationContext.MemberName]);
                     }
                 }
                 else
@@ -66,7 +66,7 @@ namespace ThingsLibrary.Attributes
 
             if (instance == null)
             {
-                var propertyInfo = validationContext.ObjectType.GetProperty(validationContext.MemberName);
+                var propertyInfo = validationContext.ObjectType.GetProperty(validationContext.MemberName ?? string.Empty);
                 if (propertyInfo != null)
                 {
                     var isNullable = propertyInfo.CustomAttributes.Any(x => x.AttributeType.Name == "NullableAttribute");
@@ -76,7 +76,7 @@ namespace ThingsLibrary.Attributes
                     }
                     else
                     {
-                        return new ValidationResult($"The {validationContext.MemberName} field is required.", new List<string> { validationContext.MemberName });
+                        return new ValidationResult($"The {validationContext.MemberName} field is required.", [validationContext.MemberName ?? "(NULL)"]);
                     }
                 }
                 else
@@ -90,6 +90,9 @@ namespace ThingsLibrary.Attributes
             {
                 foreach (var keyPair in dictionary)
                 {
+                    // nothing to validate?
+                    if(keyPair.Value is null) { continue; }
+
                     var subResults = new List<ValidationResult>();
                     var context = new ValidationContext(keyPair.Value, null, null);
 
@@ -97,7 +100,7 @@ namespace ThingsLibrary.Attributes
 
                     if (subResults.Any())
                     {
-                        var compositeResult = new CompositeValidationResult($"Validation for {validationContext.DisplayName}[{keyPair.Key}] failed!", new List<string> { $"{validationContext.MemberName}[{keyPair.Key}]" });
+                        var compositeResult = new CompositeValidationResult($"Validation for {validationContext.DisplayName}[{keyPair.Key}] failed!", [$"{validationContext.MemberName}[{keyPair.Key}]"]);
                         subResults.ForEach(compositeResult.AddResult);
 
                         results.Add(compositeResult);
@@ -109,6 +112,8 @@ namespace ThingsLibrary.Attributes
                 int i = 0;
                 foreach (var item in list)
                 {
+                    if(item is null) { continue; }
+
                     var subResults = new List<ValidationResult>();
                     var context = new ValidationContext(item, null, null);
 
@@ -116,7 +121,7 @@ namespace ThingsLibrary.Attributes
 
                     if (subResults.Any())
                     {
-                        var compositeResult = new CompositeValidationResult($"Validation for {validationContext.DisplayName}[{i}] failed!", new List<string> { $"{validationContext.MemberName}[{i}]" });
+                        var compositeResult = new CompositeValidationResult($"Validation for {validationContext.DisplayName}[{i}] failed!", [$"{validationContext.MemberName}[{i}]"]);
                         subResults.ForEach(compositeResult.AddResult);
 
                         results.Add(compositeResult);
@@ -137,7 +142,7 @@ namespace ThingsLibrary.Attributes
 
                 if (subResults.Any())
                 {
-                    var compositeResult = new CompositeValidationResult($"Validation for {validationContext.DisplayName} failed!", new List<string> { validationContext.MemberName });
+                    var compositeResult = new CompositeValidationResult($"Validation for {validationContext.DisplayName} failed!", [$"{validationContext.MemberName}"]);
                     subResults.ForEach(compositeResult.AddResult);
 
                     results.Add(compositeResult);
@@ -146,7 +151,7 @@ namespace ThingsLibrary.Attributes
 
             if (results.Any())
             {
-                var compositeResults = new CompositeValidationResult($"Validation for {validationContext.DisplayName} failed!", new List<string> { validationContext.MemberName });
+                var compositeResults = new CompositeValidationResult($"Validation for {validationContext.DisplayName} failed!", [$"{validationContext.MemberName}"]);
                 results.ForEach(compositeResults.AddResult);
 
                 return compositeResults;

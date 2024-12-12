@@ -8,19 +8,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>ThingsLibrary.Base</PackageId>
-		<PackageDescription>Things Library base framework libraries and wrappers.</PackageDescription>
+		<PackageId>ThingsLibrary.Core</PackageId>
+		<PackageDescription>Things Library core framework libraries and wrappers.</PackageDescription>
 
 		<ProductName>ThingsLibrary.Base</ProductName>
-		<Title>Things Library Base Framework Library</Title>
+		<Title>Things Library Core Framework Library</Title>
 		<Description>This is the common base foundational library.</Description>
 
 		<Authors>Mark Lanning</Authors>
-		<Company>Starlight Software Co.</Company>
-		<RepositoryUrl></RepositoryUrl>
+		<Company>Starlight Software Co.</Company>		
 	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="ThingsLibrary.Schema.Library" Version="0.2.8" />
-	</ItemGroup>
 </Project>

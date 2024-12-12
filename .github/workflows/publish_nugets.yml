@@ -18,7 +18,7 @@ jobs:
       id-token: write
 
     env:      
-      SOLUTION_PATH: './ThingsLibrary.Frameworks.Deploy.sln'
+      SOLUTION_PATH: './ThingsLibrary.Frameworks.sln'
 
     steps:    
     - name: Checkout

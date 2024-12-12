@@ -23,7 +23,7 @@ namespace ThingsLibrary
         public static T GetDefault<T>()
         {
             var defaultValue = GetDefault(typeof(T));
-            if(defaultValue == null) { return default(T); }
+            if(defaultValue == null) { return default; }
 
             return (T)defaultValue;
         }

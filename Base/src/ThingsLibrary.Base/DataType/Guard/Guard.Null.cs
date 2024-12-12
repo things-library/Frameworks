@@ -42,8 +42,7 @@ namespace ThingsLibrary.DataType
         /// <param name="exceptionMessage">The exception message.</param>
         /// <typeparam name="TType">The type.</typeparam>
         /// <returns>An instance of the <see cref="ArgumentInfo{TType}" /> struct.</returns>
-        /// <exception cref="ArgumentException">Thrown when the condition is not met.</exception>
-        [MemberNotNull(nameof(argument.Value))]
+        /// <exception cref="ArgumentException">Thrown when the condition is not met.</exception>        
         public static ref readonly ArgumentInfo<TType> NotNull<TType>(in this ArgumentInfo<TType> argument, string? exceptionMessage = null) where TType : class
         {
             if (argument.HasValue())

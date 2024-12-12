@@ -5,7 +5,7 @@
 // </copyright>
 // ================================================================================
 
-using ThingsLibrary.Schema.Library.Extensions;
+using ThingsLibrary.DataType.Extensions;
 
 namespace ThingsLibrary.DataType.Events
 {

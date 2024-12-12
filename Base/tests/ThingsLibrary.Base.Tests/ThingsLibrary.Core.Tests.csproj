@@ -38,7 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\ThingsLibrary.Base\ThingsLibrary.Base.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
 	</ItemGroup>
 
 </Project>

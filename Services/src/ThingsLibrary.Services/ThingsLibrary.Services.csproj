@@ -4,7 +4,7 @@
 		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-
+		<IsPackable>true</IsPackable>
 		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
 	</PropertyGroup>
 
@@ -31,11 +31,12 @@
 				
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />				
 		<PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />		
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+		<PackageReference Include="ThingsLibrary.Schema.Library" Version="0.2.8" />		
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.Base.csproj" />
+	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
 	</ItemGroup>
 
 </Project>

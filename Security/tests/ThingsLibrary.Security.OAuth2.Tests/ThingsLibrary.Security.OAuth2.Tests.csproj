@@ -30,29 +30,4 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\ThingsLibrary.Security.OAuth2\ThingsLibrary.Security.OAuth2.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="C:\Users\MLanning\.nuget\packages\mstest.testadapter\3.1.1\build\net6.0\\Microsoft.TestPlatform.AdapterUtilities.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="C:\Users\MLanning\.nuget\packages\mstest.testadapter\3.1.1\build\net6.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="C:\Users\MLanning\.nuget\packages\mstest.testadapter\3.1.1\build\net6.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="C:\Users\MLanning\.nuget\packages\mstest.testadapter\3.1.1\build\net6.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="C:\Users\MLanning\.nuget\packages\mstest.testadapter\3.1.1\build\net6.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="C:\Users\MLanning\.nuget\packages\mstest.testadapter\3.1.1\build\net6.0\\Microsoft.TestPlatform.AdapterUtilities.dll" />
-	</ItemGroup>
-
 </Project>

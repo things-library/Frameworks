@@ -48,7 +48,7 @@ namespace ThingsLibrary.DataType.Json.Converters
             JsonSerializer.Serialize(writer, (IDictionary<string, object>)value, options);
         }
 
-        private object ExtractValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
+        private object? ExtractValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
@@ -83,7 +83,10 @@ namespace ThingsLibrary.DataType.Json.Converters
                         var list = new List<object>();
                         while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                         {
-                            list.Add(ExtractValue(ref reader, options));
+                            var value = ExtractValue(ref reader, options);
+                            if(value == null) { continue; }
+
+                            list.Add(value);
                         }
                         return list;
                     }
