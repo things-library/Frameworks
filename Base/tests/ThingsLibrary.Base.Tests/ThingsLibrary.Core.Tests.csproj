@@ -10,9 +10,9 @@
 	</PropertyGroup>
 	
 	<PropertyGroup>
-		<ProductName>ThingsLibrary.Base.Tests</ProductName>
-		<Title>Base Tests</Title>
-		<Description>This is the base tests project</Description>
+		<ProductName>ThingsLibrary.Core.Tests</ProductName>
+		<Title>Core Tests</Title>
+		<Description>This is the core tests project</Description>
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>
 		<Copyright>1998</Copyright>
@@ -29,8 +29,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-		<PackageReference Include="MSTest.TestAdapter" Version="3.6.3" />
-		<PackageReference Include="MSTest.TestFramework" Version="3.6.3" />
+		<PackageReference Include="MSTest.TestAdapter" Version="3.6.4" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.6.4" />
 		<PackageReference Include="coverlet.collector" Version="6.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

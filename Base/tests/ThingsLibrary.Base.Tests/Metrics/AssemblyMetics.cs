@@ -47,11 +47,11 @@ namespace ThingsLibrary.Tests.Metrics
             //	<Company>Services</Company>
             //  <Copyright>2022</Copyright>
             //</PropertyGroup>
-            Assert.AreEqual("ThingsLibrary.Base.Tests", metrics.ProductName());
-            Assert.AreEqual("ThingsLibrary.Base.Tests", metrics.Name());
+            Assert.AreEqual("ThingsLibrary.Core.Tests", metrics.ProductName());
+            Assert.AreEqual("ThingsLibrary.Core.Tests", metrics.Name());
             Assert.AreEqual(assembly.GetCustomAttribute<AssemblyTitleAttribute>()?.Title, metrics.Title());
             //Assert.AreEqual("Base Tests", metrics.Title());   //for some reason assembly picks up productname as also title
-            Assert.AreEqual("This is the base tests project", metrics.Description());
+            Assert.AreEqual("This is the core tests project", metrics.Description());
             Assert.AreEqual(assembly.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company, metrics.Company());
             Assert.AreEqual("1998", metrics.Copyright());
 
