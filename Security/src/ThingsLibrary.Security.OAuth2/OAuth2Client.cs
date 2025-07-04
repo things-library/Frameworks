@@ -5,11 +5,6 @@
 // </copyright>
 // ================================================================================
 
-using ThingsLibrary.DataType;
-using ThingsLibrary.DataType.Json;
-using ThingsLibrary.Security.OAuth2.Extensions;
-using System.Text.Json.Serialization.Metadata;
-
 namespace ThingsLibrary.Security.OAuth2
 {
     /// <summary>
@@ -248,7 +243,7 @@ namespace ThingsLibrary.Security.OAuth2
             try
             {
                 config = await configurationManager.GetConfigurationAsync(CancellationToken.None);
-                //this.SaveLoadOpenIdConnectConfiguration(config);
+                //this.SaveOpenIdConnectConfiguration(config);
             }
             catch
             {
@@ -275,7 +270,7 @@ namespace ThingsLibrary.Security.OAuth2
             return JsonSerializer.Deserialize<OpenIdConnectConfiguration>(fileData) ?? throw new ArgumentException($"Unable to deserialize OIDC backup copy."); 
         }
 
-        private void SaveLoadOpenIdConnectConfiguration(OpenIdConnectConfiguration config)
+        private void SaveOpenIdConnectConfiguration(OpenIdConnectConfiguration config)
         {
             try
             {
@@ -680,7 +675,7 @@ namespace ThingsLibrary.Security.OAuth2
 
             using (var client = new HttpClient())
             {
-                var response = client.Send(request);
+                var response = await client.SendAsync(request);
 
                 var json = await response.Content.ReadAsStringAsync();
 

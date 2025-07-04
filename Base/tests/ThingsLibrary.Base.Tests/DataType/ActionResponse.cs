@@ -13,7 +13,7 @@ namespace ThingsLibrary.Base.Tests.DataType
                 StatusCode = System.Net.HttpStatusCode.Created,
                 TraceId = "TraceId",
 
-                ErrorCode = "Error.Missing.Something",
+                EventCode = "Error.Missing.Something",
                 Errors = new Dictionary<string, string>
                 {
                     { "Bad1", "Bad Something" },
@@ -27,7 +27,7 @@ namespace ThingsLibrary.Base.Tests.DataType
             Assert.AreEqual("Display Message", response.DisplayMessage);
             Assert.AreEqual(System.Net.HttpStatusCode.Created, response.StatusCode);
             Assert.AreEqual("TraceId", response.TraceId);
-            Assert.AreEqual("Error.Missing.Something", response.ErrorCode);
+            Assert.AreEqual("Error.Missing.Something", response.EventCode);
 
             Assert.AreEqual("Bad1", response.Errors.First().Key);
         }

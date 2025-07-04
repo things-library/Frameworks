@@ -16,6 +16,9 @@
 		<Description>This is the common base foundational library.</Description>
 
 		<Authors>Mark Lanning</Authors>
-		<Company>Starlight Software Co.</Company>		
+		<Company>Starlight Software Co.</Company>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
 	</PropertyGroup>
 </Project>

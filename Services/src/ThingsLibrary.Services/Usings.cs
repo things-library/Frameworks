@@ -32,3 +32,4 @@ global using ThingsLibrary.DataType.Extensions;
 global using ThingsLibrary.Services.Extensions;
 
 global using ThingsLibrary.Schema.Library;
+global using ThingsLibrary.Schema.Library.Base;

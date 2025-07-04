@@ -6,7 +6,6 @@
 // ================================================================================
 
 using ThingsLibrary.Metrics;
-using ThingsLibrary.Schema.Library.Extensions;
 
 namespace ThingsLibrary.Services
 {
@@ -46,7 +45,7 @@ namespace ThingsLibrary.Services
         /// <summary>
         /// Service Canvas
         /// </summary>
-        public ItemDto Canvas { get; set; } = new ItemDto();
+        public Schema.Canvas.CanvasRoot? Canvas { get; set; }
 
         /// <summary>
         /// Debugging / Development State
@@ -139,13 +138,13 @@ namespace ThingsLibrary.Services
         /// <summary>
         /// Instance metrics
         /// </summary>
-        public ItemDto Metrics
+        public RootItemDto Metrics
         {
             get => this.GetMetrics();            
         }
-        private ItemDto? _metrics;
+        private RootItemDto? _metrics;
 
-        public ItemDto GetMetrics(int ttl = 30)
+        public RootItemDto GetMetrics(int ttl = 30)
         {
             // limit the speed to which we can call memory snapshots            
             if (_metrics != null)
@@ -153,56 +152,74 @@ namespace ThingsLibrary.Services
                 var lastRefreshOn = _metrics.Date ?? default;
                 if (_metrics.Date > DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(ttl)))
                 {
-                    _metrics["CacheTTL"] = DateTimeOffset.UtcNow.Subtract(lastRefreshOn.AddSeconds(ttl)).ToClock();
+                    _metrics.Tags["CacheTTL"] = DateTimeOffset.UtcNow.Subtract(lastRefreshOn.AddSeconds(ttl)).ToClock();
 
                     return _metrics;
                 }
             }
 
-            var rootMetrics = new ItemDto("instance", this.InstanceId.ToString(), $"instance_{this.InstanceId}".ToKey());
-            rootMetrics.Add(new Dictionary<string, string>()
+            var rootMetrics = new RootItemDto
             {
-                // APP Metrics
-                { "instance_id", $"{this.InstanceId}" },
-                { "app_name", this.Name },
-                { "app_containerized", $"{this.IsContainer}" },
+                Key = $"{this.InstanceId}",
+                Type = "instance",
+                Name = this.InstanceId.ToString(),                
 
-                // Host Environment                
-                { "debugger", $"{this.IsDebug}" },
-                { "dotnet_framework", this.Assembly.NetFrameworkVersion() },
-            });
+                Tags = new Dictionary<string, string>
+                {
+                    // APP Metrics
+                    { "instance_id", $"{this.InstanceId}" },
+                    { "app_name", this.Name },
+                    { "app_containerized", $"{this.IsContainer}" },
+
+                    // Host Environment                
+                    { "debugger", $"{this.IsDebug}" },
+                    { "dotnet_framework", this.Assembly.NetFrameworkVersion() },
+                }
+            };            
 
             //assembly metrics
-            var assemblyItem = new ItemDto("assembly", this.Assembly.Name(), this.Assembly.Namespace().ToKey());
-            assemblyItem.Add(new Dictionary<string, string>()
+            var assemblyItem = new RootItemDto
             {
-                { "name", this.Assembly.Name()},
-                { "namespace", this.Assembly.Namespace()},
-                { "version", this.Assembly.Version()},
-                { "file_version", this.Assembly.FileVersionStr()},
-                { "date", $"{this.Assembly.CreatedOn()} ({this.Assembly.CreatedOn().ToHHMMSS(true)})"},
-                { "product", this.Assembly.ProductName()},
-                { "company", this.Assembly.Company()},
-                { "description", this.Assembly.Description()},
-                { "copyright", this.Assembly.Copyright()},
-                { "path", this.Assembly.Path()},
-                { "data_path", this.Assembly.AppDataPath()},
-                { "temp_path", this.Assembly.TempDirectoryPath()}
-            });
-            rootMetrics.Attach(assemblyItem);
+                Key = "assembly",
+                Type = "assembly",
+                Name = this.Assembly.Name(),                
+
+                Tags = new Dictionary<string, string>()
+                {
+                    { "name", this.Assembly.Name()},
+                    { "namespace", this.Assembly.Namespace()},
+                    { "version", this.Assembly.Version()},
+                    { "file_version", this.Assembly.FileVersionStr()},
+                    { "date", $"{this.Assembly.CreatedOn()} ({this.Assembly.CreatedOn().ToHHMMSS(true)})"},
+                    { "product", this.Assembly.ProductName()},
+                    { "company", this.Assembly.Company()},
+                    { "description", this.Assembly.Description()},
+                    { "copyright", this.Assembly.Copyright()},
+                    { "path", this.Assembly.Path()},
+                    { "data_path", this.Assembly.AppDataPath()},
+                    { "temp_path", this.Assembly.TempDirectoryPath()}
+                }
+            };
+            rootMetrics.Items.Add(assemblyItem.Key, assemblyItem);
 
             // machine metrics
-            var machineItem = new ItemDto("machine", MachineMetrics.MachineName(), MachineMetrics.MachineName().ToKey());
-            machineItem.Add(new Dictionary<string, string>()
+            var machineItem = new RootItemDto
             {
-                { "name", MachineMetrics.MachineName() },
-                { "cpu_count", $"{MachineMetrics.CpuCount()}" },
-                { "os_version", MachineMetrics.OsVersion() },
-                { "ip_address", string.Join(";", MachineMetrics.LocalIPAddresses()) },
-                { "mac_address", string.Join(";", MachineMetrics.MacAddresses()) },
-                { "timezone", TimeZoneInfo.Local.DisplayName }
-            });
-            rootMetrics.Attach(machineItem);
+                Key = "machine",
+                Type = "machine",
+                Name = MachineMetrics.MachineName(),
+
+                Tags = new Dictionary<string, string>()
+                {
+                    { "name", MachineMetrics.MachineName() },
+                    { "cpu_count", $"{MachineMetrics.CpuCount()}" },
+                    { "os_version", MachineMetrics.OsVersion() },
+                    { "ip_address", string.Join(";", MachineMetrics.LocalIPAddresses()) },
+                    { "mac_address", string.Join(";", MachineMetrics.MacAddresses()) },
+                    { "timezone", TimeZoneInfo.Local.DisplayName }
+                }
+            };            
+            rootMetrics.Items.Add(machineItem.Key, machineItem);
 
             _metrics = rootMetrics;
 
@@ -216,18 +233,18 @@ namespace ThingsLibrary.Services
         /// <summary>
         /// Heartbeat related metrics
         /// </summary>
-        public ItemDto LastHeartbeat
+        public RootItemDto LastHeartbeat
         {
             get => this.GetHeartbeatMetrics();
         }
-        private ItemDto? _lastHeartbeat;
+        private RootItemDto? _lastHeartbeat;
 
         /// <summary>
         /// Gets constantly changing metrics about the application
         /// </summary>
         /// <param name="ttl">Time to live (seconds)</param>
         /// <returns></returns>
-        public ItemDto GetHeartbeatMetrics(int ttl = 30)
+        public RootItemDto GetHeartbeatMetrics(int ttl = 30)
         {
             // limit the speed to which we can call memory snapshots            
             if (_lastHeartbeat != null)
@@ -235,7 +252,7 @@ namespace ThingsLibrary.Services
                 var lastRefreshOn = _lastHeartbeat.Date ?? DateTimeOffset.Now;
                 if (lastRefreshOn > DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(ttl)))
                 {
-                    _lastHeartbeat["cache_ttl"] = DateTimeOffset.UtcNow.Subtract(lastRefreshOn.AddSeconds(ttl)).ToClock();
+                    _lastHeartbeat.Tags["cache_ttl"] = DateTimeOffset.UtcNow.Subtract(lastRefreshOn.AddSeconds(ttl)).ToClock();
 
                     return _lastHeartbeat;
                 }
@@ -247,22 +264,29 @@ namespace ThingsLibrary.Services
             var dateTime = DateTimeOffset.UtcNow;
 
             // since we are going to the trouble keep track of it
-            var memoryItem = new ItemDto("instance_hb", "Instance Heartbeat", $"hb_{dateTime.ToUnixTimeSeconds}") { Date = DateTime.Now };
+            var memoryItem = new RootItemDto
+            {
+                Key = $"hb_{dateTime.ToUnixTimeSeconds()}",
 
-            memoryItem.Add(new Dictionary<string, string>()
-            {       
-                // machine metrics
-                { "memory_process_used", $"{MachineMetrics.ProcessUsedMemoryKB}"},
-                { "harddrive_available", $"{MachineMetrics.GetAvailableHardDriveSpaceKB()}" },
+                Type = "instance_hb",
+                Name = "Instance Heartbeat",
+                Date = DateTime.Now,
+
+                Tags = new Dictionary<string, string>()
+                {       
+                    // machine metrics
+                    { "memory_process_used", $"{MachineMetrics.ProcessUsedMemoryKB}"},
+                    { "harddrive_available", $"{MachineMetrics.GetAvailableHardDriveSpaceKB()}" },
                     
-                // memory metrics
-                { "memory_available", $"{memory?.AvailableKB}" },
-                { "memory_available_percent", $"{(memory != null ? System.Math.Round(memory.AvailablePercent * 100, 1) : "")}"},
-                { "memory_used", $"{memory?.UsedKB}"},
-                { "memory_used_percent", $"{(memory != null ? System.Math.Round(memory.UsedPercent * 100, 1) : "")}"}                
-            });
+                    // memory metrics
+                    { "memory_available", $"{memory?.AvailableKB}" },
+                    { "memory_available_percent", $"{(memory != null ? System.Math.Round(memory.AvailablePercent * 100, 1) : "")}"},
+                    { "memory_used", $"{memory?.UsedKB}"},
+                    { "memory_used_percent", $"{(memory != null ? System.Math.Round(memory.UsedPercent * 100, 1) : "")}"}
+                }
+            };
 
-            memoryItem["cache_ttl"] = DateTimeOffset.UtcNow.Subtract(memoryItem.Date.Value.AddSeconds(ttl)).ToClock();
+            memoryItem.Tags["cache_ttl"] = DateTimeOffset.UtcNow.Subtract(memoryItem.Date.Value.AddSeconds(ttl)).ToClock();
 
             _lastHeartbeat = memoryItem;
 
@@ -277,27 +301,24 @@ namespace ThingsLibrary.Services
         /// <returns></returns>
         public string AgentString()
         {
-            return $"{this.Name}/{this.Version} ({this.Id}; {ThingsLibrary.Metrics.MachineMetrics.OsVersion()})";
+            return $"{this.Name}/{this.Version} ({this.Id}; {MachineMetrics.OsVersion()})";
         }
 
-        ///// <summary>
-        ///// Get the instance status details
-        ///// </summary>
-        ///// <returns></returns>
-        //public Contracts.ServiceStatusDto GetInstanceStatus()
-        //{
-        //    return new Contracts.ServiceStatusDto()
-        //    {
-        //        Instance = App.Service.GetMetrics(),
-        //        Heartbeat = App.Service.GetHeartbeatMetrics(),
+        /// <summary>
+        /// Get the instance status details
+        /// </summary>
+        /// <returns></returns>
+        public RootItemDto GetInstanceStatus()
+        {
+            var itemDto = App.Service.GetMetrics();
 
-        //        Metadata = new Dictionary<string, string>
-        //            {
-        //                { "TimeNow", DateTimeOffset.Now.ToString("O") },
-        //                { "TimeUtcNow", DateTimeOffset.UtcNow.ToString("O") },
-        //            }
-        //    };
-        //}
+            itemDto.Items.Add("instance_hb", App.Service.GetHeartbeatMetrics());
+
+            itemDto.Meta["TimeNow"] = DateTimeOffset.Now.ToString("O");
+            itemDto.Meta["TimeUtcNow"] = DateTimeOffset.UtcNow.ToString("O");
+
+            return itemDto;
+        }
 
         ///// <summary>
         ///// Get the whoami details from the claims principal
@@ -383,8 +404,10 @@ namespace ThingsLibrary.Services
                 id = SequentialGuid.NewGuid();
                 var fileData = JsonSerializer.Serialize(new { id = id });
 
+                var folderPath = Path.GetDirectoryName(filePath) ?? throw new ArgumentException($"Unable to get directory path from '{filePath}'");
+
                 Log.Information("= Instance Id: {AppInstanceId} (creating)", id);
-                IO.Directory.VerifyPath(Path.GetDirectoryName(filePath));
+                IO.Directory.VerifyPath(folderPath);
 
                 // save out the file                 
                 File.WriteAllText(filePath, fileData);

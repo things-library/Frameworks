@@ -14,6 +14,7 @@ global using System.Net;
 
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
+global using System.Text.Json.Serialization.Metadata;
 
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Security.Claims;
@@ -21,3 +22,10 @@ global using System.Security.Claims;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.IdentityModel.Protocols;
 global using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+
+
+// ================================================================================
+// LOCAL 
+// ================================================================================
+global using ThingsLibrary.DataType;
+global using ThingsLibrary.Security.OAuth2.Extensions;

@@ -18,14 +18,18 @@ namespace ThingsLibrary.Services
     /// The core configure sections can be overridden to override the base configuration or add to.
     /// </summary>
     public abstract class Startup
-    {
+    {        
         /// <summary>
         /// Web Application Builder
         /// </summary>
-        public IHostBuilder Builder { get; init; }
+        private IHostBuilder Builder { get; init; }
 
-        public IServiceProvider Services { get; set; }
-                
+        /// <summary>
+        /// App Duration Stopwatch
+        /// </summary>
+        public Stopwatch AppWatch { get; init; } = Stopwatch.StartNew();
+
+
         public Startup()
         {
             // so we always have a logger running from as soon as possible
@@ -68,7 +72,7 @@ namespace ThingsLibrary.Services
                 services.AddSeriLogging(context.Configuration);
 
                 // Register the service canvas singletons and as a static instance
-                context.AddServiceCanvas(services);
+                services.AddServiceCanvas(context.Configuration);
 
                 Log.Debug("");
                 Log.Debug("======================================================================");
@@ -89,8 +93,7 @@ namespace ThingsLibrary.Services
             Log.Information("BUILD");
             Log.Debug("======================================================================");
             var host = this.Builder.Build();
-            this.Services = host.Services;
-
+            
             Log.Debug("");
             Log.Debug("======================================================================");
             Log.Information("CONFIGURE");
@@ -100,8 +103,8 @@ namespace ThingsLibrary.Services
             Log.Debug("");
             Log.Debug("======================================================================");
             Log.Information("PRE-LAUNCH CHECKS");
-            Log.Debug("======================================================================");
-            this.PreChecks();
+            Log.Debug("======================================================================");            
+            this.PreChecks(host.Services);
 
             // okay, we are good to go if we made it here
             Log.Information("App Ready!");
@@ -159,9 +162,9 @@ namespace ThingsLibrary.Services
         /// - Health Checks ('live' probe)
         /// - Database Migrations Check (if Db dependency)
         /// </remarks>
-        public virtual void PreChecks()
+        public virtual void PreChecks(IServiceProvider services)
         {
-            this.Services.CheckHealth();
+            services.CheckHealth();
         }
 
 

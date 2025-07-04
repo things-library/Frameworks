@@ -20,8 +20,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Google.Apis.Storage.v1" Version="1.68.0.3627" />
-		<PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />		
+		<PackageReference Include="Google.Apis.Storage.v1" Version="1.70.0.3808" />
+		<PackageReference Include="Google.Cloud.Storage.V1" Version="4.13.0" />		
 	</ItemGroup>
 
 	<ItemGroup>

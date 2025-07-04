@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Entity.Mongo</PackageId>
+		<ProductName>ThingsLibrary.Entity.Mongo</ProductName>
+		<Title>Cloud Entity Framework Library</Title>
+		<Description>This is the shared library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/starlight-software-co/Frameworks</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>	  
+		<PackageReference Include="MongoDB.EntityFrameworkCore" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Entity\ThingsLibrary.Entity.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Audit\" />
+	</ItemGroup>
+
+</Project>

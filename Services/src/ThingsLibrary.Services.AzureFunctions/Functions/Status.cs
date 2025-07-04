@@ -1,4 +1,13 @@
+// ================================================================================
+// <copyright file="Status.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using ThingsLibrary.DataType;
+using ThingsLibrary.Security.OAuth2.Services;
 
 namespace ThingsLibrary.Services.AzureFunctions.Functions
 {
@@ -7,7 +16,7 @@ namespace ThingsLibrary.Services.AzureFunctions.Functions
     /// </summary>
     public class Status : Base.BaseUserFunctions
     {    
-        public Status() : base()
+        public Status(IClaimsPrincipalAccessor claimsPrincipalAccessor) : base(claimsPrincipalAccessor)
         {        
             //nothing
         }
@@ -24,7 +33,7 @@ namespace ThingsLibrary.Services.AzureFunctions.Functions
 
             var headers = request.Headers.ToDictionary(x => x.Key, x => string.Join(", ", x.Value));
 
-            await response.WriteAsJsonAsync(new JsonResponse<Dictionary<string, string>>(data: headers), context.CancellationToken);
+            await response.WriteAsJsonAsync(new ActionResponse<Dictionary<string, string>>(data: headers), context.CancellationToken);
 
             return response;
         }
@@ -62,7 +71,7 @@ namespace ThingsLibrary.Services.AzureFunctions.Functions
 
             var healthReport = await healthCheckService.CheckHealthAsync(context.CancellationToken);
 
-            return await request.CreateResponseAsync<HealthReport>(new JsonResponse<HealthReport>(healthReport), context.CancellationToken);
+            return await request.CreateResponseAsync<HealthReport>(new ActionResponse<HealthReport>(healthReport), context.CancellationToken);
         }
     }
 

@@ -232,11 +232,11 @@ namespace ThingsLibrary.DataType.Extensions
         {
             // allocate memory for our list based on how many items we will have
             var keyList = new List<object>(properties.Count());
-            
+
             foreach (var property in properties)
             {
                 var value = property.GetValue(instance, null);
-                if(value == null) {  continue; }
+                if (value == null) { continue; }
 
                 keyList.Add(value);
             }
@@ -244,27 +244,58 @@ namespace ThingsLibrary.DataType.Extensions
             return keyList;
         }
 
+        ///// <summary>
+        ///// Copy the public properties of one class object to the other class object
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="source"></param>
+        ///// <param name="target"></param>
+        ///// <exception cref="ArgumentNullException"></exception>
+        //public static void CopyPropertyValues<TEntity>(this TEntity source, TEntity target) where TEntity : class
+        //{
+        //    ArgumentNullException.ThrowIfNull(source);
+        //    ArgumentNullException.ThrowIfNull(target);
+
+        //    var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        //    foreach (PropertyInfo property in properties)
+        //    {
+        //        if (property.CanRead && property.CanWrite)
+        //        {
+        //            object? value = property.GetValue(source);
+        //            property.SetValue(target, value);
+        //        }
+        //    }
+        //}
+
         /// <summary>
         /// Copy the public properties of one class object to the other class object
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static void CopyPropertyValues<TEntity>(this TEntity source, TEntity target) where TEntity : class
+        /// <typeparam name="TEntity">Class entity</typeparam>
+        /// <param name="source">Source Object</param>
+        /// <param name="destination">Destination Object</param>
+        public static void CopyPropertyValues<TEntity>(this TEntity source, object destination) where TEntity : class
         {
             ArgumentNullException.ThrowIfNull(source);
-            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(destination);
 
-            var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var sourceType = source.GetType();
 
-            foreach (PropertyInfo property in properties)
+            var destinationType = destination.GetType();
+            var destinationProperties = destinationType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanWrite);
+
+            foreach (var destinationProperty in destinationProperties)
             {
-                if (property.CanRead && property.CanWrite)
-                {
-                    object? value = property.GetValue(source);
-                    property.SetValue(target, value);
-                }
+                var destinationSetProperty = destinationProperty.GetSetMethod(false);
+                if (destinationSetProperty?.IsPrivate != true) { continue; }
+
+                var sourceProperty = sourceType.GetProperty(destinationProperty.Name, BindingFlags.Public | BindingFlags.Instance);
+                if (sourceProperty?.CanRead != true) { continue; }
+
+                if (!destinationProperty.PropertyType.IsAssignableFrom(sourceProperty.PropertyType)) { continue; }
+
+                var value = sourceProperty.GetValue(source, null);
+                destinationProperty.SetValue(destination, value, null);
             }
         }
 

@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BAD76D62-CB88-45EE-8137-71FDC3C184AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{1CEF8AF5-998C-4745-9274-889C47D3788D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{99F01F1C-D37F-4EEB-8458-90B4A3882E5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Testing", "..\Base\src\ThingsLibrary.Testing\ThingsLibrary.Testing.csproj", "{212D6FB7-C4C8-4B71-B77F-D411FF2E574A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Entity", "src\ThingsLibrary.Entity\ThingsLibrary.Entity.csproj", "{D5F59CDF-9473-3BC9-88B8-A3E5BC769053}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary", "..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj", "{69A74342-DD23-54EF-BF18-B34E75393DB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Entity.Mongo", "src\ThingsLibrary.Entity.Mongo\ThingsLibrary.Entity.Mongo.csproj", "{9A503129-42C4-C8B9-48D3-1722FEC8CF6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Entity.MongoAudit", "src\ThingsLibrary.Entity.MongoAudit\ThingsLibrary.Entity.MongoAudit.csproj", "{2C8EB842-A358-F8A7-7F39-E29832FA09B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Entity.Cosmos", "src\ThingsLibrary.Entity.AzureCosmos\ThingsLibrary.Entity.Cosmos.csproj", "{0DA5CA91-4D54-44D4-1ACC-C74CFDD3ABCE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{212D6FB7-C4C8-4B71-B77F-D411FF2E574A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{212D6FB7-C4C8-4B71-B77F-D411FF2E574A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{212D6FB7-C4C8-4B71-B77F-D411FF2E574A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{212D6FB7-C4C8-4B71-B77F-D411FF2E574A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F59CDF-9473-3BC9-88B8-A3E5BC769053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F59CDF-9473-3BC9-88B8-A3E5BC769053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F59CDF-9473-3BC9-88B8-A3E5BC769053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F59CDF-9473-3BC9-88B8-A3E5BC769053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69A74342-DD23-54EF-BF18-B34E75393DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A74342-DD23-54EF-BF18-B34E75393DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A74342-DD23-54EF-BF18-B34E75393DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A74342-DD23-54EF-BF18-B34E75393DB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A503129-42C4-C8B9-48D3-1722FEC8CF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A503129-42C4-C8B9-48D3-1722FEC8CF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A503129-42C4-C8B9-48D3-1722FEC8CF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A503129-42C4-C8B9-48D3-1722FEC8CF6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C8EB842-A358-F8A7-7F39-E29832FA09B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C8EB842-A358-F8A7-7F39-E29832FA09B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C8EB842-A358-F8A7-7F39-E29832FA09B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C8EB842-A358-F8A7-7F39-E29832FA09B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DA5CA91-4D54-44D4-1ACC-C74CFDD3ABCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DA5CA91-4D54-44D4-1ACC-C74CFDD3ABCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DA5CA91-4D54-44D4-1ACC-C74CFDD3ABCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DA5CA91-4D54-44D4-1ACC-C74CFDD3ABCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1CEF8AF5-998C-4745-9274-889C47D3788D} = {BAD76D62-CB88-45EE-8137-71FDC3C184AE}
+		{212D6FB7-C4C8-4B71-B77F-D411FF2E574A} = {99F01F1C-D37F-4EEB-8458-90B4A3882E5B}
+		{69A74342-DD23-54EF-BF18-B34E75393DB7} = {99F01F1C-D37F-4EEB-8458-90B4A3882E5B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E14452CD-97CA-49B1-AED4-BD581AC936B8}
+	EndGlobalSection
+EndGlobal

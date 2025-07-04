@@ -66,7 +66,7 @@ namespace ThingsLibrary.Storage.Azure
         // ================================================================================
         // VENDOR SPECIFIC (if you aren't using the interface methods) allow for exposure of vendor specific objects
         // ================================================================================
-        public BlobContainerClient AzureContainerClient { get; set; } = null;
+        public BlobContainerClient AzureContainerClient { get; set; }
 
         /// <summary>
         /// Constructor

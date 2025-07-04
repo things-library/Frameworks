@@ -16,6 +16,12 @@ namespace ThingsLibrary.DataType.Json.Converters
     public class JsonIgnoreEmptyCollectionAttribute : Attribute { }
 
     /// <summary>
+    /// Json Ignore Attribute that when added to collections will JsonIgnore the collection when empty.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class JsonIgnoreDefaultAttribute : Attribute { }
+
+    /// <summary>
     /// Json ignores any collection that is empty that has the above attribute attached to it.
     /// </summary>
     /// <remarks>To use this resolver it must be registered with the json serialization options:
@@ -33,40 +39,55 @@ namespace ThingsLibrary.DataType.Json.Converters
         public static void IgnoreEmptyCollections(JsonTypeInfo jsonTypeInfo)
         {
             if (jsonTypeInfo.Kind != JsonTypeInfoKind.Object) { return; }
-            
+
             foreach (JsonPropertyInfo propertyInfo in jsonTypeInfo.Properties)
             {
                 // property MUST have a JsonIgnoreEmptyCollection attribute declaration
-                if (propertyInfo.AttributeProvider == null) { continue; }
-
-                var customAttributes = propertyInfo.AttributeProvider.GetCustomAttributes(typeof(JsonIgnoreEmptyCollectionAttribute), true);
-                if (customAttributes.Length == 0)
+                if (propertyInfo.AttributeProvider?.GetCustomAttributes(typeof(JsonIgnoreEmptyCollectionAttribute), true).Length > 0)
                 {
-                    continue;
+                    propertyInfo.ShouldSerialize = (obj, prop) =>
+                    {
+                        if (prop == null) { return false; }
+
+                        var collectionType = typeof(ICollection<>);
+
+                        foreach (var interfaceType in prop.GetType().GetInterfaces())
+                        {
+                            if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == collectionType)
+                            {
+                                var countProperty = interfaceType.GetProperty("Count");
+                                if (countProperty != null && (int)countProperty.GetValue(prop)! == 0)   //if the property exist then it is a int
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+
+                        return true;
+                    };
                 }
 
-                propertyInfo.ShouldSerialize = (obj, prop) =>
+                // STRING EMPTY OR NULL
+                if (propertyInfo.AttributeProvider?.GetCustomAttributes(typeof(JsonIgnoreDefaultAttribute), true).Length > 0)
                 {
-                    if(prop == null) { return false; }
-                    
-                    var collectionType = typeof(ICollection<>);
-
-                    foreach (var interfaceType in prop.GetType().GetInterfaces())
+                    propertyInfo.ShouldSerialize = (obj, propValue) =>
                     {
-                        if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == collectionType)
+                        if (propValue == null) { return false; }
+
+                        if (propertyInfo.PropertyType == typeof(String))
                         {
-                            var countProperty = interfaceType.GetProperty("Count");
-                            if (countProperty != null && (int)countProperty.GetValue(prop)! == 0)
-                            { 
-                                return false; 
-                            }                            
+                            return ((string)propValue != string.Empty);
                         }
-                    }
 
-                    return true;
-                };
+                        if (propertyInfo.PropertyType == typeof(Int16))
+                        {
+                            return ((Int16)propValue != 0);
+                        }
 
+                        return true;
+                    };
+                }
             }
         }
-    }    
+    }
 }

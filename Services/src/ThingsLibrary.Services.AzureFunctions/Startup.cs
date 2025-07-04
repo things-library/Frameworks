@@ -1,4 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// ================================================================================
+// <copyright file="Startup.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json.Serialization;
 using System.Text.Json;
@@ -38,9 +45,9 @@ namespace ThingsLibrary.Services.AzureFunctions
                 Log.Debug("======================================================================");
                 this.Builder.ConfigureAppConfiguration((context, config) =>
                 {
-                    this.InitLogger(context.Configuration);
+                    //this.InitLogger(context.Configuration);
 
-                    this.Builder.UseSerilog(Log.Logger);
+                    //this.Builder.UseSerilog(Log.Logger);
 
                     this.ConfigureAppConfiguration(context, config);
                 });
@@ -50,7 +57,7 @@ namespace ThingsLibrary.Services.AzureFunctions
                 Log.Debug("======================================================================");
                 this.Builder.ConfigureServices((context, services) =>
                 {
-                    services.AddSerilog();
+                    //services.AddSerilog();
 
                     // application insights
                     services.AddApplicationInsightsTelemetryWorkerService();
@@ -77,7 +84,7 @@ namespace ThingsLibrary.Services.AzureFunctions
                 Log.Debug("======================================================================");
                 Log.Debug("HOST BUILD");
                 Log.Debug("======================================================================");
-                App.Service.Host = this.Builder.Build();
+                var host = this.Builder.Build();
 
                 Log.Debug("======================================================================");
                 Log.Debug("PRE-LAUNCH CHECKS");
@@ -90,7 +97,7 @@ namespace ThingsLibrary.Services.AzureFunctions
                 Log.Debug("======================================================================");
                 Log.Information("Launching @ {AppStartOn} (A:{StartupDuration})...", DateTime.UtcNow.ToString("o"), this.AppWatch.Elapsed.ToClock());
                 Log.Debug("======================================================================");
-                await this.Host.RunAsync(App.Service.CancellationToken);
+                await host.RunAsync(App.Service.CancellationToken);
 
                 if (App.Service.CancellationToken.IsCancellationRequested)
                 {
@@ -133,7 +140,7 @@ namespace ThingsLibrary.Services.AzureFunctions
         /// Configure App Builder
         /// </summary>
         /// <param name="builder"></param>
-        public virtual void ConfigureAppBuilder(HostBuilder builder)
+        public virtual void ConfigureAppBuilder(IHostBuilder builder)
         {
             // Azure Function Middleware and Defaults
             this.Builder.ConfigureFunctionsWorkerDefaults((context, builder) => ConfigureFunctionsWorkerDefaults(context, builder));                     

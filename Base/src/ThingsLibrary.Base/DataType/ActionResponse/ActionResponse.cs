@@ -1,5 +1,5 @@
 ﻿// ================================================================================
-// <copyright file="JsonResponse.cs" company="Starlight Software Co">
+// <copyright file="ActionResponse.cs" company="Starlight Software Co">
 //    Copyright (c) Starlight Software Co. All rights reserved.
 //    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
@@ -62,11 +62,11 @@ namespace ThingsLibrary.DataType
         public string TraceId { get; init; } = Activity.Current?.Id ?? string.Empty;
 
         /// <summary>
-        /// Standardized error key/code system for easy understanding of error message (which could be translated, etc).. 
+        /// Standardized key/code system for easy understanding of message (which could be translated, etc).. 
         /// </summary>
         /// <remarks>Codes might look like:  STATION_NOT_FOUND, STATION_ALREADY_EXISTS</remarks>
-        [JsonPropertyName("errorCode"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public string ErrorCode { get; init; } = string.Empty;
+        [JsonPropertyName("eventCode"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public string EventCode { get; init; } = string.Empty;
 
         /// <summary>
         /// Error listing with key that could tie to a field on the provided DTO data model (customer/user readible)
@@ -79,12 +79,12 @@ namespace ThingsLibrary.DataType
         /// </summary>
         [JsonPropertyName("exception")]
         public ActionException? Exception { get; set; }
-        
+
         /// <summary>
         /// If the response is in a error state
         /// </summary>
-        [JsonPropertyName("isError"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]        
-        public bool IsError => ((int)this.StatusCode < 200 || (int)this.StatusCode >= 300);
+        [JsonPropertyName("isError"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public bool IsError => !this.IsSuccessStatusCode;
 
         /// <summary>
         /// Simple check on the response status
@@ -115,7 +115,7 @@ namespace ThingsLibrary.DataType
         /// <summary>
         /// Create Json Response
         /// </summary>
-        /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
+        /// <param name="statusCode"><see cref="System.Net.HttpStatusCode"/></param>
         /// <param name="title">User Friendly Title</param>
         public ActionResponse(HttpStatusCode statusCode, string displayMessage, string? errorMessage = null)
         {
@@ -130,7 +130,7 @@ namespace ThingsLibrary.DataType
         /// <summary>
         /// Create a Json Response
         /// </summary>
-        /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
+        /// <param name="statusCode"><see cref="System.Net.HttpStatusCode"/></param>
         /// <param name="displayMessage">User Friendly Title</param>
         /// <param name="errorFieldName">Field/property that is causing this message</param>
         /// <param name="fieldErrorMessage">Error message</param>
