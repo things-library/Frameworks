@@ -26,8 +26,12 @@ jobs:
     - name: Setup .NET 9.0.x
       uses: actions/setup-dotnet@v3
       with:
-        # Semantic version range syntax or exact version of a dotnet version
         dotnet-version: '9.0.x'
+
+    - name: Setup .NET 8.0.x
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
         
     # You can test your matrix by printing the current dotnet version
     - name: Display dotnet version
