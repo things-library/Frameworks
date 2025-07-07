@@ -5,8 +5,6 @@
 // </copyright>
 // ================================================================================
 
-using ThingsLibrary.Schema.Canvas;
-
 namespace ThingsLibrary.Services.Extensions
 {
     public static class ConfigurationExtensions

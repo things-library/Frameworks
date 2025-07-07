@@ -144,8 +144,9 @@ namespace ThingsLibrary.DataType.Extensions
         /// <returns></returns>
         public static string GetUsername(this ClaimsPrincipal claimsPrincipal)
         {
-            // find a unique username to use
-            var username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "preferred_username")?.Value;
+            // find a unique username to use            
+            var username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "unique_name")?.Value;
+            if (username == default) { username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "preferred_username")?.Value; }
             if (username == default) { username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "upn")?.Value; }
             if (username == default) { username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "username")?.Value; }
             if (username == default) { username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "email")?.Value; }

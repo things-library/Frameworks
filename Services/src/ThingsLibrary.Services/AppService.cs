@@ -171,7 +171,7 @@ namespace ThingsLibrary.Services
                     { "app_name", this.Name },
                     { "app_containerized", $"{this.IsContainer}" },
 
-                    // Host Environment                
+                    // Host Environment                    
                     { "debugger", $"{this.IsDebug}" },
                     { "dotnet_framework", this.Assembly.NetFrameworkVersion() },
                 }
@@ -201,6 +201,26 @@ namespace ThingsLibrary.Services
                 }
             };
             rootMetrics.Items.Add(assemblyItem.Key, assemblyItem);
+
+            // CANVAS
+            if (this.Canvas != null)
+            {
+                var canvasItem = new RootItemDto
+                {
+                    Key = "canvas",
+                    Type = "canvas",
+                    Name = this.Canvas.Info.Name,
+                    
+                    Tags = new Dictionary<string, string>
+                    {
+                        { "namespace", this.Canvas.Info.Namespace },
+                        { "environment", this.Canvas.Info.Environment },
+                        { "host", $"{this.Canvas.Info.Host}" }
+                    }
+                };
+                rootMetrics.Items.Add(canvasItem.Key, canvasItem);
+
+            }
 
             // machine metrics
             var machineItem = new RootItemDto
