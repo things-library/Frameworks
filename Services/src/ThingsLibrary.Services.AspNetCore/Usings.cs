@@ -5,37 +5,34 @@
 // </copyright>
 // ================================================================================
 
-global using System.Reflection;
-global using System.Net;
+global using System;
+global using System.Collections.Generic;
 global using System.Diagnostics;
-
+global using System.Linq;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
+global using System.Threading.Tasks;
 
-//global using Microsoft.AspNetCore.Http;
-//global using Microsoft.AspNetCore.Http.HttpResults;
-//global using Microsoft.AspNetCore.Mvc;
-//global using Microsoft.AspNetCore.Builder;
-
-//global using Microsoft.AspNetCore.Authentication.Cookies;
-////global using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-//global using Microsoft.AspNetCore.Authentication;
-//global using Microsoft.AspNetCore.Authorization;
-
-
-
+global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Configuration;
-
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
-global using Microsoft.Extensions.Options;
 
+// ================================================================================
+// THIRD PARTY
+// ================================================================================
 global using Serilog;
-
+global using Serilog.Events;
 
 // ================================================================================
-// FRAMEWORKS 
+// FIRST PARTY
 // ================================================================================
+global using ThingsLibrary.DataType;
+global using ThingsLibrary.DataType.Extensions;
+global using ThingsLibrary.Services.AspNetCore.Extensions;
+
+global using ThingsLibrary.Schema.Library;
+global using ThingsLibrary.Schema.Library.Extensions;
 
 // ================================================================================
 // LOCAL 

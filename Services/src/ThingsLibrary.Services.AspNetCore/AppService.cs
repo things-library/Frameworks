@@ -7,7 +7,7 @@
 
 using ThingsLibrary.Metrics;
 
-namespace ThingsLibrary.Services
+namespace ThingsLibrary.Services.AspNetCore
 {
     public static class App
     {
@@ -22,11 +22,6 @@ namespace ThingsLibrary.Services
     /// </summary>
     public class AppService
     {
-        /// <summary>
-        /// Persistent Unique App Id
-        /// </summary>
-        public Guid InstanceId { get; init; }
-
         /// <summary>
         /// Started DateTime
         /// </summary>
@@ -76,8 +71,7 @@ namespace ThingsLibrary.Services
         /// </summary>
         public AppService()
         {
-            // each container gets its own unique id so we can keep track internally and externally
-            this.InstanceId = this.GetOrCreateInstanceId();           
+            //nothing
         }
         
         #region --- Environment ---   
@@ -160,14 +154,13 @@ namespace ThingsLibrary.Services
 
             var rootMetrics = new RootItemDto
             {
-                Key = $"{this.InstanceId}",
+                Key = "instance",
                 Type = "instance",
-                Name = this.InstanceId.ToString(),                
+                Name = this.Name,                
 
                 Tags = new Dictionary<string, string>
                 {
-                    // APP Metrics
-                    { "instance_id", $"{this.InstanceId}" },
+                    // APP Metrics                    
                     { "app_name", this.Name },
                     { "app_containerized", $"{this.IsContainer}" },
 
@@ -393,54 +386,6 @@ namespace ThingsLibrary.Services
         //        AppRoles = appRoles,
         //        AppPolicies = appPolicies
         //    };
-        //}
-
-
-        /// <summary>
-        /// Get a unique ID for this machine instance or create it and persist it.
-        /// </summary>
-        /// <returns>Unique Guid</returns>
-        private Guid GetOrCreateInstanceId()
-        {
-            try
-            {
-                // create a linux/windows friendly file path
-                var filePath = Path.Combine(this.Assembly.AppDataPath(), "id.json");
-
-                Guid id;
-                
-                if (File.Exists(filePath))
-                {
-                    var doc = JsonDocument.Parse(File.ReadAllText(filePath));
-
-                    id = doc.GetProperty<Guid>("id", Guid.Empty);
-                    if(id != Guid.Empty)
-                    {
-                        Log.Information("= Instance Id: {AppInstanceId} (found)", id);
-                        return id;
-                    }
-                }
-
-                id = SequentialGuid.NewGuid();
-                var fileData = JsonSerializer.Serialize(new { id = id });
-
-                var folderPath = Path.GetDirectoryName(filePath) ?? throw new ArgumentException($"Unable to get directory path from '{filePath}'");
-
-                Log.Information("= Instance Id: {AppInstanceId} (creating)", id);
-                IO.Directory.VerifyPath(folderPath);
-
-                // save out the file                 
-                File.WriteAllText(filePath, fileData);
-
-                return id;
-            }
-            catch (Exception ex)
-            {
-                Log.Warning("Unable to create persistent instance Id.");
-                Log.Warning(ex, ex.Message);
-
-                return Guid.NewGuid();
-            }            
-        }
+        //}        
     }
 }

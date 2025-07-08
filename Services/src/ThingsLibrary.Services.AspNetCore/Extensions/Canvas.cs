@@ -7,7 +7,7 @@
 
 using ThingsLibrary.Schema.Canvas;
 
-namespace ThingsLibrary.Services.Extensions
+namespace ThingsLibrary.Services.AspNetCore.Extensions
 {
     /// <summary>
     /// Service Canvas Extensions

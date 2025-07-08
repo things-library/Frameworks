@@ -1,44 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<IsPackable>true</IsPackable>
-		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-	<PropertyGroup>
-		<PackageId>ThingsLibrary.Services</PackageId>
-		<ProductName>ThingsLibrary.Services</ProductName>
-		<Title>ThingsLibrary Services Framework Library</Title>
-		<Description>This is the shared foundational library</Description>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.6" />    
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+  </ItemGroup>
 
-		<Authors>Mark Lanning</Authors>
-		<Company>Starlight Software Co.</Company>
-
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.6" />
-		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.6" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.6" />
-		<PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
-				
-		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />				
-		<PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />		
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\Schemas\src\csharp\ThingsLibrary.Schema.Canvas\ThingsLibrary.Schema.Canvas.csproj" />
-	  <ProjectReference Include="..\..\..\..\Schemas\src\csharp\ThingsLibrary.Schema.Library\ThingsLibrary.Schema.Library.csproj" />
-	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Schemas\src\csharp\ThingsLibrary.Schema.Canvas\ThingsLibrary.Schema.Canvas.csproj" />
+    <ProjectReference Include="..\..\..\..\Schemas\src\csharp\ThingsLibrary.Schema.Library\ThingsLibrary.Schema.Library.csproj" />
+    <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
+  </ItemGroup>
 
 </Project>

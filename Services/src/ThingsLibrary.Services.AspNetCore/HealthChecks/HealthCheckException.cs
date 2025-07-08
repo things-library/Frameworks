@@ -5,7 +5,7 @@
 // </copyright>
 // ================================================================================
 
-namespace ThingsLibrary.Services.HealthChecks
+namespace ThingsLibrary.Services.AspNetCore.HealthChecks
 {
     /// <summary>
     /// Exception occurred during a health check event

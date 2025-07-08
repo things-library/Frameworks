@@ -6,30 +6,40 @@
 // ================================================================================
 
 global using System;
-global using System.Collections.Generic;
 global using System.Diagnostics;
+
+global using System.Collections.Generic;
+global using System.ComponentModel;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using System.ComponentModel.DataAnnotations;
+global using System.Globalization;
+
 global using System.Linq;
+global using System.Net;
+
+global using System.Text;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
 global using System.Threading.Tasks;
 
-global using Microsoft.Extensions.Logging;
-global using Microsoft.Extensions.Configuration;
-global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Hosting;
+global using System.Security.Claims;
+
+global using Azure;
+global using Azure.Communication;
+global using Azure.Communication.Sms;
+global using Azure.Communication.Email;
 
 // ================================================================================
 // THIRD PARTY
 // ================================================================================
-global using Serilog;
-global using Serilog.Events;
-
-// ================================================================================
-// FIRST PARTY
-// ================================================================================
+//global using ThingsLibrary.Schema.Library;
 global using ThingsLibrary.DataType;
 global using ThingsLibrary.DataType.Extensions;
-global using ThingsLibrary.Services.Extensions;
 
-global using ThingsLibrary.Schema.Library;
-global using ThingsLibrary.Schema.Library.Base;
+// ================================================================================
+// LOCAL
+// ================================================================================
+//global using NotificationServices.Extensions;
+
+
+

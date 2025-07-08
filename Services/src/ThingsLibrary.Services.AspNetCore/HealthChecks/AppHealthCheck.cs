@@ -7,7 +7,7 @@
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace ThingsLibrary.Services.HealthChecks
+namespace ThingsLibrary.Services.AspNetCore.HealthChecks
 {
     /// <summary>
     /// Configuration Variables:  HealthCheck.App.IsCurrent

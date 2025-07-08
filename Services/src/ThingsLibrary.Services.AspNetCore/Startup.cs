@@ -1,197 +1,143 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using ThingsLibrary.Services;
-using ThingsLibrary.Services.HealthChecks;
+﻿// ================================================================================
+// <copyright file="Startup.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
 
-namespace Starlight.Services.AspNetCore
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using ThingsLibrary.Schema.Canvas;
+using ThingsLibrary.Services.AspNetCore.Extensions;
+using ThingsLibrary.Services.AspNetCore.HealthChecks;
+
+namespace ThingsLibrary.Services.AspNetCore
 {
     /// <summary>
-    /// Startup Helper Class
+    /// Standarized start up process that auto configures all of the cross cutting concerns by leveraging the ServiceCanvas strongly typed settings.
+    /// 
+    /// The core configure sections can be overridden to override the base configuration or add to.
     /// </summary>
-    /// <remarks>
-    /// Order of Execution:
-    /// - Configure Services
-    /// - Configure Health Services
-    /// - Build App
-    /// - Configure App
-    /// - Pre-Launch Checks
-    /// - Run
-    /// </remarks>
-    public abstract class Startup : ThingsLibrary.Services.Startup
-    {
+    public abstract class Startup
+    {        
         /// <summary>
         /// Web Application Builder
         /// </summary>
-        public WebApplicationBuilder Builder { get; init; }
+        private WebApplicationBuilder Builder { get; init; }
 
         /// <summary>
-        /// Configuration
+        /// App Duration Stopwatch
         /// </summary>
-        public IConfiguration Configuration => this.Builder.Configuration;
+        public Stopwatch AppWatch { get; init; } = Stopwatch.StartNew();
 
-        /// <summary>
-        /// Health Check Builder
-        /// </summary>
-        public IHealthChecksBuilder? HealthBuilder { get; private set; }
+        public CanvasRoot Canvas { get; private set; } = new();
 
-        /// <summary>
-        /// Web Application
-        /// </summary>
-        public WebApplication? WebApp { get; private set; }
-
-        public AppService App { get; set; }
-
-        /// <summary>
-        /// Startup Constructor
-        /// </summary>
-        /// <param name="args">Command Line Arguments</param>
-        protected Startup(string[] args)
+        protected Startup()
         {
             // so we always have a logger running from as soon as possible
             this.InitBootstrapLogger();
-
+            
             // show something ASAP so we know processing has started
-            Log.Information($"Startup(args[{args.Length}])...");
+            Log.Information("Startup()...");
             Log.Information("======================================================================");
-            Log.Information($" {this.App.Assembly.Name()} @ ({DateTime.UtcNow.ToString("o")})");
+            Log.Information(" {AppName} @ ({AppStartOn})", App.Service.Assembly.Name(), DateTime.UtcNow.ToString("o"));
             Log.Information("======================================================================");
 
             // build the web application
             Log.Debug("Initializing HostBuilder...");
-            this.Builder = WebApplication.CreateBuilder(args);
-                        
-            // CONFIGURATION SOURCES            
-            this.Builder.Configuration.AddUserSecrets(System.Reflection.Assembly.GetEntryAssembly()!, true);
-
-            // if there are command arguments we want to log them
-            //this.LogCommandArguments(args);
-
-            // log the configuration sources
-            this.LogConfigurationSources(this.Builder.Configuration);
+            this.Builder = WebApplication.CreateBuilder();
         }
 
-        /// <summary>
-        /// Run Background Service
-        /// </summary>
-        /// <typeparam name="T"><see cref="BackgroundService"/></typeparam>        
-        public async Task Run<T>() where T : BackgroundService
-        {
-            Log.Information("======================================================================");
-            Log.Information("+ Hosted Service: {BackgroundService}", typeof(T).FullName);
-            this.Builder.Services.AddHostedService<T>();
-
-            await RunAsync();
-        }
+        public abstract void ConfigureHostBuilder();
 
         /// <summary>
         /// Run/launch web application
         /// </summary>
         public async Task RunAsync()
         {
-            try
-            {
-                // set up the host Ilogger
-                this.InitLogger(this.Builder.Configuration);
-                //this.Builder.Host.UseSerilog();
+            this.ConfigureHostBuilder();
 
-                // configure servides
-                this.Builder.Host.ConfigureServices((context, services) =>
-                {
-                    services.AddSerilog();
+            // Override the enviroment settings?
+            var environmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+            if (!string.IsNullOrEmpty(environmentName)) { this.Builder.Host.UseEnvironment(environmentName); }
 
-                    // Register the service canvas singletons and as a static instance
-                    services.AddCanvasServices(context.Configuration);
+            // configure servides
+            this.Builder.Host.ConfigureServices((context, services) =>
+            {                
+                // add the serilog
+                services.AddSeriLogging(context.Configuration);
 
-                    Log.Debug("");
-                    Log.Debug("======================================================================");
-                    Log.Information(" CONFIGURE SERVICES");
-                    Log.Debug("======================================================================");
-                    this.ConfigureServices(context, services);
-
-                    Log.Debug("");
-                    Log.Debug("======================================================================");
-                    Log.Debug(" CONFIGURE Health SERVICES...");
-                    Log.Debug("======================================================================");
-                    Log.Debug("+ Health Check Service...");
-                    this.HealthBuilder = services.AddHealthChecks();
-                    this.ConfigureHealthServices();                    
-                });
+                // Register the service canvas singletons and as a static instance
+                this.Canvas = services.AddServiceCanvas(context.Configuration);                
 
                 Log.Debug("");
                 Log.Debug("======================================================================");
-                Log.Information("BUILD");
-                Log.Debug("======================================================================");                
-                this.WebApp = this.Builder.Build();
-                App.Service.Host = this.WebApp;
+                Log.Information(" CONFIGURE SERVICES");
+                Log.Debug("======================================================================");
+                this.ConfigureServices(context, services);
 
                 Log.Debug("");
                 Log.Debug("======================================================================");
-                Log.Information("CONFIGURE");
+                Log.Debug(" CONFIGURE Health SERVICES...");
                 Log.Debug("======================================================================");
-                //this.WebApp.UseCanvasServices();
-                this.ConfigureApp();
+                Log.Debug("+ Health Check Service...");
+                this.ConfigureHealthServices(context, services);
+            });
 
-                Log.Debug("");
-                Log.Debug("======================================================================");
-                Log.Information("PRE-LAUNCH CHECKS");
-                Log.Debug("======================================================================");
-                this.PreChecks();
+            Log.Debug("");
+            Log.Debug("======================================================================");
+            Log.Information("BUILD");
+            Log.Debug("======================================================================");
+            var app = this.Builder.Build();
+            
+            Log.Debug("");
+            Log.Debug("======================================================================");
+            Log.Information("CONFIGURE");
+            Log.Debug("======================================================================");
+            this.ConfigureApp(app);
+            
+            Log.Debug("");
+            Log.Debug("======================================================================");
+            Log.Information("PRE-LAUNCH CHECKS");
+            Log.Debug("======================================================================");            
+            this.PreChecks(app.Services);
 
-                // okay, we are good to go if we made it here
-                Log.Information("App Ready!");
-                App.Service.IsReady = true;
+            // okay, we are good to go if we made it here
+            Log.Information("App Ready!");
+            App.Service.IsReady = true;
 
-                Log.Debug("");
-                Log.Debug("======================================================================");
-                Log.Information("Launching @ {AppStartOn} (Dur:{StartupDuration})...", DateTime.UtcNow.ToString("o"), this.AppWatch.Elapsed.ToClock());
-                Log.Debug("======================================================================");
+            Log.Debug("");
+            Log.Debug("======================================================================");
+            Log.Information("Launching @ {AppStartOn} (Dur:{StartupDuration})...", DateTime.UtcNow.ToString("o"), DateTimeOffset.Now.Subtract(App.Service.StartedOn).ToClock());
+            Log.Debug("======================================================================");
+            await app.RunAsync(App.Service.CancellationToken);
+            
+            // APPLICATION ENDED!!!                                
+            App.Service.IsReady = false;
 
-                await this.WebApp.RunAsync(App.Service.CancellationToken);
+            // APPLICATION ENDED!!!
+            Log.Debug("");
+            Log.Debug("======================================================================");
+            Log.Information(" APPLICATION ENDED @ {AppEndTime}, (Dur:{AppDuration})", DateTime.UtcNow.ToString("o"), DateTimeOffset.Now.Subtract(App.Service.StartedOn).ToClock());
+            Log.Debug("======================================================================");
 
-                // APPLICATION ENDED!!!                                
-                this.AppWatch.Stop();
-                App.Service.IsReady = false;
-                
-                // APPLICATION ENDED!!!
-                Log.Debug("");
-                Log.Debug("======================================================================");
-                Log.Information(" APPLICATION ENDED @ {AppEndTime}, (Dur:{AppDuration})", DateTime.UtcNow.ToString("o"), this.AppWatch.Elapsed.ToClock());
-                Log.Debug("======================================================================");
-            }
-            catch (TaskCanceledException)
-            {
-                //nothing we expect this.. fix later
-                Log.Warning("Task Cancelled");
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Host terminated unexpectedly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
+            // flush log
+            await Log.CloseAndFlushAsync();
         }
-              
+
         /// <summary>
-        /// Configure services
+        /// Configure Services
         /// </summary>
+        /// <param name="context">Host Builder Context</param>
+        /// <param name="services">Service Collection</param>
         public abstract void ConfigureServices(HostBuilderContext context, IServiceCollection services);
 
-
         /// <summary>
-        /// Configure the health services
+        /// Configure middleware and other app services
         /// </summary>
-        public virtual void ConfigureHealthServices()
-        {
-            //no other health checks specified yet
-        }
-
-        /// <summary>
-        /// Configure web application
-        /// </summary>
-        /// <returns>Startup for chaining commands</returns>
-        public abstract void ConfigureApp();
-
+        public abstract void ConfigureApp(WebApplication app);
+                
         /// <summary>
         /// Do all pre-launch checks
         /// </summary>
@@ -201,37 +147,77 @@ namespace Starlight.Services.AspNetCore
         /// - Health Checks ('live' probe)
         /// - Database Migrations Check (if Db dependency)
         /// </remarks>
-        public virtual void PreChecks()
+        public virtual void PreChecks(IServiceProvider services)
         {
-            this.CheckHealth();
+            services.CheckHealth();
+        }
 
 
+        #region --- Health Checks ---
+
+        /// <summary>
+        /// Configures Healthchecks (startup, live, ready)
+        /// </summary>
+        /// <param name="context">Host Builder Context</param>
+        /// <param name="services">Service Collection</param>
+        private void ConfigureHealthServices(HostBuilderContext context, IServiceCollection services)
+        {
+            var healthCheckBuilder = services.AddHealthChecks();
+
+            // self check (always return healthy when no other health checks are added)            
+            Log.Debug("+ Health Checks: startup, live, ready...");
+            healthCheckBuilder.AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "startup", "live", "ready" });
+
+            // invoke the main configure health 
+            this.ConfigureHealthServices(context, services, healthCheckBuilder);
         }
 
         /// <summary>
-        /// Do a health check, if it is degrated do another just to make sure.
+        /// Configure Health Services
         /// </summary>
-        /// <exception cref="ApplicationException"></exception>
-        public void CheckHealth()
+        /// <param name="context"></param>
+        /// <param name="services"></param>
+        public abstract void ConfigureHealthServices(HostBuilderContext context, IServiceCollection services, IHealthChecksBuilder healthCheckBuilder);
+
+        #endregion
+
+        #region --- Logger --- 
+
+        /// <summary>
+        /// Initialize an initial logger so we have something from the start
+        /// </summary>
+        protected void InitBootstrapLogger()
         {
-            Log.Debug("Performing Initial 'Startup' Health Checks...");
-            var healthCheck = this.WebApp!.Services.GetService<HealthCheckService>();
+            // Set up logging ASAP
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateBootstrapLogger();
+        }
 
-            if (healthCheck == null)
+        /// <summary>
+        /// Logs the configuration sources/providers
+        /// </summary>
+        /// <param name="configurationBuilder">Configuration Builder</param>
+        protected void LogConfigurationSources(IConfigurationBuilder configurationBuilder)
+        {
+            Log.Information("Configuration Sources:");
+            foreach (var source in configurationBuilder.Sources)
             {
-                Log.Warning("No health check service to check.");
-                return;
-            }
-
-            // only run the startup checks which at this point should be good to go
-            var healthReport = healthCheck.CheckHealthAsync(x => x.Tags.Contains("live")).Result;
-            if (healthReport.Status != HealthStatus.Healthy)
-            {
-                // sometimes the first db connection takes longer to establish and so make sure we get two bad health reports in a row before reporting bad health
-                healthReport = healthCheck.CheckHealthAsync(x => x.Tags.Contains("live")).Result;
-                if (healthReport.Status != HealthStatus.Healthy) { throw new HealthCheckException("Application Unhealthy."); }
+                if (source is JsonConfigurationSource jsonSource)
+                {
+                    Log.Information("= {AppConfigSource} (Path: {AppConfigSourcePath})", source, jsonSource.Path);
+                }
+                else
+                {
+                    Log.Information("= {AppConfigSource}", source);
+                }
             }
         }
-     
+
+        #endregion
+
     }
 }

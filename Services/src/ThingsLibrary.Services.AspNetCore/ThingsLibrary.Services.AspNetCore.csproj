@@ -7,20 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Startup.cs" />
-  </ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.7" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.6" />
+	  <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7" />
+	  
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.6" />
+	  <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.6" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.6" />
+	  <PackageReference Include="Microsoft.Identity.Web.UI" Version="3.10.0" />
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.0" />
+	  <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+	  <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
+	  <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+	  <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ThingsLibrary.Services\ThingsLibrary.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

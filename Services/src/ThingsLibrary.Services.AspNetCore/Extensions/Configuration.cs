@@ -5,7 +5,7 @@
 // </copyright>
 // ================================================================================
 
-namespace ThingsLibrary.Services.Extensions
+namespace ThingsLibrary.Services.AspNetCore.Extensions
 {
     public static class ConfigurationExtensions
     {
@@ -46,7 +46,7 @@ namespace ThingsLibrary.Services.Extensions
                 Log.Debug("Not Found; Trying to get '{ConnectionStringName}' with Prefix...", $"CUSTOMCONNSTR_{connectionStringName}");
                 connectionString = configuration.GetConnectionString($"CUSTOMCONNSTR_{connectionStringName}");
             }
-
+            
             if (string.IsNullOrEmpty(connectionString))
             {
                 Log.Debug("Not Found; Trying to get '{ConnectionStringName}' from environment variables...", connectionStringName);

@@ -5,7 +5,7 @@
 // </copyright>
 // ================================================================================
 
-namespace ThingsLibrary.Services.Extensions
+namespace ThingsLibrary.Services.AspNetCore.Extensions
 {
     public static class LoggerExtensions
     {
@@ -34,7 +34,8 @@ namespace ThingsLibrary.Services.Extensions
                 Log.Warning("Default Serilog Logger Initalized.");
             }
 
-            services.AddLogging(loggerBuilder => loggerBuilder.AddSerilog(Log.Logger));
+            services.AddSerilog(Log.Logger);
+            //services.AddLogging(loggerBuilder => loggerBuilder.AddSerilog(Log.Logger));
 
             // for chaining
             return services;
