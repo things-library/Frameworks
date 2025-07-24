@@ -5,6 +5,7 @@
 // </copyright>
 // ================================================================================
 
+using Serilog;
 using ThingsLibrary.Schema.Canvas;
 
 namespace ThingsLibrary.Services.AspNetCore.Extensions

@@ -6,6 +6,7 @@
 // ================================================================================
 
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Serilog;
 
 namespace ThingsLibrary.Services.AspNetCore.HealthChecks
 {

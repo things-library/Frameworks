@@ -21,8 +21,8 @@ global using Microsoft.Extensions.Hosting;
 // ================================================================================
 // THIRD PARTY
 // ================================================================================
-//global using Serilog;
-//global using Serilog.Events;
+global using Serilog;
+global using Serilog.Events;
 
 // ================================================================================
 // FIRST PARTY

@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-
+using Serilog;
 using ThingsLibrary.Services.AspNetCore.HealthChecks;
 
 namespace ThingsLibrary.Services.AspNetCore.Extensions

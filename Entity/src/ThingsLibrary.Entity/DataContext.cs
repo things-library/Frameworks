@@ -73,18 +73,13 @@ namespace ThingsLibrary.Entity
             //    builder.HasIndex(indexAttribute.PropertyNames.ToArray());
             //}
         }
-
-        #region --- Seed Base Data ---
-
+                
         /// <summary>
         /// Do any database prechecks and data seeding
         /// </summary>
         public virtual void Prechecks()
         {
             this.Database.EnsureCreated();
-        }
-
-        #endregion
-
+        }        
     }
 }

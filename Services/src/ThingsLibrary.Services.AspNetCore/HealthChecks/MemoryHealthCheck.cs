@@ -20,13 +20,15 @@ namespace ThingsLibrary.Services.AspNetCore.HealthChecks
     public class MemoryHealthCheck : IHealthCheck
     {        
         private IConfiguration Configuration { get; set; }
+        private ILogger Logger { get; set; }
         
         /// <summary>
         /// Constructor
         /// </summary>
-        public MemoryHealthCheck(IConfiguration configuration)
+        public MemoryHealthCheck(IConfiguration configuration, ILogger<MemoryHealthCheck> logger)
         {
             this.Configuration = configuration;// App.Service.Configuration;
+            this.Logger = logger;
         }
 
         /// <summary>
@@ -48,7 +50,7 @@ namespace ThingsLibrary.Services.AspNetCore.HealthChecks
                 if (machineMemory == null)
                 {
                     //Requires 'procps' library in Linux to run MemoryMetrics.GetSnapshot
-                    Log.Warning("HealthCheck.Memory: Error getting machine memory!! Missing 'procps' linux library?");
+                    this.Logger.LogWarning("HealthCheck.Memory: Error getting machine memory!! Missing 'procps' linux library?");
                 }
 
                 var data = new Dictionary<string, object>()

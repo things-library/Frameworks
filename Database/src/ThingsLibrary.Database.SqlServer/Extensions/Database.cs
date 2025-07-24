@@ -5,6 +5,8 @@
 // </copyright>
 // ================================================================================
 
+using ThingsLibrary.Services.Extensions;
+
 namespace ThingsLibrary.Database.SqlServer.Extensions
 {
     public static class DatabaseExtensions
@@ -22,7 +24,21 @@ namespace ThingsLibrary.Database.SqlServer.Extensions
             ArgumentNullException.ThrowIfNullOrEmpty(parameterName);
 
             var connectionString = configuration.TryGetConnectionString(parameterName);
-            
+
+            services.AddDatabaseSqlServer<TContext>(connectionString);
+
+            return services;
+        }
+
+        /// <summary>
+        /// Add SQL Server Database
+        /// </summary>
+        /// <param name="services">Service Collection</param>
+        /// <param name="connectionString">Connection String</param>        
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static IServiceCollection AddDatabaseSqlServer<TContext>(this IServiceCollection services, string connectionString) where TContext : Database.DataContext
+        {            
             // verify a SQL connection can be established before continuing            
             using (var connection = new SqlConnection(connectionString))
             {

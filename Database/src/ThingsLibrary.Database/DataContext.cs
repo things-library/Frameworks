@@ -198,5 +198,13 @@ namespace ThingsLibrary.Database
             // Postgres
 
         }
-}
+
+        /// <summary>
+        /// Do any database prechecks and data seeding
+        /// </summary>
+        public virtual void Prechecks()
+        {
+            this.Database.EnsureCreated();
+        }
+    }
 }

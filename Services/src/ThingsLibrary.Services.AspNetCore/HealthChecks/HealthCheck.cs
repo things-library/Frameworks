@@ -44,9 +44,7 @@ namespace ThingsLibrary.Services.AspNetCore.HealthChecks
                         foreach (var item in entry.Value.Data)
                         {
                             writer.WritePropertyName(item.Key);
-                            JsonSerializer.Serialize(
-                                writer, item.Value, item.Value?.GetType() ??
-                                typeof(object));
+                            JsonSerializer.Serialize(writer, item.Value, item.Value?.GetType() ?? typeof(object));
                         }
                         writer.WriteEndObject();
                         writer.WriteEndObject();
