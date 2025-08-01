@@ -69,7 +69,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             });
 
             // STARTUP
-            Log.Debug("= Ready: {AppHealthStartup}", "/health/startup");
+            Log.Debug("= Startup: {AppHealthStartup}", "/health/startup");
             app.UseHealthChecks("/health/startup", new HealthCheckOptions
             {
                 Predicate = x => x.Tags.Contains("startup"),

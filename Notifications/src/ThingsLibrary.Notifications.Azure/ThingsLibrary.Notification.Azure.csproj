@@ -1,19 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Communication.Email" Version="1.0.1" />
-    <PackageReference Include="Azure.Communication.Sms" Version="1.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
-  </ItemGroup>
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Notification.Azure</PackageId>
+		<PackageDescription>Things Library Azure Communication Services wrapping library.</PackageDescription>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ThingsLibrary.Notification\ThingsLibrary.Notification.csproj" />
-  </ItemGroup>
+		<ProductName>ThingsLibrary.Notification.Azure</ProductName>
+		<Title>Things Library ACS Wrapper Library</Title>
+		<Description>This is the Azure Communication Services wrapper library.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Azure.Communication.Email" Version="1.0.1" />
+		<PackageReference Include="Azure.Communication.Sms" Version="1.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Notification\ThingsLibrary.Notification.csproj" />
+	</ItemGroup>
 
 </Project>

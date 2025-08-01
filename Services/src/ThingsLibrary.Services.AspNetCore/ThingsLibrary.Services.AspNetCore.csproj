@@ -1,27 +1,39 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net9.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
 
-  <ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.7" />
-	  <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.6" />
-	  <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7" />
-	  
-	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
-	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
-	  <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.6" />
-	  <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.6" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.6" />
-	  <PackageReference Include="Microsoft.Identity.Web.UI" Version="3.10.0" />
-  </ItemGroup>
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Services.AspNetCore</PackageId>
+		<PackageDescription>Things Library Services library.</PackageDescription>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ThingsLibrary.Services\ThingsLibrary.Services.csproj" />
-  </ItemGroup>
+		<ProductName>ThingsLibrary.Services.AspNetCore</ProductName>
+		<Title>Things Library AspNetCore Services library.</Title>
+		<Description>This is the standarized AspNetCore wrapping services library.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7" />
+
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="3.10.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ThingsLibrary.Services\ThingsLibrary.Services.csproj" />
+	</ItemGroup>
 
 </Project>
