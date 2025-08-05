@@ -155,7 +155,7 @@ namespace ThingsLibrary.Services.AspNetCore
             var rootMetrics = new RootItemDto
             {
                 Key = "instance",
-                Type = "instance",
+                Type = "app_instance",
                 Name = this.Name,                
 
                 Tags = new Dictionary<string, string>
@@ -174,7 +174,7 @@ namespace ThingsLibrary.Services.AspNetCore
             var assemblyItem = new RootItemDto
             {
                 Key = "assembly",
-                Type = "assembly",
+                Type = "app_assembly",
                 Name = this.Assembly.Name(),                
 
                 Tags = new Dictionary<string, string>()
@@ -201,7 +201,7 @@ namespace ThingsLibrary.Services.AspNetCore
                 var canvasItem = new RootItemDto
                 {
                     Key = "canvas",
-                    Type = "canvas",
+                    Type = "app_canvas",
                     Name = this.Canvas.Info.Name,
                     
                     Tags = new Dictionary<string, string>
@@ -219,7 +219,7 @@ namespace ThingsLibrary.Services.AspNetCore
             var machineItem = new RootItemDto
             {
                 Key = "machine",
-                Type = "machine",
+                Type = "app_machine",
                 Name = MachineMetrics.MachineName(),
 
                 Tags = new Dictionary<string, string>()
@@ -281,7 +281,7 @@ namespace ThingsLibrary.Services.AspNetCore
             {
                 Key = $"hb_{dateTime.ToUnixTimeSeconds()}",
 
-                Type = "instance_hb",
+                Type = "app_instance_hb",
                 Name = "Instance Heartbeat",
                 Date = DateTime.Now,
 
