@@ -17,7 +17,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="claimsPrincipal"><see cref="ClaimsPrincipal"/></param>
         /// <param name="key">Claim Key</param>
         /// <returns>Claim string</returns>
-        public static string GetClaim(this ClaimsPrincipal claimsPrincipal, string key)
+        public static string? GetClaim(this ClaimsPrincipal claimsPrincipal, string key)
         {
             return claimsPrincipal.Claims.GetClaim(key);
         }
@@ -30,7 +30,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="key">Claim Key</param>
         /// <param name="defaultValue">Default value if key is not found.</param>
         /// <returns>Claim as requested data type, or DefaultValue if key not found."/></returns>
-        public static T GetClaim<T>(this ClaimsPrincipal claimsPrincipal, string key, T defaultValue)
+        public static T? GetClaim<T>(this ClaimsPrincipal claimsPrincipal, string key, T defaultValue)
         {
             return claimsPrincipal.Claims.GetClaim<T>(key, defaultValue);
         }
@@ -43,7 +43,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="key">Claim Key</param>
         /// <param name="defaultValue">Default value if key is not found.</param>
         /// <returns>Claim as requested data type, or DefaultValue if key not found."/></returns>
-        public static T GetClaim<T>(this IEnumerable<Claim> claims, string key, T defaultValue)
+        public static T? GetClaim<T>(this IEnumerable<Claim> claims, string key, T defaultValue)
         {
             var claim = GetClaim(claims, key);
             if (claim == null) { return defaultValue; }
@@ -57,11 +57,11 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="claims"><see cref="IEnumerable{Claim}"/></param>
         /// <param name="key">Claim Key</param>
         /// <returns>Claim string</returns>
-        public static string GetClaim(this IEnumerable<Claim> claims, string key)
+        public static string? GetClaim(this IEnumerable<Claim> claims, string key)
         {
             if (string.IsNullOrEmpty(key)) { return string.Empty; }
 
-            return claims.FirstOrDefault(c => c.Type == key)?.Value ?? string.Empty;
+            return claims.FirstOrDefault(c => c.Type == key)?.Value;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="claimsPrincipal"><see cref="ClaimsPrincipal"/></param>
         /// <param name="keys">Claim Keys (in order of importance)</param>
         /// <returns>Claim string</returns>
-        public static string GetClaim(this ClaimsPrincipal claimsPrincipal, params string[] keys)
+        public static string? GetClaim(this ClaimsPrincipal claimsPrincipal, params string[] keys)
         {
             return claimsPrincipal.Claims.GetClaim(keys);
         }
@@ -81,7 +81,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="claims"><see cref="IEnumerable{Claim}"/></param>
         /// <param name="keys">Claim Keys (in order of importance)</param>
         /// <returns>Claim string</returns>
-        public static string GetClaim(this IEnumerable<Claim> claims, params string[] keys)
+        public static string? GetClaim(this IEnumerable<Claim> claims, params string[] keys)
         {
             if (keys == null || !keys.Any()) { return string.Empty; }
 
@@ -92,7 +92,7 @@ namespace ThingsLibrary.DataType.Extensions
                 if (claim != default) { return claim.Value; }
             }
 
-            return string.Empty;
+            return null;
         }
 
         /// <summary>
@@ -126,15 +126,36 @@ namespace ThingsLibrary.DataType.Extensions
         /// </summary>
         /// <param name="claimsPrincipal">Claims Principal</param>
         /// <returns></returns>
-        public static string GetUserId(this ClaimsPrincipal claimsPrincipal)
+        public static string? GetUserId(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.Claims.GetUserId();
+        }
+
+        /// <summary>
+        /// Get User ID from claims
+        /// </summary>
+        /// <param name="claimsPrincipal">Claims Principal</param>
+        /// <returns></returns>
+        public static string? GetUserId(this IEnumerable<Claim> claims)
         {
             // try to find the user based on the object id (if exists)
-            var userId = claimsPrincipal.Claims.SingleOrDefault(c => c.Type == "sub")?.Value.ToLower();
-            if (userId == null) { userId = claimsPrincipal.Claims.SingleOrDefault(c => c.Type == "oid")?.Value.ToLower(); }
+            var userId = claims.SingleOrDefault(c => c.Type == "sub")?.Value.ToLower();
+            if (userId == null) { userId = claims.SingleOrDefault(c => c.Type == "oid")?.Value.ToLower(); }
 
             userId = userId?.Trim().ToLower();
 
-            return userId ?? string.Empty;
+            return userId;
+        }
+
+
+        /// <summary>
+        /// Get Username from claims
+        /// </summary>
+        /// <param name="claimsPrincipal">Claims Principal</param>
+        /// <returns></returns>
+        public static string? GetUsername(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.Claims.GetUsername();
         }
 
         /// <summary>
@@ -142,26 +163,27 @@ namespace ThingsLibrary.DataType.Extensions
         /// </summary>
         /// <param name="claimsPrincipal">Claims Principal</param>
         /// <returns></returns>
-        public static string GetUsername(this ClaimsPrincipal claimsPrincipal)
+        public static string? GetUsername(this IEnumerable<Claim> claims)
         {
             // find a unique username to use            
-            var username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "unique_name")?.Value;
-            if (username == default) { username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "preferred_username")?.Value; }
-            if (username == default) { username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "upn")?.Value; }
-            if (username == default) { username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "username")?.Value; }
-            if (username == default) { username = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "email")?.Value; }
+            var username = claims.FirstOrDefault(x => x.Type == "unique_name")?.Value;
+            if (username == default) { username = claims.FirstOrDefault(x => x.Type == "preferred_username")?.Value; }
+            if (username == default) { username = claims.FirstOrDefault(x => x.Type == "upn")?.Value; }
+            if (username == default) { username = claims.FirstOrDefault(x => x.Type == "username")?.Value; }
+            if (username == default) { username = claims.FirstOrDefault(x => x.Type == "email")?.Value; }
 
             username = username?.Trim().ToLower();
 
-            return username ?? string.Empty;
+            return username;
         }
+                
 
         /// <summary>
         /// Get email address from claims
         /// </summary>
         /// <param name="claimsPrincipal">Claims Principal</param>
         /// <returns></returns>
-        public static string GetEmailAddress(this ClaimsPrincipal claimsPrincipal)
+        public static string? GetEmailAddress(this ClaimsPrincipal claimsPrincipal)
         {
             // find a unique username to use
             var email = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
@@ -173,7 +195,33 @@ namespace ThingsLibrary.DataType.Extensions
 
             email = email?.Trim().ToLower();
 
-            return email ?? string.Empty;
+            return email;
+        }
+
+        public static string? GetEmailAddress(this IEnumerable<Claim> claims)
+        {
+            // find a unique username to use
+            var email = claims.FirstOrDefault(x => x.Type == "email")?.Value;
+            if (email == default)
+            {
+                var username = claims.GetUsername();
+                if (IsValidEmail(username)) { email = username; }
+            }
+
+            email = email?.Trim().ToLower();
+
+            return email;
+        }
+
+
+        /// <summary>
+        /// Get first and last name
+        /// </summary>
+        /// <param name="claimsPrincipal">Claims Principal</param>
+        /// <returns></returns>
+        public static (string?, string?) GetNames(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.Claims.GetNames();
         }
 
         /// <summary>
@@ -181,14 +229,14 @@ namespace ThingsLibrary.DataType.Extensions
         /// </summary>
         /// <param name="claimsPrincipal">Claims Principal</param>
         /// <returns></returns>
-        public static (string, string) GetNames(this ClaimsPrincipal claimsPrincipal)
+        public static (string?, string?) GetNames(this IEnumerable<Claim> claims)
         {
-            var givenName = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "given_name")?.Value;
-            var familyName = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "family_name")?.Value;
+            var givenName = claims.FirstOrDefault(x => x.Type == "given_name")?.Value;
+            var familyName = claims.FirstOrDefault(x => x.Type == "family_name")?.Value;
 
             if (string.IsNullOrEmpty(givenName) && string.IsNullOrEmpty(familyName))
             {
-                var fullName = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
+                var fullName = claims.FirstOrDefault(x => x.Type == "name")?.Value;
                 if (fullName != default)
                 {
                     int spacePos = fullName.IndexOf(' ');
@@ -204,10 +252,18 @@ namespace ThingsLibrary.DataType.Extensions
             givenName = givenName?.Trim();
             familyName = familyName?.Trim();
 
-            return (
-                givenName ?? string.Empty,
-                familyName ?? string.Empty
-            );
+            return (givenName, familyName);
+        }
+
+
+        /// <summary>
+        /// Get a display name based on given_name and family_name
+        /// </summary>
+        /// <param name="claimsPrincipal">Claims Principal</param>
+        /// <returns></returns>
+        public static string? GetDisplayName(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.Claims.GetDisplayName();
         }
 
         /// <summary>
@@ -215,9 +271,13 @@ namespace ThingsLibrary.DataType.Extensions
         /// </summary>
         /// <param name="claimsPrincipal">Claims Principal</param>
         /// <returns></returns>
-        public static string GetDisplayName(this ClaimsPrincipal claimsPrincipal)
+        public static string? GetDisplayName(this IEnumerable<Claim> claims)
         {
-            var (givenName, familyName) = claimsPrincipal.GetNames();
+            var name = claims.GetClaim("name");
+            if (!string.IsNullOrEmpty(name)) { return name; }
+
+            var (givenName, familyName) = claims.GetNames();
+            if (givenName == null && familyName == null) { return null; }
 
             return $"{givenName} {familyName}".Trim();
         }
@@ -228,16 +288,27 @@ namespace ThingsLibrary.DataType.Extensions
         /// </summary>
         /// <param name="claimsPrincipal">Claims Principal</param>
         /// <returns></returns>
-        public static string GetPhoneNumber(this ClaimsPrincipal claimsPrincipal)
+        public static string? GetPhoneNumber(this ClaimsPrincipal claimsPrincipal)
         {
-            var phoneNumber = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "phoneNumber")?.Value;
-            if (phoneNumber == default) { phoneNumber = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "phone")?.Value; }
+            return claimsPrincipal.Claims.GetPhoneNumber();
+        }
+
+        /// <summary>
+        /// Get Phone Number from claims
+        /// </summary>
+        /// <param name="claimsPrincipal">Claims Principal</param>
+        /// <returns></returns>
+        public static string? GetPhoneNumber(this IEnumerable<Claim> claims)
+        {
+            var phoneNumber = claims.FirstOrDefault(x => x.Type == "phoneNumber")?.Value;
+            if (phoneNumber == default) { phoneNumber = claims.FirstOrDefault(x => x.Type == "phone")?.Value; }
 
             // we don't want to deal with nulls
             phoneNumber = phoneNumber?.Trim();
 
-            return phoneNumber ?? string.Empty;
+            return phoneNumber;
         }
+
 
         /// <summary>
         /// Check if the email address is valid
@@ -246,6 +317,8 @@ namespace ThingsLibrary.DataType.Extensions
         /// <returns></returns>
         private static bool IsValidEmail(string email)
         {
+            if (string.IsNullOrEmpty(email)) { return false; }
+
             var trimmedEmail = email.Trim();
 
             if (trimmedEmail.EndsWith(".")) { return false; }

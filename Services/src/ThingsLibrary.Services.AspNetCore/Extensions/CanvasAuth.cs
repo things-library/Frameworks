@@ -5,24 +5,23 @@
 // </copyright>
 // ================================================================================
 
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+
 using Serilog;
+
 using ThingsLibrary.Schema.Canvas;
 
 
@@ -44,6 +43,8 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                 Log.Debug("+ {AppCapability}", "Microsoft Identity");
                 authBuilder.AddMicrosoftIdentityWebApp(options =>
                 {
+                    options.GetClaimsFromUserInfoEndpoint = true;
+
                     configuration.Bind("AzureAd", options);
                     //options.Events = new JwtBearerEvents
                     //{
@@ -93,7 +94,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
         {
             // require jwt section
             if (App.Service.Canvas?.Auth == null) { throw new ArgumentException("Canvas Auth must be defined."); }
-            if (App.Service.Canvas.Auth?.Jwt == null) { throw new ArgumentException("JWT must be included to add auth security."); }
+            //if (App.Service.Canvas.Auth?.Jwt == null) { throw new ArgumentException("JWT must be included to add auth security."); }
 
             var auth = App.Service.Canvas.Auth;
             if (auth.OpenId != null && auth.Cookie == null) { throw new ArgumentException("OpenID must include a Cookie definition."); }
@@ -112,7 +113,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                 {
                     options.DefaultAuthenticateScheme = "JWT_OR_OIDC";
                     options.DefaultChallengeScheme = "JWT_OR_OIDC";
-                    options.DefaultScheme = "JWT_OR_OIDC";
+                    options.DefaultScheme = "JWT_OR_OIDC"; 
                 });
 
                 authBuilder.AddPolicyScheme("JWT_OR_OIDC", "JWT_OR_OIDC", options =>
@@ -137,7 +138,11 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             else if (auth.OpenId != null)
             {
                 Log.Debug("+ {AppCapability}", "OpenID Authentication (OIDC)");
-                authBuilder = services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme);
+                authBuilder = services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                });
             }
             else// if(auth.Jwt != null)
             {
@@ -205,13 +210,18 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             {
                 Log.Debug("+ {AppCapability}", "Microsoft Identity");
                 authBuilder.AddMicrosoftIdentityWebApp(azureAdSection);
+                
+                services.PostConfigure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
+                {
+                    // The claim in the Jwt token where App roles are available.
+                    options.TokenValidationParameters.NameClaimType = "name";
+                    options.TokenValidationParameters.RoleClaimType = "roles";
+                });
             }
 
-            // ================================================================================
+            // ====================================================================================================            
             // AUTHORIZATION
-            // ====================================================================================================
-            // AUTHORIZATION Config
-            // ====================================================================================================
+            // ====================================================================================================            
             Log.Debug("======================================================================");
             Log.Debug("Service Authentication");
             Log.Debug("- App Roles:");
@@ -221,7 +231,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             });
 
             services.AddAuthorization(options =>
-            {
+            {                
                 // add all the role -> claim matches            
                 Log.Debug("- Policies:");
                 auth.PolicyClaimsMap.ForEach(map =>
@@ -233,13 +243,15 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                     {
                         if (!auth.AppRoles.Contains(role)) { throw new ArgumentException($"Policy Claims Map in Canvas:Auth references missing role '{role}'"); }
                     }
-                    options.AddPolicy(map.Key, policy => policy.RequireClaim(App.Service.Canvas.Auth.Jwt!.RoleClaimType, map.Value));
+                    options.AddPolicy(map.Key, policy => policy.RequireClaim("role", map.Value));
                 });
-                
-                // By default, all incoming requests will be authorized according to the default policy.
-                options.FallbackPolicy = options.DefaultPolicy;
-            });
 
+                // ================================================================================
+                // REQUIRE EVERYONE TO LOGIN                
+                // By default, all incoming requests will be authorized according to the default policy.
+                options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); //options.DefaultPolicy;
+            });            
+            
             return authBuilder;
         }
 
@@ -282,6 +294,11 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                 if (!authJwt.DisableValidation)
                 {
                     //options.TokenValidationParameters = App.Service.OAuth2Client!.GetTokenValidationParametersAsync().Result;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = authJwt.NameClaimType,
+                        RoleClaimType = authJwt.RoleClaimType
+                    };
                 }
                 else
                 {
@@ -306,8 +323,6 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                         RoleClaimType = authJwt.RoleClaimType
                     };
                 }
-
-                options.Events ??= new JwtBearerEvents();                
             });
         }
         
@@ -331,7 +346,6 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                 authBuilder = services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme);
             }
 
-
             authBuilder.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
             {
                 options.Authority = authOpenId.Authority.OriginalString;
@@ -352,9 +366,28 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+
                     NameClaimType = "name",
                     RoleClaimType = "roles"
-                };                
+                };
+
+                //Additional config snipped
+                //options.Events = new OpenIdConnectEvents
+                //{
+                //    OnTokenValidated = async context =>
+                //    {
+                //        //var identity = context.Principal.Identity as ClaimsIdentity;
+                    
+                //        //if (identity != null && IsEmployee()
+                //        //{
+                //        //    identity.AddClaim(new Claim("roles", "Employee"));
+                //        //}
+                //    }
+                //};
             });
         }
 
