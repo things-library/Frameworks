@@ -6,7 +6,7 @@
 // ================================================================================
 
 using System.Security.Claims;
-using ThingsLibrary.Schema.Canvas.Base;
+using ThingsLibrary.Schema.Library.Base;
 
 namespace ConnectedServices.Portal.Extensions
 {

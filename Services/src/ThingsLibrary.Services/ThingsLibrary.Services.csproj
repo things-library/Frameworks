@@ -29,7 +29,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\Schemas\src\csharp\ThingsLibrary.Schema.Canvas\ThingsLibrary.Schema.Canvas.csproj" />
 		<ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
 	</ItemGroup>
 
