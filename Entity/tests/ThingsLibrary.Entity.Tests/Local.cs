@@ -1,6 +1,6 @@
-using Starlight.Entity.Local;
+using ThingsLibrary.Entity.Local;
 
-namespace Starlight.Entity.Tests
+namespace ThingsLibrary.Entity.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class LocalUnitTests

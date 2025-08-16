@@ -1,7 +1,7 @@
-using Starlight.Entity.Mongo;
-using Starlight.Entity.Mongo.Models;
+using ThingsLibrary.Entity.Mongo;
+using ThingsLibrary.Entity.Mongo.Models;
 
-namespace Starlight.Entity.Tests
+namespace ThingsLibrary.Entity.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class MongoUnitTests

@@ -1,4 +1,4 @@
-﻿namespace Starlight.Entity.Tests
+﻿namespace ThingsLibrary.Entity.Tests
 {
     [ExcludeFromCodeCoverage]
     public class TestData

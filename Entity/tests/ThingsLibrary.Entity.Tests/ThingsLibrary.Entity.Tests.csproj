@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<ProductName>Starlight.Entity.Tests</ProductName>
+		<ProductName>ThingsLibrary.Entity.Tests</ProductName>
 		<Title>Cloud Data Entity Tests</Title>
 		<Description>This is the core entity tests project</Description>
 
@@ -33,9 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Starlight.Entity.AzureTable\Starlight.Entity.AzureTable.csproj" />
-	  <ProjectReference Include="..\..\src\Starlight.Entity.Local\Starlight.Entity.Local.csproj" />
-	  <ProjectReference Include="..\..\src\Starlight.Entity.Mongo\Starlight.Entity.Mongo.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Entity.Mongo\ThingsLibrary.Entity.Mongo.csproj" />
 	</ItemGroup>
 
 </Project>

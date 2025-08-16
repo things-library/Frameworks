@@ -6,5 +6,5 @@ global using System.ComponentModel.DataAnnotations;
 global using System.Diagnostics.CodeAnalysis;
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-global using Starlight.DataType.Extensions;
+global using ThingsLibrary.DataType.Extensions;
 

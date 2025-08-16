@@ -28,8 +28,4 @@
 	  <ProjectReference Include="..\ThingsLibrary.Entity\ThingsLibrary.Entity.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Audit\" />
-	</ItemGroup>
-
 </Project>

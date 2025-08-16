@@ -1,6 +1,6 @@
-using Starlight.Entity.AzureTable;
+using ThingsLibrary.Entity.AzureTable;
 
-namespace Starlight.Entity.Tests
+namespace ThingsLibrary.Entity.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class AzureTableUnitTests
