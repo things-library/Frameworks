@@ -46,14 +46,11 @@ namespace ThingsLibrary.DataType
         /// Create Json Response
         /// </summary>
         /// <param name="data">Data</param>        
-        public ActionResponse(TEntity data, string title = "Success")
+        public ActionResponse(TEntity data, string displayMessage = "Success", string? errorMessage = null) : base(HttpStatusCode.OK, displayMessage, errorMessage)
         {
             var type = typeof(TEntity);
             this.Type = $"{type.Namespace}.{type.Name}";
-            
-            this.StatusCode = HttpStatusCode.OK;
-            this.DisplayMessage = title;
-
+                        
             this.Data = data;
         }
 
