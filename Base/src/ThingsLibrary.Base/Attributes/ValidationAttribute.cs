@@ -157,7 +157,7 @@ namespace ThingsLibrary.Attributes
                 return compositeResults;
             }
 
-            return ValidationResult.Success;
+            return ValidationResult.Success!;
         }
     }
 

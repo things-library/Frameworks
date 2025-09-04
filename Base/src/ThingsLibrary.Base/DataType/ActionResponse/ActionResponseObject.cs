@@ -46,12 +46,17 @@ namespace ThingsLibrary.DataType
         /// Create Json Response
         /// </summary>
         /// <param name="data">Data</param>        
-        public ActionResponse(TEntity data, string displayMessage = "Success", string? errorMessage = null) : base(HttpStatusCode.OK, displayMessage, errorMessage)
+        public ActionResponse(TEntity data, string displayMessage = "Success", string? eventCode = null) : base(HttpStatusCode.OK, displayMessage, eventCode)
         {
             var type = typeof(TEntity);
             this.Type = $"{type.Namespace}.{type.Name}";
-                        
+
             this.Data = data;
+
+            if (!string.IsNullOrEmpty(eventCode))
+            {
+                this.EventCode = eventCode;
+            }            
         }
 
         /// <summary>
@@ -59,7 +64,7 @@ namespace ThingsLibrary.DataType
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/></param>
         /// <param name="title">User Friendly Title</param>
-        public ActionResponse(HttpStatusCode statusCode, string displayMessage, string? errorMessage = null) : base(statusCode, displayMessage, errorMessage)
+        public ActionResponse(HttpStatusCode statusCode, string displayMessage, string eventCode) : base(statusCode, displayMessage, eventCode)
         {
             //nothing
         }

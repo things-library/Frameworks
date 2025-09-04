@@ -18,7 +18,10 @@ namespace ThingsLibrary.DataType.Extensions
             {
                 var converter = TypeDescriptor.GetConverter(typeof(T));
                 
-                return (T)converter.ConvertFrom(value);
+                var convertedValue = (T?)converter.ConvertFrom(value);
+                if(convertedValue == null) { throw new ArgumentException("Unable to convert value."); }
+
+                return convertedValue;
             }
 
             return (T)Convert.ChangeType(value, typeof(T));

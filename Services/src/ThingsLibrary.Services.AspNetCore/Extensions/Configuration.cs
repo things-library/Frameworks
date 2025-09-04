@@ -5,8 +5,6 @@
 // </copyright>
 // ================================================================================
 
-using Serilog;
-
 namespace ThingsLibrary.Services.AspNetCore.Extensions
 {
     public static class ConfigurationExtensions

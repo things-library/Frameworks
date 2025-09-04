@@ -30,7 +30,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="key">Claim Key</param>
         /// <param name="defaultValue">Default value if key is not found.</param>
         /// <returns>Claim as requested data type, or DefaultValue if key not found."/></returns>
-        public static T? GetClaim<T>(this ClaimsPrincipal claimsPrincipal, string key, T defaultValue)
+        public static T? GetClaim<T>(this ClaimsPrincipal claimsPrincipal, string key, T? defaultValue)
         {
             return claimsPrincipal.Claims.GetClaim<T>(key, defaultValue);
         }
@@ -43,7 +43,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="key">Claim Key</param>
         /// <param name="defaultValue">Default value if key is not found.</param>
         /// <returns>Claim as requested data type, or DefaultValue if key not found."/></returns>
-        public static T? GetClaim<T>(this IEnumerable<Claim> claims, string key, T defaultValue)
+        public static T? GetClaim<T>(this IEnumerable<Claim> claims, string key, T? defaultValue)
         {
             var claim = GetClaim(claims, key);
             if (claim == null) { return defaultValue; }
@@ -315,7 +315,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        private static bool IsValidEmail(string email)
+        private static bool IsValidEmail(string? email)
         {
             if (string.IsNullOrEmpty(email)) { return false; }
 

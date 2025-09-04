@@ -45,10 +45,10 @@ namespace ThingsLibrary.IO
         /// <summary>
         /// Copies a root file to a new destination path
         /// </summary>
-        /// <param name="rootDirPath"></param>
-        /// <param name="rootPartialName"></param>
-        /// <param name="destinationPath"></param>
-        /// <param name="isOverwrite"></param>
+        /// <param name="rootDirPath">Root directory path</param>
+        /// <param name="rootPartialName">Partial name of the root file</param>
+        /// <param name="destinationPath">Destination directory path</param>
+        /// <param name="isOverwrite">Whether to overwrite existing files at the destination</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         public static void RootFileCopy(string rootDirPath, string rootPartialName, string destinationPath, bool isOverwrite = true)
@@ -171,7 +171,7 @@ namespace ThingsLibrary.IO
         /// <summary>
         /// Verifies if the file name is valid for the running operating system.
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">Filename to validate</param>
         /// <returns>True if string is valid for a filename</returns>
         /// <remarks>Windows Invalid Characters: \ / : * ? " < > |</remarks>
         public static bool IsFileNameValid(string filename)
@@ -180,6 +180,11 @@ namespace ThingsLibrary.IO
             return filename.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
         }
 
+        /// <summary>
+        /// Returns a valid file name by removing invalid characters.
+        /// </summary>
+        /// <param name="filename">Filename to sanitize</param>
+        /// <returns>Sanitized filename</returns>
         public static string GetValidFileName(string filename)
         {
             return string.Join("", filename.Split(Path.GetInvalidFileNameChars()));
@@ -1211,6 +1216,12 @@ namespace ThingsLibrary.IO
 
         #region --- Compression ---
 
+        /// <summary>
+        /// Compresses a file to a zip archive.
+        /// </summary>
+        /// <param name="sourceFilePath">Source file path</param>
+        /// <param name="destinationFilePath">Destination zip file path</param>
+        /// <param name="overwrite">Whether to overwrite the destination file if it exists</param>
         public static void CompressToZip(string sourceFilePath, string destinationFilePath, bool overwrite)
         {
             if (System.IO.File.Exists(destinationFilePath))

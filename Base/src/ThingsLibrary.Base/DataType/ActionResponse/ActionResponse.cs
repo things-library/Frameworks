@@ -5,10 +5,10 @@
 // </copyright>
 // ================================================================================
 
+using System.Net;
+
 using ThingsLibrary.DataType.Extensions;
 using ThingsLibrary.DataType.Json.Converters;
-using System.Net;
-using System;
 
 namespace ThingsLibrary.DataType
 {
@@ -116,15 +116,24 @@ namespace ThingsLibrary.DataType
         /// Create Json Response
         /// </summary>
         /// <param name="statusCode"><see cref="System.Net.HttpStatusCode"/></param>
-        /// <param name="title">User Friendly Title</param>
-        public ActionResponse(HttpStatusCode statusCode, string displayMessage, string? errorMessage = null)
+        /// <param name="displayMessage">User Friendly Title</param>
+        public ActionResponse(HttpStatusCode statusCode, string displayMessage, string? eventCode = null)
         {
             this.StatusCode = statusCode;
             this.DisplayMessage = displayMessage;
-            if (!string.IsNullOrEmpty(errorMessage))
-            {                
-                this.Exception = new ActionException(errorMessage);
-            }            
+            
+            if(eventCode != null)
+            {
+                this.EventCode = eventCode;
+            }
+            else if (this.IsSuccessStatusCode)
+            {
+                this.EventCode = "success";
+            }
+            //if (!string.IsNullOrEmpty(errorMessage))
+            //{
+            //    this.Exception = new ActionException(errorMessage);
+            //}
         }
 
         /// <summary>
@@ -146,26 +155,49 @@ namespace ThingsLibrary.DataType
         /// Create json response based on exception
         /// </summary>
         /// <param name="exception"></param>
-        public ActionResponse(Exception exception, string? displayMessage = null)
+        public ActionResponse(Exception exception, string? displayMessage = null, string? eventCode = null)
         {
             this.StatusCode = HttpStatusCode.InternalServerError;
             this.DisplayMessage = (string.IsNullOrEmpty(displayMessage) ? exception.Message : displayMessage);
+
             this.Exception = new ActionException(exception);
             this.Errors.Add("exception", exception.Message);
+
+            if (!string.IsNullOrEmpty(eventCode))
+            {
+                this.EventCode = eventCode;
+            }
+        }
+
+        /// <summary>
+        /// Create json response based on exception
+        /// </summary>
+        /// <param name="exception"></param>
+        public ActionResponse(ActionException exception, string? displayMessage = null, string? eventCode = null)
+        {
+            this.StatusCode = HttpStatusCode.InternalServerError;
+            this.DisplayMessage = (string.IsNullOrEmpty(displayMessage) ? exception.Message : displayMessage);
+
+            this.Exception = exception;
+            this.Errors.Add("exception", exception.Message);
+
+            if (!string.IsNullOrEmpty(eventCode))
+            {
+                this.EventCode = eventCode;
+            }
         }
 
         /// <summary>
         /// Create Json Response based on validation results
         /// </summary>
         /// <param name="results">Validation Results</param>
-        public ActionResponse(ICollection<ValidationResult> results)
+        public ActionResponse(ICollection<ValidationResult> results, string displayMessage = "One or more validation errors occurred.")
         {
             if (results == null) { return; }
             if (results.Count == 0) { return; }
 
             this.StatusCode = HttpStatusCode.BadRequest;
-            this.DisplayMessage = "One or more validation errors occurred.";
-
+            this.DisplayMessage = displayMessage;
 
             // show the first error as the main error.   
             this.Errors = [];

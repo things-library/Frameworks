@@ -32,7 +32,13 @@ namespace ThingsLibrary.DataType.Json.Converters
 
                 reader.Read();
 
-                dictionary.Add(propertyName!, ExtractValue(ref reader, options));
+                var value = ExtractValue(ref reader, options);
+                if(value == null)
+                {
+                    throw new ArgumentException("Unable to extract value");
+                }
+
+                dictionary.Add(propertyName!, value);
             }
 
             return dictionary;

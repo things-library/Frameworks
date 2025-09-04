@@ -20,7 +20,7 @@ namespace ThingsLibrary
         /// If a reference Type or a System.Void Type is supplied, this method always returns null.  If a value type is supplied which is not publicly visible or which contains generic parameters, this method will fail with an exception.
         /// </remarks>
         /// <seealso cref="GetDefault(Type)"/>
-        public static T GetDefault<T>()
+        public static T? GetDefault<T>()
         {
             var defaultValue = GetDefault(typeof(T));
             if(defaultValue == null) { return default; }

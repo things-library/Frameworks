@@ -29,7 +29,7 @@ namespace ThingsLibrary.DataType.Extensions
         /// <param name="source"></param>
         /// <param name="collection"></param>
         /// <param name="replaceDuplicates"></param>
-        public static void AddRange<T, S>(this IDictionary<T, S> source, Dictionary<T, S> collection, bool replaceDuplicates = true)
+        public static void AddRange<T, S>(this IDictionary<T, S> source, IDictionary<T, S> collection, bool replaceDuplicates = true) where T : notnull
         {
             foreach (var item in collection)
             {
