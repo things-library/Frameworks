@@ -66,7 +66,9 @@ namespace ThingsLibrary.Services.AspNetCore
 
             // configure servides
             this.Builder.Host.ConfigureServices((context, services) =>
-            {                                
+            {
+                services.AddSeriLogging(context.Configuration);
+                
                 // Register the service canvas singletons and as a static instance
                 this.Canvas = services.AddServiceCanvas(context.Configuration);                
 
