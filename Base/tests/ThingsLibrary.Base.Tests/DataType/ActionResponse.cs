@@ -5,6 +5,8 @@
 // </copyright>
 // ================================================================================
 
+using System.Net;
+
 namespace ThingsLibrary.Base.Tests.DataType
 {
     [TestClass, ExcludeFromCodeCoverage]
@@ -42,10 +44,11 @@ namespace ThingsLibrary.Base.Tests.DataType
         [TestMethod]
         public void Constructor_Parameters()
         {
-            var response = new ThingsLibrary.DataType.ActionResponse<int>(System.Net.HttpStatusCode.IMUsed, "Test Message");
+            var response = new ThingsLibrary.DataType.ActionResponse<int>(HttpStatusCode.IMUsed, "Test Message", "test_message");
 
-            Assert.AreEqual(System.Net.HttpStatusCode.IMUsed, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.IMUsed, response.StatusCode);
             Assert.AreEqual("Test Message", response.DisplayMessage);
+            Assert.AreEqual("test_message", response.EventCode);
         }
 
         [TestMethod]

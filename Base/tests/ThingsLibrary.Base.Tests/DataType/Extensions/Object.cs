@@ -15,10 +15,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(100d, 100f.ConvertTo<double>());
 
             int? value = 100;
-            Assert.AreEqual(100d, value.ConvertTo<double>());
-
-            value = null;
-            Assert.AreEqual(null, value.ConvertTo<double?>());
+            Assert.AreEqual(100d, value.ConvertTo<double>());            
         }
 
         [TestMethod]

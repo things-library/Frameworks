@@ -29,7 +29,7 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.8" />
-		<PackageReference Include="Microsoft.Identity.Web.UI" Version="3.13.1" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="3.14.0" />
 		<PackageReference Include="ThingsLibrary.Schema.Canvas" Version="0.4.4" />
 	</ItemGroup>
 
