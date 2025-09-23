@@ -41,7 +41,7 @@ namespace ThingsLibrary.DataType
         /// Data type of the 'data' field if present
         /// </summary>
         [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public string Type { get; init; } = string.Empty;
+        public string Type { get; init; } = "System.String"; //unless otherwise specified
 
         /// <summary>
         /// Http status code of the response

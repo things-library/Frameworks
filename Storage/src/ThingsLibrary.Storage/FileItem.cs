@@ -63,7 +63,7 @@ namespace ThingsLibrary.Storage
             this.Name = System.IO.Path.GetFileName(resourcePath);
 
             // keep track of the entire resource path
-            this.Attributes["resource_key"] = resourcePath;
+            this.Tags["resource_key"] = resourcePath;
         }
 
     }
