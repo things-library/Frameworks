@@ -8,10 +8,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+
 using Serilog;
 using Serilog.Events;
+
 using ThingsLibrary.Schema.Canvas;
-using ThingsLibrary.Services.AspNetCore.Extensions;
 using ThingsLibrary.Services.AspNetCore.HealthChecks;
 
 namespace ThingsLibrary.Services.AspNetCore

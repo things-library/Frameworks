@@ -10,19 +10,19 @@ namespace ThingsLibrary.Tests.Math.Statistics
         [TestMethod]
         public void AnalysisEntity_Init()
         {
-            var analysis = new AnalysisEntity();
+            var analysis = new AnalysisEntity8();
 
             Assert.AreEqual(byte.MinValue, analysis.Min);
             Assert.AreEqual(byte.MaxValue, analysis.Max);
             Assert.AreEqual(0, analysis.Sum);
             Assert.AreEqual(0, analysis.SumOfDerivation);
             Assert.AreEqual(0, analysis.Count);
-            Assert.AreEqual(0, analysis.Range);
+            Assert.AreEqual(0, analysis.Range());
 
-            Assert.AreEqual(0, analysis.Mean);
-            Assert.AreEqual(0, analysis.StdDev);
-            Assert.AreEqual(0, analysis.StdErr);
-            Assert.AreEqual(0, analysis.Variance);
+            Assert.AreEqual(0, analysis.Mean());
+            Assert.AreEqual(0, analysis.StdDev());
+            Assert.AreEqual(0, analysis.StdErr());
+            Assert.AreEqual(0, analysis.Variance());
 
             Assert.AreEqual(0, analysis.CalculateMode());
             Assert.AreEqual(0, analysis.GetLimit(0));
@@ -34,7 +34,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            analysis = new AnalysisEntity();
+            analysis = new AnalysisEntity8();
             analysis.Add(list.ToArray());
 
             var analysis2 = new AnalysisEntity(analysis.Min, analysis.Max, analysis.Sum, analysis.SumOfDerivation, analysis.Count);
@@ -44,16 +44,16 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(695, analysis2.Sum);
             Assert.AreEqual(110525, analysis2.SumOfDerivation);
             Assert.AreEqual(8, analysis2.Count);
-            Assert.AreEqual(215, analysis2.Range);
+            Assert.AreEqual(215, analysis2.Range());
 
-            Assert.AreEqual(86.875, analysis2.Mean);
+            Assert.AreEqual(86.875, analysis2.Mean());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance(), 3));
 
-            Assert.AreEqual(analysis2.Mean, analysis.GetLimit(0));
-            Assert.AreEqual(analysis2.Mean + analysis2.StdDev, analysis.GetLimit(1));
+            Assert.AreEqual(analysis2.Mean(), analysis.GetLimit(0));
+            Assert.AreEqual(analysis2.Mean() + analysis2.StdDev(), analysis.GetLimit(1));
 
             Assert.AreEqual(0, analysis.GetByteLimit(-200));
             Assert.AreEqual(255, analysis.GetByteLimit(200));
@@ -62,7 +62,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
         [TestMethod]
         public void AnalysisEntity_Frequency()
         {
-            var analysis = new AnalysisEntity();
+            var analysis = new AnalysisEntity8();
             analysis.Add(100, 10);
             analysis.Add(111, 0);   // 0 frequency
 
@@ -102,7 +102,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            var analysis = new AnalysisEntity();
+            var analysis = new AnalysisEntity8();
             analysis.Add(list.ToArray());
 
             //Verified with https://www.calculator.net/statistics-calculator.html
@@ -112,14 +112,14 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(695, analysis.Sum);
             Assert.AreEqual(110525, analysis.SumOfDerivation);
             Assert.AreEqual(8, analysis.Count);
-            Assert.AreEqual(215, analysis.Range);
+            Assert.AreEqual(215, analysis.Range());
 
-            Assert.AreEqual(86.875, analysis.Mean);
+            Assert.AreEqual(86.875, analysis.Mean());
             Assert.AreEqual(100, analysis.CalculateMode());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance(), 3));
         }
 
         [TestMethod]
@@ -131,49 +131,49 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            var rootAnalysis = new AnalysisEntity();
+            var rootAnalysis = new AnalysisEntity8();
             rootAnalysis.Add(list.ToArray());
 
             // add the root to it and we should get the same expected values since the original was blank
-            var analysis = new AnalysisEntity();
+            var analysis = new AnalysisEntity8();
             analysis.Add(rootAnalysis);
 
-            analysis.Add((AnalysisEntity)null);
-            analysis.Add(new AnalysisEntity());
+            analysis.Add((AnalysisEntity8)null);
+            analysis.Add(new AnalysisEntity8());
 
             Assert.AreEqual(5, analysis.Min);
             Assert.AreEqual(220, analysis.Max);
             Assert.AreEqual(695, analysis.Sum);
             Assert.AreEqual(110525, analysis.SumOfDerivation);
             Assert.AreEqual(8, analysis.Count);
-            Assert.AreEqual(215, analysis.Range);
+            Assert.AreEqual(215, analysis.Range());
 
-            Assert.AreEqual(86.875, analysis.Mean);
+            Assert.AreEqual(86.875, analysis.Mean());
             Assert.AreEqual(100, analysis.CalculateMode());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance(), 3));
 
 
             // should be the same output initalizing it this way as well
-            var analysis2 = new AnalysisEntity(analysis.Min, analysis.Max, analysis.Sum, analysis.SumOfDerivation, analysis.Count);
+            var analysis2 = new AnalysisEntity8(analysis.Min, analysis.Max, analysis.Sum, analysis.SumOfDerivation, analysis.Count);
 
             Assert.AreEqual(5, analysis2.Min);
             Assert.AreEqual(220, analysis2.Max);
             Assert.AreEqual(695, analysis2.Sum);
             Assert.AreEqual(110525, analysis2.SumOfDerivation);
             Assert.AreEqual(8, analysis2.Count);
-            Assert.AreEqual(215, analysis2.Range);
+            Assert.AreEqual(215, analysis2.Range());
 
-            Assert.AreEqual(86.875, analysis2.Mean);
+            Assert.AreEqual(86.875, analysis2.Mean());
             //NOTE: MODE WILL NOT COME OVER SINCE WE DONT PULL OVER THE HISTOGRAM
-            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance(), 3));
 
             // Add a new min and max and verify
-            var analysis3 = new AnalysisEntity();
+            var analysis3 = new AnalysisEntity8();
             analysis3.Add(new List<byte>() { 2, 225 }.ToArray());
 
             analysis2.Add(analysis3);
@@ -189,7 +189,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            var analysis = new AnalysisEntity();
+            var analysis = new AnalysisEntity8();
             analysis.Add(list.ToArray());
 
             var clone = analysis.Clone();
@@ -214,7 +214,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            var analysis = new AnalysisEntity();
+            var analysis = new AnalysisEntity8();
             analysis.Add(list.ToArray());
 
             //Verified with https://www.calculator.net/statistics-calculator.html
@@ -228,7 +228,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(1, analysis.Histogram[220]);
 
             // ADD HISTOGRAM TEST
-            var analysis2 = new AnalysisEntity(analysis.Histogram);
+            var analysis2 = new AnalysisEntity8(analysis.Histogram);
             
             Assert.AreEqual(1, analysis2.Histogram[5]);
             Assert.AreEqual(1, analysis2.Histogram[10]);
@@ -250,7 +250,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            var analysis = new AnalysisEntity();
+            var analysis = new AnalysisEntity8();
             analysis.Add(list.ToArray());
 
             //Verified with https://www.calculator.net/statistics-calculator.html
@@ -277,12 +277,12 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(0, analysis.Sum);
             Assert.AreEqual(0, analysis.SumOfDerivation);
             Assert.AreEqual(0, analysis.Count);
-            Assert.AreEqual(0, analysis.Range);
+            Assert.AreEqual(0, analysis.Range());
 
-            Assert.AreEqual(0, analysis.Mean);
-            Assert.AreEqual(0, analysis.StdDev);
-            Assert.AreEqual(0, analysis.StdErr);
-            Assert.AreEqual(0, analysis.Variance);
+            Assert.AreEqual(0, analysis.Mean());
+            Assert.AreEqual(0, analysis.StdDev());
+            Assert.AreEqual(0, analysis.StdErr());
+            Assert.AreEqual(0, analysis.Variance());
 
             Assert.AreEqual(0, analysis.CalculateMode());
             Assert.AreEqual(0, analysis.GetLimit(0));
@@ -303,16 +303,16 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(695, analysis2.Sum);
             Assert.AreEqual(110525, analysis2.SumOfDerivation);
             Assert.AreEqual(8, analysis2.Count);
-            Assert.AreEqual(215, analysis2.Range);
+            Assert.AreEqual(215, analysis2.Range());
 
-            Assert.AreEqual(86.875, analysis2.Mean);
+            Assert.AreEqual(86.875, analysis2.Mean());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance(), 3));
 
-            Assert.AreEqual(analysis2.Mean, analysis.GetLimit(0));
-            Assert.AreEqual(analysis2.Mean + analysis2.StdDev, analysis.GetLimit(1));
+            Assert.AreEqual(analysis2.Mean(), analysis.GetLimit(0));
+            Assert.AreEqual(analysis2.Mean() + analysis2.StdDev(), analysis.GetLimit(1));
 
             Assert.AreEqual(ushort.MinValue, analysis.GetUshortLimit(-200000));
             Assert.AreEqual(ushort.MaxValue, analysis.GetUshortLimit(20000));
@@ -371,14 +371,14 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(695, analysis.Sum);
             Assert.AreEqual(110525, analysis.SumOfDerivation);
             Assert.AreEqual(8, analysis.Count);
-            Assert.AreEqual(215, analysis.Range);
+            Assert.AreEqual(215, analysis.Range());
 
-            Assert.AreEqual(86.875, analysis.Mean);
+            Assert.AreEqual(86.875, analysis.Mean());
             Assert.AreEqual(100, analysis.CalculateMode());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance(), 3));
         }
 
         [TestMethod]
@@ -405,14 +405,14 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(695, analysis.Sum);
             Assert.AreEqual(110525, analysis.SumOfDerivation);
             Assert.AreEqual(8, analysis.Count);
-            Assert.AreEqual(215, analysis.Range);
+            Assert.AreEqual(215, analysis.Range());
 
-            Assert.AreEqual(86.875, analysis.Mean);
+            Assert.AreEqual(86.875, analysis.Mean());
             Assert.AreEqual(100, analysis.CalculateMode());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance(), 3));
 
             // should be the same output initalizing it this way as well
             var analysis2 = new AnalysisEntity16(analysis.Min, analysis.Max, analysis.Sum, analysis.SumOfDerivation, analysis.Count);
@@ -422,13 +422,13 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(695, analysis2.Sum);
             Assert.AreEqual(110525, analysis2.SumOfDerivation);
             Assert.AreEqual(8, analysis2.Count);
-            Assert.AreEqual(215, analysis2.Range);
+            Assert.AreEqual(215, analysis2.Range());
 
-            Assert.AreEqual(86.875, analysis2.Mean);
+            Assert.AreEqual(86.875, analysis2.Mean());
             //NOTE: MODE WILL NOT COME OVER SINCE WE DONT PULL OVER THE HISTOGRAM
-            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance(), 3));
 
             // Add a new min and max and verify
             var analysis3 = new AnalysisEntity16();
@@ -527,19 +527,19 @@ namespace ThingsLibrary.Tests.Math.Statistics
         [TestMethod]
         public void AnalysisEntity64_Init()
         {
-            var analysis = new AnalysisEntity64();
+            var analysis = new AnalysisEntity();
 
             Assert.AreEqual(double.MinValue, analysis.Min);
             Assert.AreEqual(double.MaxValue, analysis.Max);
             Assert.AreEqual(0, analysis.Sum);
             Assert.AreEqual(0, analysis.SumOfDerivation);
             Assert.AreEqual(0, analysis.Count);
-            Assert.AreEqual(0, analysis.Range);
+            Assert.AreEqual(0, analysis.Range());
 
-            Assert.AreEqual(0, analysis.Mean);
-            Assert.AreEqual(0, analysis.StdDev);
-            Assert.AreEqual(0, analysis.StdErr);
-            Assert.AreEqual(0, analysis.Variance);
+            Assert.AreEqual(0, analysis.Mean());
+            Assert.AreEqual(0, analysis.StdDev());
+            Assert.AreEqual(0, analysis.StdErr());
+            Assert.AreEqual(0, analysis.Variance());
 
             Assert.AreEqual(0, analysis.GetLimit(0));
 
@@ -550,26 +550,26 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            analysis = new AnalysisEntity64();
+            analysis = new AnalysisEntity();
             analysis.Add(list.ToArray());
 
-            var analysis2 = new AnalysisEntity64(analysis.Min, analysis.Max, analysis.Sum, analysis.SumOfDerivation, analysis.Count);
+            var analysis2 = new AnalysisEntity(analysis.Min, analysis.Max, analysis.Sum, analysis.SumOfDerivation, analysis.Count);
 
             Assert.AreEqual(5, analysis2.Min);
             Assert.AreEqual(220, analysis2.Max);
             Assert.AreEqual(695, analysis2.Sum);
             Assert.AreEqual(110525, analysis2.SumOfDerivation);
             Assert.AreEqual(8, analysis2.Count);
-            Assert.AreEqual(215, analysis2.Range);
+            Assert.AreEqual(215, analysis2.Range());
 
-            Assert.AreEqual(86.875, analysis2.Mean);
+            Assert.AreEqual(86.875, analysis2.Mean());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance(), 3));
 
-            Assert.AreEqual(analysis2.Mean, analysis.GetLimit(0));
-            Assert.AreEqual(analysis2.Mean + analysis2.StdDev, analysis.GetLimit(1));
+            Assert.AreEqual(analysis2.Mean(), analysis.GetLimit(0));
+            Assert.AreEqual(analysis2.Mean() + analysis2.StdDev(), analysis.GetLimit(1));
         }
 
         [TestMethod]
@@ -609,7 +609,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            var analysis = new AnalysisEntity64();
+            var analysis = new AnalysisEntity();
             analysis.Add(list.ToArray());
 
             //Verified with https://www.calculator.net/statistics-calculator.html
@@ -619,13 +619,13 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(695, analysis.Sum);
             Assert.AreEqual(110525, analysis.SumOfDerivation);
             Assert.AreEqual(8, analysis.Count);
-            Assert.AreEqual(215, analysis.Range);
+            Assert.AreEqual(215, analysis.Range());
 
-            Assert.AreEqual(86.875, analysis.Mean);
+            Assert.AreEqual(86.875, analysis.Mean());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance(), 3));
         }
 
         [TestMethod]
@@ -637,47 +637,47 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            var rootAnalysis = new AnalysisEntity64();
+            var rootAnalysis = new AnalysisEntity();
             rootAnalysis.Add(list.ToArray());
 
             // add the root to it and we should get the same expected values since the original was blank
-            var analysis = new AnalysisEntity64();
+            var analysis = new AnalysisEntity();
             analysis.Add(rootAnalysis);
 
-            analysis.Add((AnalysisEntity64)null);
-            analysis.Add(new AnalysisEntity64());
+            analysis.Add((AnalysisEntity)null);
+            analysis.Add(new AnalysisEntity());
 
             Assert.AreEqual(5, analysis.Min);
             Assert.AreEqual(220, analysis.Max);
             Assert.AreEqual(695, analysis.Sum);
             Assert.AreEqual(110525, analysis.SumOfDerivation);
             Assert.AreEqual(8, analysis.Count);
-            Assert.AreEqual(215, analysis.Range);
+            Assert.AreEqual(215, analysis.Range());
 
-            Assert.AreEqual(86.875, analysis.Mean);
+            Assert.AreEqual(86.875, analysis.Mean());
 
-            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis.Variance(), 3));
 
             // should be the same output initalizing it this way as well
-            var analysis2 = new AnalysisEntity64(analysis.Min, analysis.Max, analysis.Sum, analysis.SumOfDerivation, analysis.Count);
+            var analysis2 = new AnalysisEntity(analysis.Min, analysis.Max, analysis.Sum, analysis.SumOfDerivation, analysis.Count);
 
             Assert.AreEqual(5, analysis2.Min);
             Assert.AreEqual(220, analysis2.Max);
             Assert.AreEqual(695, analysis2.Sum);
             Assert.AreEqual(110525, analysis2.SumOfDerivation);
             Assert.AreEqual(8, analysis2.Count);
-            Assert.AreEqual(215, analysis2.Range);
+            Assert.AreEqual(215, analysis2.Range());
 
-            Assert.AreEqual(86.875, analysis2.Mean);
+            Assert.AreEqual(86.875, analysis2.Mean());
             //NOTE: MODE WILL NOT COME OVER SINCE WE DONT PULL OVER THE HISTOGRAM
-            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev, 3));
-            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr, 3));
-            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance, 3));
+            Assert.AreEqual(79.173, System.Math.Round(analysis2.StdDev(), 3));
+            Assert.AreEqual(27.992, System.Math.Round(analysis2.StdErr(), 3));
+            Assert.AreEqual(6268.359, System.Math.Round(analysis2.Variance(), 3));
 
             // Add a new min and max and verify
-            var analysis3 = new AnalysisEntity64();
+            var analysis3 = new AnalysisEntity();
             analysis3.Add(new List<double>() { 2, 225 }.ToArray());
 
             analysis2.Add(analysis3);
@@ -693,7 +693,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
                 10, 20, 40, 100, 100, 200, 220, 5
             };
 
-            var analysis = new AnalysisEntity64();
+            var analysis = new AnalysisEntity();
             analysis.Add(list.ToArray());
 
             var clone = analysis.Clone();

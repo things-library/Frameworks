@@ -18,7 +18,7 @@ namespace ThingsLibrary.DataType.Events
         public string Type { get; set; } = string.Empty;
 
         [JsonPropertyName("tags")]
-        public Dictionary<string, string> Attributes { get; set; } = [];
+        public Dictionary<string, string> Tags { get; set; } = [];
 
         public TelemetryEvent()
         {
@@ -38,7 +38,7 @@ namespace ThingsLibrary.DataType.Events
         public override string ToString()
         {
             var sentence = new StringBuilder($"${Timestamp.ToUnixTimeMilliseconds()}|{Type}");
-            sentence.Append(string.Join(string.Empty, Attributes.Select(x => $"|{x.Key}:{x.Value}")));
+            sentence.Append(string.Join(string.Empty, Tags.Select(x => $"|{x.Key}:{x.Value}")));
 
             sentence.AppendChecksum();
 
@@ -75,7 +75,7 @@ namespace ThingsLibrary.DataType.Events
                 num = array[i].IndexOf(':');
                 if (num < 0) { continue; }
                                 
-                telemetryEvent.Attributes[array[i][..num]] = array[i][(num + 1)..];                               
+                telemetryEvent.Tags[array[i][..num]] = array[i][(num + 1)..];                               
             }
 
             return telemetryEvent;

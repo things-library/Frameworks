@@ -12,7 +12,7 @@ namespace ThingsLibrary.Math.Statistics
     /// <summary>
     /// Designed to be extreamly lightweight, realtime/runtime statistics calculation
     /// </summary>
-    public class AnalysisEntity
+    public class AnalysisEntity8
     {
         #region --- Properties ---
 
@@ -22,21 +22,21 @@ namespace ThingsLibrary.Math.Statistics
         public long SumOfDerivation { get; private set; } = 0;
         public long Count { get; private set; } = 0;
 
-        public double Mean => (this.Count > 0 ? (double)this.Sum / this.Count : 0);
+        public double Mean() => (this.Count > 0 ? (double)this.Sum / this.Count : 0);
 
-        public double StdDev => (this.Count > 0 ? (System.Math.Sqrt(((double)this.SumOfDerivation / this.Count) - (this.Mean * this.Mean))) : 0);
+        public double StdDev() => (this.Count > 0 ? (System.Math.Sqrt(((double)this.SumOfDerivation / this.Count) - (this.Mean() * this.Mean()))) : 0);
 
-        public double StdErr => (this.Count > 0 ? (this.StdDev / System.Math.Sqrt(Count)) : 0);
+        public double StdErr() => (this.Count > 0 ? (this.StdDev() / System.Math.Sqrt(Count)) : 0);
 
-        public double Variance => (this.StdDev * this.StdDev);
+        public double Variance() => (this.StdDev() * this.StdDev());
 
-        public byte Range => (byte)(this.Count > 0 ? (this.Max - this.Min) : 0);
+        public byte Range() => (byte)(this.Count > 0 ? (this.Max - this.Min) : 0);
 
         public long[] Histogram { get; init; } = new long[byte.MaxValue];
 
         #endregion
 
-        public AnalysisEntity()
+        public AnalysisEntity8()
         {
             //nothing
         }
@@ -52,7 +52,7 @@ namespace ThingsLibrary.Math.Statistics
         /// <remarks>
         /// NOTE: HISTOGRAM AND MODE WILL NOT COME OVER SINCE WE DONT PULL OVER THE HISTOGRAM
         /// </remarks>
-        public AnalysisEntity(byte min, byte max, long sum, long sumOfDerivation, long count)
+        public AnalysisEntity8(byte min, byte max, long sum, long sumOfDerivation, long count)
         {
             this.Min = min;
             this.Max = max;
@@ -67,7 +67,7 @@ namespace ThingsLibrary.Math.Statistics
         /// Initalize using histogram data
         /// </summary>
         /// <param name="histogram">Histogram to add</param>
-        public AnalysisEntity(long[] histogram)
+        public AnalysisEntity8(long[] histogram)
         {
             this.AddHistogram(histogram);
         }
@@ -75,10 +75,10 @@ namespace ThingsLibrary.Math.Statistics
         /// <summary>
         /// Clone the analysis
         /// </summary>
-        /// <returns>Cloned <see cref="AnalysisEntity"/></returns>
-        public AnalysisEntity Clone()
+        /// <returns>Cloned <see cref="AnalysisEntity8"/></returns>
+        public AnalysisEntity8 Clone()
         {
-            return new AnalysisEntity()
+            return new AnalysisEntity8()
             {
                 Min = this.Min,
                 Max = this.Max,
@@ -170,7 +170,7 @@ namespace ThingsLibrary.Math.Statistics
             this.Histogram[value] += frequency;
         }
 
-        public void Add(AnalysisEntity analysis)
+        public void Add(AnalysisEntity8 analysis)
         {
             if (analysis == null) { return; }
             if (analysis.Count <= 0) { return; }
@@ -239,7 +239,7 @@ namespace ThingsLibrary.Math.Statistics
         {
             if (this.Count == 0) { return 0; }
 
-            return this.Mean + (stdDev * this.StdDev);
+            return this.Mean() + (stdDev * this.StdDev());
         }
     }
 
@@ -277,27 +277,27 @@ namespace ThingsLibrary.Math.Statistics
         /// <summary>
         /// Mean
         /// </summary>
-        public double Mean => this.Count > 0 ? (double)this.Sum / this.Count : 0;
+        public double Mean() => this.Count > 0 ? (double)this.Sum / this.Count : 0;
 
         /// <summary>
         /// Standard Deviation
         /// </summary>
-        public double StdDev => (this.Count > 0 ? System.Math.Sqrt(((double)this.SumOfDerivation / this.Count) - (this.Mean * this.Mean)) : 0);
+        public double StdDev() => (this.Count > 0 ? System.Math.Sqrt(((double)this.SumOfDerivation / this.Count) - (this.Mean() * this.Mean())) : 0);
 
         /// <summary>
         /// Standard Error
         /// </summary>
-        public double StdErr => Count > 0 ? this.StdDev / System.Math.Sqrt(this.Count) : 0;
+        public double StdErr() => this.Count > 0 ? this.StdDev() / System.Math.Sqrt(this.Count) : 0;
 
         /// <summary>
         /// Variance
         /// </summary>
-        public double Variance => (this.StdDev * this.StdDev);
+        public double Variance() => (this.StdDev() * this.StdDev());
 
         /// <summary>
         /// Range of values
         /// </summary>
-        public ushort Range => (ushort)(this.Count > 0 ? (this.Max - this.Min) : 0);
+        public ushort Range() => (ushort)(this.Count > 0 ? (this.Max - this.Min) : 0);
 
         /// <summary>
         /// Histogram
@@ -496,7 +496,7 @@ namespace ThingsLibrary.Math.Statistics
         {
             if (this.Count == 0) { return 0; }
 
-            return this.Mean + (stdDev * this.StdDev);
+            return this.Mean() + (stdDev * this.StdDev());
         }
     }
 
@@ -507,21 +507,21 @@ namespace ThingsLibrary.Math.Statistics
     {
         #region --- Properties ---
 
-        public double Min { get; private set; } = double.MinValue;
-        public double Max { get; private set; } = double.MaxValue;
-        public double Sum { get; private set; } = 0;
-        public double SumOfDerivation { get; private set; } = 0;
+        public decimal Min { get; private set; } = decimal.MinValue;
+        public decimal Max { get; private set; } = decimal.MaxValue;
+        public decimal Sum { get; private set; } = 0;
+        public decimal SumOfDerivation { get; private set; } = 0;
         public long Count { get; set; } = 0;
 
-        public double Mean => (this.Count > 0 ? (this.Sum / this.Count) : 0);
+        public decimal Mean() => (this.Count > 0 ? (this.Sum / this.Count) : 0);
 
-        public double StdDev => (this.Count > 0 ? System.Math.Sqrt((this.SumOfDerivation / this.Count) - (this.Mean * this.Mean)) : 0);
+        public decimal StdDev() => (decimal)(this.Count > 0 ? System.Math.Sqrt((double)((this.SumOfDerivation / this.Count) - (this.Mean() * this.Mean()))) : (double)0);
 
-        public double StdErr => (this.Count > 0 ? this.StdDev / System.Math.Sqrt(this.Count) : 0);
+        public decimal StdErr() => (this.Count > 0 ? this.StdDev() / (decimal)System.Math.Sqrt(this.Count) : 0);
 
-        public double Variance => (this.StdDev * this.StdDev);
+        public decimal Variance() => (this.StdDev() * this.StdDev());
 
-        public double Range => (this.Count > 0 ? (this.Max - this.Min) : 0);
+        public decimal Range() => (this.Count > 0 ? (this.Max - this.Min) : 0);
 
         #endregion
 
@@ -530,7 +530,7 @@ namespace ThingsLibrary.Math.Statistics
 
         }
 
-        public AnalysisEntity64(double min, double max, double sum, double sumOfDerivation, long count)
+        public AnalysisEntity64(decimal min, decimal max, decimal sum, decimal sumOfDerivation, long count)
         {
             this.Min = min;
             this.Max = max;
@@ -542,6 +542,139 @@ namespace ThingsLibrary.Math.Statistics
         public AnalysisEntity64 Clone()
         {
             return new AnalysisEntity64()
+            {
+                Min = this.Min,
+                Max = this.Max,
+                Sum = this.Sum,
+                SumOfDerivation = this.SumOfDerivation,
+                Count = Count
+            };
+        }
+
+        public void Add(decimal[] values)
+        {
+            foreach (var value in values)
+            {
+                this.Add(value);
+            }
+        }
+
+        public void Add(decimal value)
+        {
+            if (this.Count == 0)
+            {
+                this.Min = value;
+                this.Max = value;
+            }
+            else
+            {
+                if (value > this.Max) { this.Max = value; }
+                if (value < this.Min) { this.Min = value; }
+            }
+
+            this.Sum += value;
+            this.SumOfDerivation += value * value;
+            this.Count++;
+        }
+
+        public void Add(decimal value, int frequency)
+        {
+            // nothing to see here folks
+            if (frequency == 0) { return; }
+
+            if (this.Count == 0)
+            {
+                this.Min = value;
+                this.Max = value;
+            }
+            else
+            {
+                if (value > this.Max) { this.Max = value; }
+                if (value < this.Min) { this.Min = value; }
+            }
+
+            this.Sum += value * frequency;
+            this.SumOfDerivation += value * value * frequency;  // value ^2 * number of times
+            this.Count += frequency;
+        }
+
+        public void Add(AnalysisEntity64 analysis)
+        {
+            if (analysis == null) { return; }
+            if (analysis.Count <= 0) { return; }
+
+            if (this.Count == 0)
+            {
+                this.Min = analysis.Min;
+                this.Max = analysis.Max;
+            }
+            else
+            {
+                if (analysis.Min < Min) { Min = analysis.Min; }
+                if (analysis.Max > Max) { Max = analysis.Max; }
+            }
+
+            this.Sum += analysis.Sum;
+            this.SumOfDerivation += analysis.SumOfDerivation;
+            this.Count += analysis.Count;
+        }
+
+        public decimal GetLimit(decimal stdDev)
+        {
+            if (this.Count == 0) { return 0; }
+
+            return this.Mean() + (stdDev * this.StdDev());
+        }
+
+        public override string ToString() => JsonSerializer.Serialize(this);
+    }
+
+    /// <summary>
+    /// Designed to be extreamly lightweight, realtime/runtime statistics calculation
+    /// </summary>
+    public class AnalysisEntity
+    {
+        #region --- Properties ---
+
+        public double Min { get; private set; } = double.MinValue;
+        public double Max { get; private set; } = double.MaxValue;
+        public double Sum { get; private set; } = 0;
+        public double SumOfDerivation { get; private set; } = 0;
+        public long Count { get; set; } = 0;
+
+        #endregion
+
+        #region --- Calculated Properties ---
+
+        public double Mean() => (this.Count > 0 ? (this.Sum / this.Count) : 0);
+
+        public double StdDev() => (this.Count > 0 ? System.Math.Sqrt((this.SumOfDerivation / this.Count) - (this.Mean() * this.Mean())) : 0);
+
+        public double StdErr() => (this.Count > 0 ? this.StdDev() / System.Math.Sqrt(this.Count) : 0);
+
+        public double Variance() => (this.StdDev() * this.StdDev());
+
+        public double Range() => (this.Count > 0 ? (this.Max - this.Min) : 0);
+
+        #endregion
+
+        public AnalysisEntity()
+        {
+
+        }
+
+        public AnalysisEntity(double min, double max, double sum, double sumOfDerivation, long count)
+        {
+            this.Min = min;
+            this.Max = max;
+            this.Sum = sum;
+            this.SumOfDerivation = sumOfDerivation;
+            this.Count = count;
+        }
+
+        public AnalysisEntity Clone()
+        {
+            return new AnalysisEntity()
             {
                 Min = this.Min,
                 Max = this.Max,
@@ -593,12 +726,12 @@ namespace ThingsLibrary.Math.Statistics
                 if (value < this.Min) { this.Min = value; }
             }
 
-            this.Sum += value * frequency;            
+            this.Sum += value * frequency;
             this.SumOfDerivation += value * value * frequency;  // value ^2 * number of times
             this.Count += frequency;
         }
 
-        public void Add(AnalysisEntity64 analysis)
+        public void Add(AnalysisEntity analysis)
         {
             if (analysis == null) { return; }
             if (analysis.Count <= 0) { return; }
@@ -623,11 +756,11 @@ namespace ThingsLibrary.Math.Statistics
         {
             if (this.Count == 0) { return 0; }
 
-            return this.Mean + (stdDev * this.StdDev);
+            return this.Mean() + (stdDev * this.StdDev());
         }
 
         public override string ToString() => JsonSerializer.Serialize(this);
     }
-
+ 
     #endregion
 }

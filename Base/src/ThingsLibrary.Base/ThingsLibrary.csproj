@@ -21,4 +21,10 @@
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="DataType\Events\**" />
+	  <EmbeddedResource Remove="DataType\Events\**" />
+	  <None Remove="DataType\Events\**" />
+	</ItemGroup>
 </Project>

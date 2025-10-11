@@ -17,9 +17,9 @@ namespace ThingsLibrary.Base.Tests.DataType.Events
         {
             var telem = new TelemetryEvent("sens", DateTime.UtcNow);
 
-            telem.Attributes.Add("gn", "Mark");
-            telem.Attributes.Add("cp", "Starlight");
-            telem.Attributes.Add("r", "1");
+            telem.Tags.Add("gn", "Mark");
+            telem.Tags.Add("cp", "Starlight");
+            telem.Tags.Add("r", "1");
 
             var sentence = telem.ToString();
 
@@ -30,10 +30,10 @@ namespace ThingsLibrary.Base.Tests.DataType.Events
 
             var telem2 = TelemetryEvent.Parse(sentence);
 
-            Assert.IsTrue(telem2.Attributes.Count == 3);
-            Assert.AreEqual(telem2.Attributes["gn"], telem.Attributes["gn"]);
-            Assert.AreEqual(telem2.Attributes["cp"], telem.Attributes["cp"]);
-            Assert.AreEqual(telem2.Attributes["r"], telem.Attributes["r"]);
+            Assert.IsTrue(telem2.Tags.Count == 3);
+            Assert.AreEqual(telem2.Tags["gn"], telem.Tags["gn"]);
+            Assert.AreEqual(telem2.Tags["cp"], telem.Tags["cp"]);
+            Assert.AreEqual(telem2.Tags["r"], telem.Tags["r"]);
         }
 
     }

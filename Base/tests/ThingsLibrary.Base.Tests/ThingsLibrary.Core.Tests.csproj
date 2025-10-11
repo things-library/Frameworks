@@ -19,6 +19,12 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
+	  <Compile Remove="DataType\Events\**" />
+	  <EmbeddedResource Remove="DataType\Events\**" />
+	  <None Remove="DataType\Events\**" />
+	</ItemGroup>
+	
+	<ItemGroup>
 	  <EmbeddedResource Include="TestData\TestFile.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </EmbeddedResource>
