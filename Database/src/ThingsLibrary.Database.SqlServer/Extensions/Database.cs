@@ -42,11 +42,11 @@ namespace ThingsLibrary.Database.SqlServer.Extensions
             // verify a SQL connection can be established before continuing            
             using (var connection = new SqlConnection(connectionString))
             {
-                Log.Information("Testing SQL Connection to {SqlDatabaseServer}...", connection.DataSource);
+                Console.WriteLine("Testing SQL Connection to {SqlDatabaseServer}...", connection.DataSource);
                 connection.Open();
 
-                Log.Information("+ SQL Server: {SqlDatabaseServer} ", connection.DataSource);
-                Log.Information("+ SQL Database: {SqlDatabaseName}", connection.Database);
+                Console.WriteLine("+ SQL Server: {SqlDatabaseServer} ", connection.DataSource);
+                Console.WriteLine("+ SQL Database: {SqlDatabaseName}", connection.Database);
             }
 
             services.AddDbContext<TContext>(builder => builder.Configure<TContext>(connectionString));

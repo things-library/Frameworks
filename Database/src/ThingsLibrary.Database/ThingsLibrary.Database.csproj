@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0</TargetFrameworks>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>true</IsPackable>
@@ -21,15 +21,28 @@
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Audit\**" />
+	  <EmbeddedResource Remove="Audit\**" />
+	  <None Remove="Audit\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Include="Audit\AuditClient.cs" />
+	  <Compile Include="Audit\AuditEvent.cs" />
+	  <Compile Include="Audit\AuditType.cs" />
+	  <Compile Include="Audit\AuditUser.cs" />
+	</ItemGroup>
 	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="9.0.8" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Services\src\ThingsLibrary.Services\ThingsLibrary.Services.csproj" />
+	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
 	</ItemGroup>	
 
 </Project>

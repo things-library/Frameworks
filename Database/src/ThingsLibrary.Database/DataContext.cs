@@ -63,18 +63,18 @@ namespace ThingsLibrary.Database
             // include all of the services fluent API configurations
             var baseAssembly = typeof(DataContext).Assembly;
 
-            Log.Information($"= Applying {baseAssembly.GetName().Name} ({baseAssembly.GetName().Version}) Configurations...");
+            Console.WriteLine($"= Applying {baseAssembly.GetName().Name} ({baseAssembly.GetName().Version}) Configurations...");
             modelBuilder.ApplyConfigurationsFromAssembly(baseAssembly);
 
             var assembly = this.GetType().Assembly;
             if (assembly != baseAssembly)
             {
-                Log.Information($"= Applying {assembly.GetName().Name} ({assembly.GetName().Version}) Configurations...");
+                Console.WriteLine($"= Applying {assembly.GetName().Name} ({assembly.GetName().Version}) Configurations...");
                 modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             }
 
             //turn off default OnDelete:cascade
-            Log.Information($"= Restricting Delete behaviors...");
+            Console.WriteLine($"= Restricting Delete behaviors...");
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;

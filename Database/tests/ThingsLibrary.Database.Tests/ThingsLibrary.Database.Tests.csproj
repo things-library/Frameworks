@@ -20,8 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Testing\ThingsLibrary.Testing.csproj" />
-		<ProjectReference Include="..\..\src\ThingsLibrary.Database\ThingsLibrary.Database.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Database\ThingsLibrary.Database.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

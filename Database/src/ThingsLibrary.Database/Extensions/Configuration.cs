@@ -21,30 +21,30 @@ namespace ThingsLibrary.Services.Extensions
         {
             if (string.IsNullOrEmpty(connectionStringName)) { throw new ArgumentNullException(nameof(connectionStringName)); }
 
-            Log.Debug("Getting connection string '{ConnectionStringName}'...", connectionStringName);
+            Console.WriteLine("Getting connection string '{ConnectionStringName}'...", connectionStringName);
             var connectionString = configuration.GetConnectionString(connectionStringName);
             if (string.IsNullOrEmpty(connectionString))
             {
-                Log.Debug("Not Found; Trying to get '{ConnectionStringName}' with Prefix...", $"CUSTOMCONNSTR_{connectionStringName}");
+                Console.WriteLine("Not Found; Trying to get '{ConnectionStringName}' with Prefix...", $"CUSTOMCONNSTR_{connectionStringName}");
                 connectionString = configuration.GetConnectionString($"CUSTOMCONNSTR_{connectionStringName}");
             }
             
             if (string.IsNullOrEmpty(connectionString))
             {
-                Log.Debug("Not Found; Trying to get '{ConnectionStringName}' from environment variables...", connectionStringName);
+                Console.WriteLine("Not Found; Trying to get '{ConnectionStringName}' from environment variables...", connectionStringName);
                 connectionString = Environment.GetEnvironmentVariable(connectionStringName);
             }
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                Log.Debug("Not Found; Trying to get '{ConnectionStringName}' from environment variables with prefix...", connectionStringName);
+                Console.WriteLine("Not Found; Trying to get '{ConnectionStringName}' from environment variables with prefix...", connectionStringName);
                 connectionString = Environment.GetEnvironmentVariable($"CUSTOMCONNSTR_{connectionStringName}");
             }
 
             // STILL NOT FOUND??!?!?
             if (string.IsNullOrEmpty(connectionString))
             {
-                Log.Warning("Connection string '{ConnectionStringName}' not found!", connectionStringName);
+                Console.WriteLine("Connection string '{ConnectionStringName}' not found!", connectionStringName);
                 throw new ArgumentException($"Unable to find connection string '{connectionStringName}'");
             }
 
