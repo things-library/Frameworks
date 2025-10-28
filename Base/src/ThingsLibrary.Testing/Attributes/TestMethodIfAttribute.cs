@@ -5,6 +5,7 @@
 // </copyright>
 // ================================================================================
 
+
 namespace ThingsLibrary.Testing.Attributes
 {
     // Source: https://matt.kotsenas.com/posts/ignoreif-mstest
@@ -27,7 +28,7 @@ namespace ThingsLibrary.Testing.Attributes
             //nothing
         }
 
-        public override TestResult[] Execute(ITestMethod testMethod)
+        public async override Task<TestResult[]> ExecuteAsync(ITestMethod testMethod)
         {
             var ignoreAttributes = this.FindAttributes(testMethod);
 
@@ -47,14 +48,15 @@ namespace ThingsLibrary.Testing.Attributes
                     };
                 }
             }
-            return base.Execute(testMethod);
+
+            return await base.ExecuteAsync(testMethod);
         }
 
         private IEnumerable<IgnoreIfAttribute> FindAttributes(ITestMethod testMethod)
         {
             // Look for an [IgnoreIf] on the method, including any virtuals this method overrides
             var ignoreAttributes = new List<IgnoreIfAttribute>();
-            ignoreAttributes.AddRange(testMethod.GetAttributes<IgnoreIfAttribute>(inherit: true));
+            ignoreAttributes.AddRange(testMethod.GetAttributes<IgnoreIfAttribute>());
 
             // Walk the class hierarchy looking for an [IgnoreIf] attribute
             var type = testMethod.MethodInfo.DeclaringType;

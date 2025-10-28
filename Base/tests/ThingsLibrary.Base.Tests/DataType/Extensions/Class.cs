@@ -185,7 +185,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
         {
             var testClass = new TestClassNoKey();
 
-            Assert.ThrowsException<ArgumentException>(() => testClass.GetKeys((Type)null));
+            Assert.Throws<ArgumentException>(() => testClass.GetKeys((Type)null));
         }
 
 

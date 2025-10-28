@@ -44,7 +44,7 @@ namespace ThingsLibrary.Tests.Json.Converters
         [TestMethod]
         public void TestDeserializer_BadData()
         {
-            Assert.ThrowsException<ArgumentException>(() => JsonSerializer.Deserialize<TestClass>(
+            Assert.Throws<ArgumentException>(() => JsonSerializer.Deserialize<TestClass>(
                @"{                     
                     ""name"": ""Test"",
                     ""name2"": [""BadValue""]

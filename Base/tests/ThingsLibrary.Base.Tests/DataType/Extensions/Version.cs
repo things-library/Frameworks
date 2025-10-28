@@ -47,12 +47,12 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual("1.2.3.4", version.ToDotString());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [TestMethod]        
         public void IsBackCompatibleNull()
         {
             var version = new Version("1.0.0.0");
-            version.IsBackCompatible(null);
+
+            Assert.Throws<ArgumentNullException>(() => version.IsBackCompatible(null));
         }
     }
 }

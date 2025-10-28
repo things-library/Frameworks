@@ -44,7 +44,7 @@ namespace ThingsLibrary.Tests.Json.Converters
         [TestMethod]
         public void TestSerializer_BadClass()
         {
-            Assert.ThrowsException<ArgumentException>(() => JsonSerializer.Deserialize<BadClass>(
+            Assert.Throws<ArgumentException>(() => JsonSerializer.Deserialize<BadClass>(
                @"{  
                     ""date1"": ""10/11/2022""
                 }"));

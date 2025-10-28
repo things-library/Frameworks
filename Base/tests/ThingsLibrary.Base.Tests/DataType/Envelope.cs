@@ -11,8 +11,7 @@ namespace ThingsLibrary.Tests.DataType
             //nothing
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]        
         public void Constructor_BadPoints()
         {
             var envelope = new Envelope(new List<(double, double)>
@@ -28,7 +27,7 @@ namespace ThingsLibrary.Tests.DataType
                 new (39.2, 48.6)                
             }, 4326);
 
-            envelope.Add((40, 50), 9999);
+            Assert.Throws<ArgumentException>(() => envelope.Add((40, 50), 9999));
         }
 
         [TestMethod]

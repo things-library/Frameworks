@@ -199,7 +199,7 @@ namespace ThingsLibrary.Tests.DataType
             // no expected totals are provided so no way to calculate when you will reach there
             var watch = new ThingsLibrary.DataType.ThroughputWatch();
 
-            Assert.ThrowsException<ArgumentException>(() => watch.Reset(1));            
+            Assert.Throws<ArgumentException>(() => watch.Reset(1));            
         }
 
         [TestMethod]
@@ -212,9 +212,9 @@ namespace ThingsLibrary.Tests.DataType
                 TotalValue = 0
             };
 
-            Assert.ThrowsException<ArgumentException>(() => watch.CalculateETA());
-            Assert.ThrowsException<ArgumentException>(() => watch.CalculateIncrementETA());
-            Assert.ThrowsException<ArgumentException>(() => watch.CalculateValueETA());
+            Assert.Throws<ArgumentException>(() => watch.CalculateETA());
+            Assert.Throws<ArgumentException>(() => watch.CalculateIncrementETA());
+            Assert.Throws<ArgumentException>(() => watch.CalculateValueETA());
         }
     }
 }

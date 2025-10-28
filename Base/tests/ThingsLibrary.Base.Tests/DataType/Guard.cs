@@ -33,18 +33,18 @@ namespace ThingsLibrary.Tests.DataType
             string testString;
 
             testString = null;
-            Assert.ThrowsException<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).NotNull());
+            Assert.Throws<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).NotNull());
 
             testString = "";
-            Assert.ThrowsException<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).NotEmpty());
+            Assert.Throws<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).NotEmpty());
 
             testString = "Hello";
-            Assert.ThrowsException<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).NotUppercase());
-            Assert.ThrowsException<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).Null());
-            Assert.ThrowsException<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).Empty());
+            Assert.Throws<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).NotUppercase());
+            Assert.Throws<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).Null());
+            Assert.Throws<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).Empty());
 
             testString = null;
-            Assert.ThrowsException<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).ThrowIf(argument => argument.Value == null, argument => new ArgumentException("Test Argument is Null", argument.Name)));
+            Assert.Throws<ArgumentException>(() => Guard.Argument(testString, nameof(testString)).ThrowIf(argument => argument.Value == null, argument => new ArgumentException("Test Argument is Null", argument.Name)));
             
         }
     }

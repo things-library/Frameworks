@@ -239,7 +239,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(1, analysis2.Histogram[220]);
                         
             // Invalid Histogram size
-            Assert.ThrowsException<ArgumentException>(() => analysis2.AddHistogram(new long[20]));
+            Assert.Throws<ArgumentException>(() => analysis2.AddHistogram(new long[20]));
         }
 
         [TestMethod]
@@ -497,7 +497,7 @@ namespace ThingsLibrary.Tests.Math.Statistics
             Assert.AreEqual(1, analysis2.Histogram[220]);
 
             // Invalid Histogram size
-            Assert.ThrowsException<ArgumentException>(() => analysis2.AddHistogram(new long[20]));
+            Assert.Throws<ArgumentException>(() => analysis2.AddHistogram(new long[20]));
         }
 
         [TestMethod]

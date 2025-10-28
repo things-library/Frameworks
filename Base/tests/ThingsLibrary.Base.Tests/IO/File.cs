@@ -40,9 +40,9 @@ namespace ThingsLibrary.Tests.IO
             Assert.IsFalse(File.Exists(Path.Combine(testDirPath, "TestFile1.dtn.jpg")));
 
             //BAD Tests
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileDelete(null));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileDelete(""));
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.File.RootFileDelete(Path.Combine(testDirPath, "MISSINGFILE.txt")));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileDelete(null));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileDelete(""));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.File.RootFileDelete(Path.Combine(testDirPath, "MISSINGFILE.txt")));
         }
 
         [TestMethod]
@@ -77,19 +77,19 @@ namespace ThingsLibrary.Tests.IO
 
 
             //BAD Tests
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy("", "Something", testDestinationPath));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(null, "Something", testDestinationPath));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy("", "Something", testDestinationPath));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(null, "Something", testDestinationPath));
 
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "", testDestinationPath));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, null, testDestinationPath));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "", testDestinationPath));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, null, testDestinationPath));
 
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "Something", ""));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "Something", null));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "Something", ""));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "Something", null));
 
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "Something", testSourcePath));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "Something", testSourcePath));
                                     
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.File.RootFileCopy(Path.Combine(testSourcePath, "BADFOLDER"), "Something", testDestinationPath));
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "Something", Path.Combine(testDestinationPath, "BADFOLDER")));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.File.RootFileCopy(Path.Combine(testSourcePath, "BADFOLDER"), "Something", testDestinationPath));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.File.RootFileCopy(testSourcePath, "Something", Path.Combine(testDestinationPath, "BADFOLDER")));
         }
 
         #region --- MD5 Hashing ---
@@ -134,13 +134,13 @@ namespace ThingsLibrary.Tests.IO
         public void ComputeMD5Base64_BadData()
         {
             // file path parameter
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.ComputeMD5Base64(""));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.ComputeMD5Base64((string)null));
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.File.ComputeMD5Base64(Path.Combine(TestDirectoryPath, "BADFOLDER")));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.ComputeMD5Base64(""));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.ComputeMD5Base64((string)null));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.File.ComputeMD5Base64(Path.Combine(TestDirectoryPath, "BADFOLDER")));
 
             // byte parameter
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.ComputeMD5Base64(new byte[0]));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.ComputeMD5(new byte[0]));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.ComputeMD5Base64(new byte[0]));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.ComputeMD5(new byte[0]));
         }
 
         [TestMethod]
@@ -152,9 +152,9 @@ namespace ThingsLibrary.Tests.IO
             Assert.AreEqual(143600, ThingsLibrary.IO.File.GetFileSize(Path.Combine(appPath, "TestData", "TestImage.jpg")));
 
             //BAD DATA
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.GetFileSize(""));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.GetFileSize(null));
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.File.GetFileSize(Path.Combine(appPath, "BADFOLDER", "TestFile.json")));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.GetFileSize(""));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.GetFileSize(null));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.File.GetFileSize(Path.Combine(appPath, "BADFOLDER", "TestFile.json")));
         }
 
         #endregion
@@ -247,8 +247,8 @@ namespace ThingsLibrary.Tests.IO
         public void GetMimeType_BadData()
         {            
             //BAD DATA
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.GetMimeType(""));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.File.GetMimeType(null));                        
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.GetMimeType(""));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.File.GetMimeType(null));                        
         }
 
         #endregion
@@ -277,7 +277,7 @@ namespace ThingsLibrary.Tests.IO
             Assert.IsTrue(File.Exists(testZipFilePath));
 
             // already exists should throw a exception if not overwritten
-            Assert.ThrowsException<IOException>(() => ThingsLibrary.IO.File.CompressToZip(testFilePath, testZipFilePath, false));
+            Assert.Throws<IOException>(() => ThingsLibrary.IO.File.CompressToZip(testFilePath, testZipFilePath, false));
 
             // COMPRESS AGAIN AND MAKE SURE IT DOESNT ERROR
             ThingsLibrary.IO.File.CompressToZip(testFilePath, testZipFilePath, true);

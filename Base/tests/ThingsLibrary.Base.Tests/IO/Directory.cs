@@ -28,13 +28,13 @@ namespace ThingsLibrary.Tests.IO
             Assert.IsTrue(Directory.Exists(test1Path));
 
             // BAD TESTS
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.VerifyPath(null));
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.Directory.VerifyPath(""));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.VerifyPath(null));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.Directory.VerifyPath(""));
 
             // this is only a windows issue.. those characters are valid in linux
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Assert.ThrowsException<DirectoryNotFoundException>(() => ThingsLibrary.IO.Directory.VerifyPath(Path.Combine(TestDirectoryPath, $"\\//*<>")));
+                Assert.Throws<DirectoryNotFoundException>(() => ThingsLibrary.IO.Directory.VerifyPath(Path.Combine(TestDirectoryPath, $"\\//*<>")));
             }            
         }
 
@@ -54,8 +54,8 @@ namespace ThingsLibrary.Tests.IO
             Assert.IsFalse(ThingsLibrary.IO.Directory.TryDeleteDirectory(test1Path));
 
             //BAD TESTS
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.TryDeleteDirectory(null));
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.TryDeleteDirectory(""));            
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.TryDeleteDirectory(null));
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.TryDeleteDirectory(""));            
         }
 
         [TestMethod]
@@ -105,19 +105,19 @@ namespace ThingsLibrary.Tests.IO
             Assert.IsFalse(ThingsLibrary.IO.Directory.RecursiveCompare(sourcePath, destinationPath));
 
             // BAD TESTS            
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(sourcePath, sourcePath, false));    // source and destination are the same
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(null, destinationPath, false)); // bad parameter
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCopy("", destinationPath, false));   // bad parameter
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(sourcePath, null, false));      // bad parameter
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(sourcePath, "", false));        // bad parameter
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(Path.Combine(TestDirectoryPath, "BADPATH"), destinationPath, false));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(sourcePath, sourcePath, false));    // source and destination are the same
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(null, destinationPath, false)); // bad parameter
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCopy("", destinationPath, false));   // bad parameter
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(sourcePath, null, false));      // bad parameter
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(sourcePath, "", false));        // bad parameter
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.Directory.RecursiveCopy(Path.Combine(TestDirectoryPath, "BADPATH"), destinationPath, false));
 
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(sourcePath, sourcePath));        // source and destination are the same
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(null, destinationPath));     // bad parameter
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCompare("", destinationPath));       // bad parameter
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(sourcePath, null));          // bad parameter
-            Assert.ThrowsException<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(sourcePath, ""));            // bad parameter
-            Assert.ThrowsException<ArgumentException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(Path.Combine(TestDirectoryPath, "BADPATH"), destinationPath));
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(sourcePath, sourcePath));        // source and destination are the same
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(null, destinationPath));     // bad parameter
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCompare("", destinationPath));       // bad parameter
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(sourcePath, null));          // bad parameter
+            Assert.Throws<ArgumentNullException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(sourcePath, ""));            // bad parameter
+            Assert.Throws<ArgumentException>(() => ThingsLibrary.IO.Directory.RecursiveCompare(Path.Combine(TestDirectoryPath, "BADPATH"), destinationPath));
         }
     }
 }

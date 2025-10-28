@@ -50,8 +50,8 @@ namespace ThingsLibrary.Tests.DataType
         [TestMethod]
         public void GetJsonKey_BadData()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => Key.GetJsonKey(null));
-            Assert.ThrowsException<ArgumentNullException>(() => Key.GetJsonKey(""));
+            Assert.Throws<ArgumentNullException>(() => Key.GetJsonKey(null));
+            Assert.Throws<ArgumentNullException>(() => Key.GetJsonKey(""));
         }
     }
 }

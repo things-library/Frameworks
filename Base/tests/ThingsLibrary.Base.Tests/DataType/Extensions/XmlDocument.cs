@@ -51,7 +51,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
         [TestMethod]
         public void GetProperty_NullPath()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => TestDocument.GetProperty<string>(null, "[DEFAULT]"));
+            Assert.Throws<ArgumentNullException>(() => TestDocument.GetProperty<string>(null, "[DEFAULT]"));
         }
 
         public static XmlDocument GetTestDocument()

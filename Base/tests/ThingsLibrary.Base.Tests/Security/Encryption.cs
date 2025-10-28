@@ -54,10 +54,10 @@ namespace ThingsLibrary.Tests.Security
             var cipher = new Encryption(Encryption.EncryptionAlgorithmType.AES);
 
             // ENCRYPT IT
-            Assert.ThrowsException<CryptographicException>(() => cipher.Encrypt(null));
+            Assert.Throws<CryptographicException>(() => cipher.Encrypt(null));
 
             // DECRYPT IT
-            Assert.ThrowsException<CryptographicException>(() => cipher.Decrypt(null));
+            Assert.Throws<CryptographicException>(() => cipher.Decrypt(null));
         }
 
         [DataTestMethod]        
@@ -84,8 +84,8 @@ namespace ThingsLibrary.Tests.Security
             data = "Hi";
             encryptedData = cipher.EncryptToBase64String(data, salt);
 
-            Assert.ThrowsException<CryptographicException>(() => cipher.DecryptFromBase64String(encryptedData, "BAD"));
-            Assert.ThrowsException<CryptographicException>(() => cipher.DecryptFromBase64String(encryptedData, "BAD SALT Value 12345678901234567890123456789"));
+            Assert.Throws<CryptographicException>(() => cipher.DecryptFromBase64String(encryptedData, "BAD"));
+            Assert.Throws<CryptographicException>(() => cipher.DecryptFromBase64String(encryptedData, "BAD SALT Value 12345678901234567890123456789"));
         }
 
         [TestMethod]
@@ -106,7 +106,7 @@ namespace ThingsLibrary.Tests.Security
 
             Assert.AreEqual(20, saltString.Length);
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => Encryption.CreateSaltString(0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Encryption.CreateSaltString(0));
         }
 
         [TestMethod]
@@ -115,9 +115,9 @@ namespace ThingsLibrary.Tests.Security
             var algorithm = Encryption.GetSymmetricAlgorithm(Encryption.EncryptionAlgorithmType.AES);
             Assert.IsTrue(algorithm is System.Security.Cryptography.Aes);
 
-            Assert.ThrowsException<CryptographicException>(() => Encryption.GetSymmetricAlgorithm(Encryption.EncryptionAlgorithmType.DES));
-            Assert.ThrowsException<CryptographicException>(() => Encryption.GetSymmetricAlgorithm(Encryption.EncryptionAlgorithmType.RC2));
-            Assert.ThrowsException<CryptographicException>(() => Encryption.GetSymmetricAlgorithm(Encryption.EncryptionAlgorithmType.Rijndael));
+            Assert.Throws<CryptographicException>(() => Encryption.GetSymmetricAlgorithm(Encryption.EncryptionAlgorithmType.DES));
+            Assert.Throws<CryptographicException>(() => Encryption.GetSymmetricAlgorithm(Encryption.EncryptionAlgorithmType.RC2));
+            Assert.Throws<CryptographicException>(() => Encryption.GetSymmetricAlgorithm(Encryption.EncryptionAlgorithmType.Rijndael));
         }
 
         #endregion

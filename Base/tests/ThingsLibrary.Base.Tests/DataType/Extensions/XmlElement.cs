@@ -52,9 +52,9 @@ namespace ThingsLibrary.Tests.DataType.Extensions
         [TestMethod]
         public void GetProperty_NullPath()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => TestElement.GetProperty<string>(null, "[DEFAULT]"));
+            Assert.Throws<ArgumentNullException>(() => TestElement.GetProperty<string>(null, "[DEFAULT]"));
 
-            Assert.ThrowsException<ArgumentNullException>(() => XmlElementExtensions.GetProperty<string>((XmlElement)null, "[DEFAULT]", string.Empty));
+            Assert.Throws<ArgumentNullException>(() => XmlElementExtensions.GetProperty<string>((XmlElement)null, "[DEFAULT]", string.Empty));
         }
     }
 }

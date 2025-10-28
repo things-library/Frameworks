@@ -18,12 +18,11 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(100d, value.ConvertTo<double>());            
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
+        [TestMethod]        
         public void ConvertTo_Bad()
         {
             int? value = null;
-            Assert.AreEqual(100d, value.ConvertTo<double>());
+            Assert.Throws<InvalidCastException>(() => value.ConvertTo<double>());
 
             //Assert.AreEqual(1d, 100d.ConvertTo<DateTime>());
         }

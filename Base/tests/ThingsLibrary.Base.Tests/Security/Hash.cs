@@ -54,10 +54,10 @@ namespace ThingsLibrary.Tests.Security
         [TestMethod]  
         public void Outlyers()
         {
-            Assert.ThrowsException<CryptographicException>(() => Hashing.GetHashAlgorithm(Hashing.HashAlgorithmType.Unknown, HASH_BASE));
+            Assert.Throws<CryptographicException>(() => Hashing.GetHashAlgorithm(Hashing.HashAlgorithmType.Unknown, HASH_BASE));
 
             var hashAlgorithm = new Hashing(Hashing.HashAlgorithmType.MD5, HASH_BASE);
-            Assert.ThrowsException<CryptographicException>(() => hashAlgorithm.ComputeHash(null));
+            Assert.Throws<CryptographicException>(() => hashAlgorithm.ComputeHash(null));
         }
 
     }

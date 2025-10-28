@@ -20,8 +20,8 @@ namespace ThingsLibrary.Tests.IO
             Assert.AreEqual(false, Embedded.Exists("BADPATH.SOMETHING.txt"));
 
             //BAD Tests
-            Assert.ThrowsException<ArgumentNullException>(() => Embedded.Exists(null));
-            Assert.ThrowsException<ArgumentNullException>(() => Embedded.Exists(""));
+            Assert.Throws<ArgumentNullException>(() => Embedded.Exists(null));
+            Assert.Throws<ArgumentNullException>(() => Embedded.Exists(""));
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace ThingsLibrary.Tests.IO
             Assert.AreEqual("3hCjqg6QntQssOGbuu2p0Q==", md5);
 
             //BAD Tests
-            Assert.ThrowsException<ArgumentNullException>(() => Embedded.GetStream(null));
-            Assert.ThrowsException<ArgumentNullException>(() => Embedded.GetStream(""));
+            Assert.Throws<ArgumentNullException>(() => Embedded.GetStream(null));
+            Assert.Throws<ArgumentNullException>(() => Embedded.GetStream(""));
         }
 
         /// <summary>
@@ -75,10 +75,10 @@ namespace ThingsLibrary.Tests.IO
             Assert.AreEqual(12345, json.GetProperty<int>("id", 0));
 
             //BAD Tests
-            Assert.ThrowsException<ArgumentNullException>(() => Embedded.LoadAsString(null));
-            Assert.ThrowsException<ArgumentNullException>(() => Embedded.LoadAsString(""));
+            Assert.Throws<ArgumentNullException>(() => Embedded.LoadAsString(null));
+            Assert.Throws<ArgumentNullException>(() => Embedded.LoadAsString(""));
 
-            Assert.ThrowsException<ArgumentException>(() => Embedded.LoadAsString("BadResourceName"));
+            Assert.Throws<ArgumentException>(() => Embedded.LoadAsString("BadResourceName"));
         }
 
         [TestMethod]
@@ -91,10 +91,10 @@ namespace ThingsLibrary.Tests.IO
             Assert.AreEqual(143600, fileBytes.Length);
 
             //BAD Tests
-            Assert.ThrowsException<ArgumentNullException>(() => Embedded.LoadByteFile(null));
-            Assert.ThrowsException<ArgumentNullException>(() => Embedded.LoadByteFile(""));
+            Assert.Throws<ArgumentNullException>(() => Embedded.LoadByteFile(null));
+            Assert.Throws<ArgumentNullException>(() => Embedded.LoadByteFile(""));
 
-            Assert.ThrowsException<ArgumentException>(() => Embedded.LoadByteFile("BadResourceName"));
+            Assert.Throws<ArgumentException>(() => Embedded.LoadByteFile("BadResourceName"));
         }
     }
 }

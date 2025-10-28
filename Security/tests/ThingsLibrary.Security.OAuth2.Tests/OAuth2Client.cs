@@ -1,6 +1,4 @@
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace ThingsLibrary.Security.OAuth2.Tests
 {
@@ -82,7 +80,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             Assert.IsTrue(oauth2.Scopes.Count == scopeCount);
 
             // BAD DATA
-            //Assert.ThrowsException<ArgumentException>(() => oauth2.AddScope("not_supported"));
+            //Assert.Throws<ArgumentException>(() => oauth2.AddScope("not_supported"));
         }
 
         [TestMethod]
@@ -102,8 +100,8 @@ namespace ThingsLibrary.Security.OAuth2.Tests
         public void FetchDefinitions_BadData()
         {            
             var oauth2 = new OAuth2Client();
-            Assert.ThrowsException<AggregateException>(() => oauth2.FetchOpenIdDefinitionsAsync().Wait());
-            Assert.ThrowsException<ArgumentNullException>(() => oauth2.UpdateServiceDefinitions(null));
+            Assert.Throws<AggregateException>(() => oauth2.FetchOpenIdDefinitionsAsync().Wait());
+            Assert.Throws<ArgumentNullException>(() => oauth2.UpdateServiceDefinitions(null));
         }
 
         [TestMethod]
@@ -127,8 +125,8 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             Assert.AreEqual("456", queryString["nonce"]);
 
             // BAD DATA          
-            Assert.ThrowsException<ArgumentException>(() => new OAuth2Client() { ClientId = "", CallbackUrl = "https://test.com/login" }.GetAuthCodeUrl("123", "456"));
-            Assert.ThrowsException<ArgumentException>(() => new OAuth2Client() { ClientId = "123456", CallbackUrl = "" }.GetAuthCodeUrl("123", "456"));
+            Assert.Throws<ArgumentException>(() => new OAuth2Client() { ClientId = "", CallbackUrl = "https://test.com/login" }.GetAuthCodeUrl("123", "456"));
+            Assert.Throws<ArgumentException>(() => new OAuth2Client() { ClientId = "123456", CallbackUrl = "" }.GetAuthCodeUrl("123", "456"));
         }
 
         [TestMethod]
@@ -153,9 +151,9 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             Assert.AreEqual("456", queryString["nonce"]);
 
             // BAD DATA          
-            Assert.ThrowsException<ArgumentException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "4567", CallbackUrl = "https://test.com/login" }.GetIdTokenUrl("123", "456"));
-            Assert.ThrowsException<ArgumentException>(() => new OAuth2Client() { ClientId = "123456", ClientSecret = "", CallbackUrl = "https://test.com/login" }.GetIdTokenUrl("123", "456"));
-            Assert.ThrowsException<ArgumentException>(() => new OAuth2Client() { ClientId = "123456", ClientSecret = "4567", CallbackUrl = "" }.GetIdTokenUrl("123", "456"));            
+            Assert.Throws<ArgumentException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "4567", CallbackUrl = "https://test.com/login" }.GetIdTokenUrl("123", "456"));
+            Assert.Throws<ArgumentException>(() => new OAuth2Client() { ClientId = "123456", ClientSecret = "", CallbackUrl = "https://test.com/login" }.GetIdTokenUrl("123", "456"));
+            Assert.Throws<ArgumentException>(() => new OAuth2Client() { ClientId = "123456", ClientSecret = "4567", CallbackUrl = "" }.GetIdTokenUrl("123", "456"));            
         }
 
         [TestMethod]
@@ -204,8 +202,8 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             oauth2.UpdateServiceDefinitions(config);
 
             // BAD DATA
-            Assert.ThrowsException<InvalidOperationException>(() => oauth2.GetAuthCodeUrl("123", "456"));
-            Assert.ThrowsException<InvalidOperationException>(() => oauth2.GetIdTokenUrl("123", "456"));
+            Assert.Throws<InvalidOperationException>(() => oauth2.GetAuthCodeUrl("123", "456"));
+            Assert.Throws<InvalidOperationException>(() => oauth2.GetIdTokenUrl("123", "456"));
         }
 
         [TestMethod]
@@ -223,19 +221,19 @@ namespace ThingsLibrary.Security.OAuth2.Tests
 
             oauth2.UpdateServiceDefinitions(config);
 
-            //Assert.ThrowsException<AggregateException>(() => oauth2.GetAccessTokenAsync().Wait());
-            Assert.ThrowsException<AggregateException>(() => oauth2.GetAccessTokenAsync("12345").Result);
+            //Assert.Throws<AggregateException>(() => oauth2.GetAccessTokenAsync().Wait());
+            Assert.Throws<AggregateException>(() => oauth2.GetAccessTokenAsync("12345").Result);
 
             //BAD DATA
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "Something", CallbackUrl = "Something" }.GetAccessTokenAsync(null).Result);
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "Something", CallbackUrl = "Something" }.GetAccessTokenAsync("").Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "Something", CallbackUrl = "Something" }.GetAccessTokenAsync(null).Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "Something", CallbackUrl = "Something" }.GetAccessTokenAsync("").Result);
 
-            //Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "Something", CallbackUrl = "Something" }.GetAccessTokenAsync().Wait());
-            //Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "", CallbackUrl = "Something" }.GetAccessTokenAsync().Wait());
+            //Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "Something", CallbackUrl = "Something" }.GetAccessTokenAsync().Wait());
+            //Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "", CallbackUrl = "Something" }.GetAccessTokenAsync().Wait());
                         
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "Something", CallbackUrl = "Something" }.GetAccessTokenAsync("12345").Result);
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "", CallbackUrl = "Something" }.GetAccessTokenAsync("12345").Result);
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "Something", CallbackUrl = null }.GetAccessTokenAsync("12345").Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "Something", CallbackUrl = "Something" }.GetAccessTokenAsync("12345").Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "", CallbackUrl = "Something" }.GetAccessTokenAsync("12345").Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "Something", CallbackUrl = null }.GetAccessTokenAsync("12345").Result);
         }
 
         [TestMethod]
@@ -255,16 +253,16 @@ namespace ThingsLibrary.Security.OAuth2.Tests
 
             var token = new OAuth2Token();
 
-            Assert.ThrowsException<AggregateException>(() => oauth2.RefreshTokenAsync(null).Result);
-            Assert.ThrowsException<AggregateException>(() => oauth2.RefreshTokenAsync(token).Result);
+            Assert.Throws<AggregateException>(() => oauth2.RefreshTokenAsync(null).Result);
+            Assert.Throws<AggregateException>(() => oauth2.RefreshTokenAsync(token).Result);
 
             // BAD DATA
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "Something" }.RefreshTokenAsync(token).Result);
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "" }.RefreshTokenAsync(token).Result);
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "Something" }.RefreshTokenAsync(null).Result);
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "" }.RefreshTokenAsync(token).Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "Something" }.RefreshTokenAsync(token).Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "" }.RefreshTokenAsync(token).Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "", ClientSecret = "Something" }.RefreshTokenAsync(null).Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "" }.RefreshTokenAsync(token).Result);
 
-            Assert.ThrowsException<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "Something" }.RefreshTokenAsync(new OAuth2Token() { RefreshToken = "12345"}).Result);
+            Assert.Throws<AggregateException>(() => new OAuth2Client() { ClientId = "Something", ClientSecret = "Something" }.RefreshTokenAsync(new OAuth2Token() { RefreshToken = "12345"}).Result);
         }
 
 

@@ -30,8 +30,8 @@ namespace ThingsLibrary.Security.OAuth2.Tests.Extensions
         [DataRow(null, null, "System.String")]
         public void GetPropertyString_BadData(string propertyKey, string expectedValue, string typeStr)
         {
-            Assert.ThrowsException<ArgumentNullException>(() => TestDocument.GetProperty<string>("", ""));
-            Assert.ThrowsException<ArgumentNullException>(() => TestDocument.GetProperty<string>(null, ""));
+            Assert.Throws<ArgumentNullException>(() => TestDocument.GetProperty<string>("", ""));
+            Assert.Throws<ArgumentNullException>(() => TestDocument.GetProperty<string>(null, ""));
         }
 
         [DataTestMethod]

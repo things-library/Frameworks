@@ -34,12 +34,13 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedResult, result);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]        
         public void GetValue_Null()
         {
             var builder = new DbConnectionStringBuilder();
-            builder.GetValue<string>("Any", string.Empty);
+
+            Assert.Throws<ArgumentException>(() => builder.GetValue<string>("Any", string.Empty));
+            
         }
     }
 }

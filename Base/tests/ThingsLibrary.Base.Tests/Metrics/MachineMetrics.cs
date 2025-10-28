@@ -71,7 +71,7 @@ namespace ThingsLibrary.Tests.Metrics
             Assert.IsTrue(MachineMetrics.GetAvailableHardDriveSpaceKB(TestDirectoryPath) > 0);
 
             //BAD Tests
-            Assert.ThrowsException<ArgumentException>(() => MachineMetrics.GetAvailableHardDriveSpaceKB(Path.Combine(TestDirectoryPath, "BAD_FOLDER")));
+            Assert.Throws<ArgumentException>(() => MachineMetrics.GetAvailableHardDriveSpaceKB(Path.Combine(TestDirectoryPath, "BAD_FOLDER")));
         }
 
         [TestMethod]
