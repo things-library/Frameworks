@@ -5,6 +5,8 @@
 // </copyright>
 // ================================================================================
 
+using Serilog;
+
 namespace ThingsLibrary.Database
 {
     // ====================================================================================
@@ -42,14 +44,6 @@ namespace ThingsLibrary.Database
             //nothing
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder options)
-        //{
-        //    //TODO:            
-        //    Console.WriteLine("OnConfiguring()");
-        //    //optionsBuilder.EnableSensitiveDataLogging();
-        //}
-
-
         /// <summary>
         /// On Model Creating
         /// </summary>
@@ -63,22 +57,22 @@ namespace ThingsLibrary.Database
             // include all of the services fluent API configurations
             var baseAssembly = typeof(DataContext).Assembly;
 
-            Console.WriteLine($"= Applying {baseAssembly.GetName().Name} ({baseAssembly.GetName().Version}) Configurations...");
+            Log.Information("= Applying {AssemblyName} ({AssemblyVersion}) Configurations...", baseAssembly.GetName().Name, baseAssembly.GetName().Version);
             modelBuilder.ApplyConfigurationsFromAssembly(baseAssembly);
 
             var assembly = this.GetType().Assembly;
             if (assembly != baseAssembly)
             {
-                Console.WriteLine($"= Applying {assembly.GetName().Name} ({assembly.GetName().Version}) Configurations...");
+                Log.Information("= Applying {AssemblyName} ({AssemblyVersion}) Configurations...", assembly.GetName().Name, assembly.GetName().Version);
                 modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             }
 
             //turn off default OnDelete:cascade
-            Console.WriteLine($"= Restricting Delete behaviors...");
+            Log.Information($"= Restricting Delete behaviors...");
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }            
+            }
         }
 
         /// <summary>
@@ -94,6 +88,7 @@ namespace ThingsLibrary.Database
             var partitionKey = type.GetProperties().FirstOrDefault(x => x.GetCustomAttributes(typeof(Attributes.PartitionKeyAttribute), false).Any());
             if (partitionKey != null)
             {
+                Log.Information("= Creating Partition Key Index on {EntityType}.{PartitionKey}", type.Name, partitionKey.Name);
                 builder.HasIndex(partitionKey.Name);
             }
 
@@ -114,7 +109,7 @@ namespace ThingsLibrary.Database
         /// <param name="modelBuilder"></param>
         public void SeedBaseData(ModelBuilder modelBuilder)
         {
-            Console.WriteLine("= Seeding / Validating Base Database Data...");
+            Log.Information("= Seeding / Validating Base Database Data...");
 
             // EXAMPLE:
             //modelBuilder.Entity<EventType>().HasData(

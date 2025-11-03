@@ -8,7 +8,7 @@
 namespace ThingsLibrary.Services.Extensions
 {
     public static class ConfigurationExtensions
-    {        
+    {
         /// <summary>
         /// Get connection string in the various places it could be.
         /// </summary>
@@ -21,30 +21,30 @@ namespace ThingsLibrary.Services.Extensions
         {
             if (string.IsNullOrEmpty(connectionStringName)) { throw new ArgumentNullException(nameof(connectionStringName)); }
 
-            Console.WriteLine($"Getting connection string '{connectionStringName}'...");
+            Log.Debug("Getting connection string '{ConnectionStringName}'...", connectionStringName);
             var connectionString = configuration.GetConnectionString(connectionStringName);
             if (string.IsNullOrEmpty(connectionString))
             {
-                Console.WriteLine($"Not Found; Trying to get 'CUSTOMCONNSTR_{connectionStringName}' with Prefix...");
+                Log.Debug("Not Found; Trying to get '{ConnectionStringName}' with Prefix...", $"CUSTOMCONNSTR_{connectionStringName}");
                 connectionString = configuration.GetConnectionString($"CUSTOMCONNSTR_{connectionStringName}");
             }
-            
+
             if (string.IsNullOrEmpty(connectionString))
             {
-                Console.WriteLine($"Not Found; Trying to get '{connectionStringName}' from environment variables...");
+                Log.Debug("Not Found; Trying to get '{ConnectionStringName}' from environment variables...", connectionStringName);
                 connectionString = Environment.GetEnvironmentVariable(connectionStringName);
             }
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                Console.WriteLine($"Not Found; Trying to get '{connectionStringName}' from environment variables with prefix...");
+                Log.Debug("Not Found; Trying to get '{ConnectionStringName}' from environment variables with prefix...", connectionStringName);
                 connectionString = Environment.GetEnvironmentVariable($"CUSTOMCONNSTR_{connectionStringName}");
             }
 
             // STILL NOT FOUND??!?!?
             if (string.IsNullOrEmpty(connectionString))
             {
-                Console.WriteLine($"Connection string '{connectionStringName}' not found!");
+                Log.Warning("Connection string '{ConnectionStringName}' not found!", connectionStringName);
                 throw new ArgumentException($"Unable to find connection string '{connectionStringName}'");
             }
 

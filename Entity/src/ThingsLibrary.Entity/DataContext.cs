@@ -5,6 +5,8 @@
 // </copyright>
 // ================================================================================
 
+using Serilog;
+
 namespace ThingsLibrary.Entity
 {
     public class DataContext : DbContext
@@ -32,22 +34,22 @@ namespace ThingsLibrary.Entity
             // include all of the services fluent API configurations
             var baseAssembly = typeof(DataContext).Assembly;
 
-            Console.WriteLine($"= Applying {baseAssembly.GetName().Name} ({baseAssembly.GetName().Version}) Configurations...");
+            Log.Information("= Applying {AssemblyName} ({AssemblyVersion}) Configurations...", baseAssembly.GetName().Name, baseAssembly.GetName().Version);
             modelBuilder.ApplyConfigurationsFromAssembly(baseAssembly);
 
             var assembly = this.GetType().Assembly;
             if (assembly != baseAssembly)
             {
-                Console.WriteLine($"= Applying {assembly.GetName().Name} ({assembly.GetName().Version}) Configurations...");
+                Log.Information("= Applying {AssemblyName} ({AssemblyVersion}) Configurations...", assembly.GetName().Name, assembly.GetName().Version);
                 modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             }
 
-            //turn off default OnDelete:cascade            
-            Console.WriteLine($"= Restricting Delete behaviors...");
+            //turn off default OnDelete:cascade
+            Log.Information($"= Restricting Delete behaviors...");
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }            
+            }
         }
 
         /// <summary>

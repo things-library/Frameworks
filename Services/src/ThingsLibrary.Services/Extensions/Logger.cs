@@ -5,42 +5,42 @@
 // </copyright>
 // ================================================================================
 
-namespace ThingsLibrary.Services.AspNetCore.Extensions
+namespace ThingsLibrary.Services.Extensions
 {
     public static class LoggerExtensions
     {
-        ///// <summary>
-        ///// Initialize a long term logger 
-        ///// </summary>
-        //public static IServiceCollection AddSeriLogging(this IServiceCollection services, IConfiguration configuration)
-        //{
-        //    // configure the logger as as possible
-        //    if (configuration.GetSection("Serilog").Exists())
-        //    {
-        //        Log.Logger = new LoggerConfiguration()
-        //            .ReadFrom.Configuration(configuration)
-        //            .CreateLogger();
-        //    }
-        //    else
-        //    {
-        //        Console.ForegroundColor = ConsoleColor.Red;
-        //        Console.WriteLine("WARNING: No 'serilog' section found in AppSettings.");
-        //        Console.ForegroundColor = ConsoleColor.Gray;
+        /// <summary>
+        /// Initialize a long term logger 
+        /// </summary>
+        public static IServiceCollection AddSeriLogging(this IServiceCollection services, IConfiguration configuration)
+        {
+            // configure the logger as as possible
+            if (configuration.GetSection("Serilog").Exists())
+            {
+                Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(configuration)
+                    .CreateLogger();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("WARNING: No 'serilog' section found in AppSettings.");
+                Console.ForegroundColor = ConsoleColor.Gray;
 
-        //        Log.Logger = new LoggerConfiguration()
-        //            .WriteTo.Console()
-        //            .CreateLogger();
+                Log.Logger = new LoggerConfiguration()
+                    .WriteTo.Console()
+                    .CreateLogger();
 
-        //        Log.Warning("Default Serilog Logger Initalized.");
-        //    }
+                Log.Warning("Default Serilog Logger Initalized.");
+            }
 
-        //    // add the serilog
-        //    //services.AddSeriLogging(configuration);
-        //    //services.AddSerilog(Log.Logger);
-        //    //services.AddLogging(loggerBuilder => loggerBuilder.AddSerilog(Log.Logger));
+            // add the serilog
+            services.AddSeriLogging(configuration);
+            services.AddSerilog(Log.Logger);
+            services.AddLogging(loggerBuilder => loggerBuilder.AddSerilog(Log.Logger));
 
-        //    // for chaining
-        //    return services;
-        //}
+            // for chaining
+            return services;
+        }
     }
 }

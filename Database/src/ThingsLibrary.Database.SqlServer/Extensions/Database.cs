@@ -5,6 +5,7 @@
 // </copyright>
 // ================================================================================
 
+using Serilog;
 using ThingsLibrary.Services.Extensions;
 
 namespace ThingsLibrary.Database.SqlServer.Extensions
@@ -42,11 +43,11 @@ namespace ThingsLibrary.Database.SqlServer.Extensions
             // verify a SQL connection can be established before continuing            
             using (var connection = new SqlConnection(connectionString))
             {
-                Console.WriteLine($"Testing SQL Connection to {connection.DataSource}...");
+                Log.Information("Testing SQL Connection to {DatabaseServer}...", connection.DataSource);
                 connection.Open();
 
-                Console.WriteLine($"+ SQL Server: {connection.DataSource} ");
-                Console.WriteLine($"+ SQL Database: {connection.Database}");
+                Log.Information("+ SQL Server: {DatabaseServer}", connection.DataSource);
+                Log.Information("+ SQL Database: {DatabaseName}", connection.Database);
             }
 
             services.AddDbContext<TContext>(builder => builder.Configure<TContext>(connectionString));
