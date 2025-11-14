@@ -47,9 +47,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             //   "LivenessUrl": "/health",
             //   "ReadinessUrl": "/health/ready",
             //   "StartupUrl": "/health/startup"
-
-            if (App.Service?.Canvas == null) { throw new ArgumentException("Service Canvas Not Defined."); }
-            
+                        
             Log.Debug("Health Probe Endpoints:");
 
             // LIVENESS

@@ -48,15 +48,32 @@ namespace ThingsLibrary.DataType.Extensions
 
             foreach (var result in results)
             {
-                if (result is CompositeValidationResult compositeResult)
+                // Check if this result has nested results
+                var nestedResults = result.GetType().GetProperty("Results")?.GetValue(result) as ICollection<ValidationResult>;
+
+                if (nestedResults != null && nestedResults.Count > 0)
                 {
-                    list.AddRange(compositeResult.Flatten());
+                    // Recursively flatten nested results
+                    list.AddRange(nestedResults.Flatten());
                 }
                 else
                 {
+                    // No nested results, add this result
                     list.Add(result);
                 }
             }
+
+            //foreach (var result in results)
+            //{                
+            //    if (result is CompositeValidationResult compositeResult)
+            //    {
+            //        list.AddRange(compositeResult.Flatten());
+            //    }
+            //    else
+            //    {
+            //        list.Add(result);
+            //    }
+            //}
 
             //return list.OrderBy(x => x.MemberNames.FirstOrDefault()).ToList();
             return list;

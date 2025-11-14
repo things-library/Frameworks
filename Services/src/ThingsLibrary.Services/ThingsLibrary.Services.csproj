@@ -29,6 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\Schemas\src\csharp\ThingsLibrary.Schema.Library\ThingsLibrary.Schema.Library.csproj" />
 	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
 	</ItemGroup>
 

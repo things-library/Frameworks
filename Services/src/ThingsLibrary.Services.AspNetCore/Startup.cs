@@ -12,7 +12,6 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
 using Serilog.Events;
 
-using ThingsLibrary.Schema.Canvas;
 using ThingsLibrary.Services.AspNetCore.HealthChecks;
 
 namespace ThingsLibrary.Services.AspNetCore
@@ -33,9 +32,9 @@ namespace ThingsLibrary.Services.AspNetCore
         /// App Duration Stopwatch
         /// </summary>
         public Stopwatch AppWatch { get; init; } = Stopwatch.StartNew();
-
-        public CanvasRoot Canvas { get; private set; } = new();
-
+                
+        public ItemDto Canvas { get; private set; } = new();
+        
         protected Startup()
         {
             // so we always have a logger running from as soon as possible
@@ -71,7 +70,8 @@ namespace ThingsLibrary.Services.AspNetCore
                 services.AddSeriLogging(context.Configuration);
                 
                 // Register the service canvas singletons and as a static instance
-                this.Canvas = services.AddServiceCanvas(context.Configuration);                
+                //this.ServiceCanvas = services.AddServiceCanvas(context.Configuration);                
+                this.Canvas = services.AddCanvas(context.Configuration);
 
                 Log.Debug("");
                 Log.Debug("======================================================================");
@@ -111,7 +111,7 @@ namespace ThingsLibrary.Services.AspNetCore
 
             Log.Debug("");
             Log.Debug("======================================================================");
-            Log.Information("Launching @ {AppStartOn} (Dur:{StartupDuration})...", DateTime.UtcNow.ToString("o"), DateTimeOffset.Now.Subtract(App.Service.StartedOn).ToClock());
+            Log.Information("Launching @ {AppStartOn} (Dur:{StartupDuration})...", DateTime.UtcNow.ToString("o"), DateTimeOffset.UtcNow.Subtract(App.Service.StartedOn).ToClock());
             Log.Debug("======================================================================");
             await app.RunAsync(App.Service.CancellationToken);
             
@@ -121,7 +121,7 @@ namespace ThingsLibrary.Services.AspNetCore
             // APPLICATION ENDED!!!
             Log.Debug("");
             Log.Debug("======================================================================");
-            Log.Information(" APPLICATION ENDED @ {AppEndTime}, (Dur:{AppDuration})", DateTime.UtcNow.ToString("o"), DateTimeOffset.Now.Subtract(App.Service.StartedOn).ToClock());
+            Log.Information(" APPLICATION ENDED @ {AppEndTime}, (Dur:{AppDuration})", DateTime.UtcNow.ToString("o"), DateTimeOffset.UtcNow.Subtract(App.Service.StartedOn).ToClock());
             Log.Debug("======================================================================");
 
             // flush log

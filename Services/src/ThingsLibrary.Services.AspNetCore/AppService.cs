@@ -25,7 +25,7 @@ namespace ThingsLibrary.Services.AspNetCore
         /// <summary>
         /// Started DateTime
         /// </summary>
-        public DateTimeOffset StartedOn { get; } = DateTimeOffset.Now;
+        public DateTimeOffset StartedOn { get; } = DateTimeOffset.UtcNow;
         
         /// <summary>
         /// Cancellation Token Source
@@ -40,7 +40,9 @@ namespace ThingsLibrary.Services.AspNetCore
         /// <summary>
         /// Service Canvas
         /// </summary>
-        public Schema.Canvas.CanvasRoot? Canvas { get; set; }
+        //public Schema.Canvas.CanvasRoot? ServiceCanvas { get; set; }
+
+        public Schema.Library.ItemDto? Canvas { get; set; }
 
         /// <summary>
         /// Debugging / Development State
@@ -144,7 +146,7 @@ namespace ThingsLibrary.Services.AspNetCore
             if (_metrics != null)
             {
                 var lastRefreshOn = _metrics.Date ?? default;
-                if (_metrics.Date > DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(ttl)))
+                if (_metrics.Date > DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(ttl)))
                 {
                     _metrics.Tags["CacheTTL"] = DateTimeOffset.UtcNow.Subtract(lastRefreshOn.AddSeconds(ttl)).ToClock();
 
@@ -196,24 +198,23 @@ namespace ThingsLibrary.Services.AspNetCore
             rootMetrics.Items.Add(assemblyItem.Key, assemblyItem);
 
             // CANVAS
-            if (this.Canvas != null)
-            {
-                var canvasItem = new RootItemDto
-                {
-                    Key = "canvas",
-                    Type = "app_canvas",
-                    Name = this.Canvas.Info.Name,
+            //if (this.ServiceCanvas != null)
+            //{
+            //    var canvasItem = new RootItemDto
+            //    {
+            //        Key = "canvas",
+            //        Type = "app_canvas",
+            //        Name = this.ServiceCanvas.Info.Name,
                     
-                    Tags = new Dictionary<string, string>
-                    {
-                        { "namespace", this.Canvas.Info.Namespace },
-                        { "environment", this.Canvas.Info.Environment },
-                        { "host", $"{this.Canvas.Info.Host}" }
-                    }
-                };
-                rootMetrics.Items.Add(canvasItem.Key, canvasItem);
-
-            }
+            //        Tags = new Dictionary<string, string>
+            //        {
+            //            { "namespace", this.ServiceCanvas.Info.Namespace },
+            //            { "environment", this.ServiceCanvas.Info.Environment },
+            //            { "host", $"{this.ServiceCanvas.Info.Host}" }
+            //        }
+            //    };
+            //    rootMetrics.Items.Add(canvasItem.Key, canvasItem);
+            //}
 
             // machine metrics
             var machineItem = new RootItemDto
@@ -262,8 +263,8 @@ namespace ThingsLibrary.Services.AspNetCore
             // limit the speed to which we can call memory snapshots            
             if (_lastHeartbeat != null)
             {
-                var lastRefreshOn = _lastHeartbeat.Date ?? DateTimeOffset.Now;
-                if (lastRefreshOn > DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(ttl)))
+                var lastRefreshOn = _lastHeartbeat.Date ?? DateTimeOffset.UtcNow;
+                if (lastRefreshOn > DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(ttl)))
                 {
                     _lastHeartbeat.Tags["cache_ttl"] = DateTimeOffset.UtcNow.Subtract(lastRefreshOn.AddSeconds(ttl)).ToClock();
 
