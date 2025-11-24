@@ -40,6 +40,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\..\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
 	</ItemGroup>
 
