@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ThingsLibrary.Schema.Library;
 using ThingsLibrary.Services.Extensions;
 
-namespace ThingsLibrary.Cache.Cosmost
+namespace ThingsLibrary.Cache.Cosmos
 {
     public static partial class ServicesExtensions
     {
@@ -27,9 +27,7 @@ namespace ThingsLibrary.Cache.Cosmost
                 cacheOptions.ContainerName = configOptions["container_name"] ?? throw new ArgumentException("'container_name' missing from cache options.");
                 cacheOptions.CreateIfNotExists = true;
             });
-
-            //var c = new CosmosClientBuilder()
-
+                        
             //services.TryAddSingleton<JsonSerializerOptions>(jsonSerializerOptions);   //required 
             services.AddTransient<ICacheStore, CacheStore>();
 
