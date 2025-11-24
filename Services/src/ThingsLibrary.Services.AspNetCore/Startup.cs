@@ -72,14 +72,12 @@ namespace ThingsLibrary.Services.AspNetCore
                 // Register the service canvas singletons and as a static instance
                 //this.ServiceCanvas = services.AddServiceCanvas(context.Configuration);                
                 this.Canvas = services.AddCanvas(context.Configuration);
-
-                Log.Debug("");
+                                
                 Log.Debug("======================================================================");
                 Log.Information(" CONFIGURE SERVICES");
                 Log.Debug("======================================================================");
                 this.ConfigureServices(context, services);
-
-                Log.Debug("");
+                                
                 Log.Debug("======================================================================");
                 Log.Debug(" CONFIGURE Health SERVICES...");
                 Log.Debug("======================================================================");
