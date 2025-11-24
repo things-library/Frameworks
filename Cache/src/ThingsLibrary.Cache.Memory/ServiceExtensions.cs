@@ -13,7 +13,7 @@ namespace ThingsLibrary.Cache.Memory
 {
     public static partial class ServicesExtensions
     {
-        public static IServiceCollection AddCacheStore(this IServiceCollection services, JsonSerializerOptions jsonSerializerOptions)
+        public static IServiceCollection AddCacheMemoryStore(this IServiceCollection services, JsonSerializerOptions jsonSerializerOptions)
         {
             services.AddDistributedMemoryCache();
 

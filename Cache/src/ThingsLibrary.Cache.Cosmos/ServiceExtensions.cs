@@ -18,7 +18,7 @@ namespace ThingsLibrary.Cache.Cosmost
 {
     public static partial class ServicesExtensions
     {
-        public static IServiceCollection AddCacheStore(this IServiceCollection services, CosmosClient comosClient, ItemDto configOptions)
+        public static IServiceCollection AddCacheCosmosStore(this IServiceCollection services, CosmosClient comosClient, ItemDto configOptions)
         {
             services.AddCosmosCache((CosmosCacheOptions cacheOptions) =>
             {
@@ -36,7 +36,7 @@ namespace ThingsLibrary.Cache.Cosmost
             return services;
         }
 
-        public static IServiceCollection AddCacheStore(this IServiceCollection services, IConfiguration configuration, ItemDto configOptions)
+        public static IServiceCollection AddCacheCosmosStore(this IServiceCollection services, IConfiguration configuration, ItemDto configOptions)
         {
             services.AddCosmosCache((CosmosCacheOptions cacheOptions) =>
             {
