@@ -6,8 +6,10 @@
 		<Nullable>enable</Nullable>
 
 		<IsPackable>false</IsPackable>
-		<IsTestProject>true</IsTestProject>
+		<IsTestProject>true</IsTestProject>		
+		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
 		<EnableMSTestRunner>true</EnableMSTestRunner>
+		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 	
 	<PropertyGroup>

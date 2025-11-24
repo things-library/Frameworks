@@ -102,7 +102,7 @@ namespace ThingsLibrary.Tests.Metrics
 
             var versions = AssemblyMetrics.GetDependencyVersions(assembly);
 
-            Assert.AreEqual(20, versions.Count);
+            Assert.AreEqual(25, versions.Count);
         }
     }
 }
