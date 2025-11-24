@@ -5,6 +5,7 @@
 // </copyright>
 // ================================================================================
 
+using Microsoft.Data.SqlClient;
 using Serilog;
 using ThingsLibrary.Services.Extensions;
 
