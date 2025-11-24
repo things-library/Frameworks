@@ -38,8 +38,8 @@ jobs:
     - name: Build
       run: dotnet build ${{env.SOLUTION_PATH}} --configuration Release /p:Version="${VERSION}" --no-restore
       
-    # - name: Test
-    #   run: dotnet test ${{env.SOLUTION_PATH}} -c Release --no-build --results-directory "./Artifacts/Test/0.0.0" --coverage --coverage-output-format cobertura
+    - name: Test
+      run: dotnet test --solution ${{env.SOLUTION_PATH}} -c Release --no-build --results-directory "./Artifacts/Test/0.0.0" --coverage --coverage-output-format cobertura
     
     - name: Pack
       run: dotnet pack ${{env.SOLUTION_PATH}} -v normal -c Release /p:Version="${VERSION}" /p:PackageVersion="${VERSION}" /p:PackageReleaseNotes="${{ github.event.inputs.releaseNotes }}" --no-restore --no-build --output "./Artifacts/Build"
