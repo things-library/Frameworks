@@ -40,7 +40,7 @@ namespace ThingsLibrary.Cache.Cosmost
         {
             services.AddCosmosCache((CosmosCacheOptions cacheOptions) =>
             {
-                var connectionStringVariable = configOptions["connection_variable"] ?? throw new ArgumentException("'connection_variable' missing from cache options");
+                var connectionStringVariable = configOptions["connection_string_variable"] ?? throw new ArgumentException("'connection_string_variable' missing from cache options");
 
                 cacheOptions.ClientBuilder = new CosmosClientBuilder(configuration.TryGetConnectionString(connectionStringVariable));
                 cacheOptions.DatabaseName = configOptions["database_name"] ?? throw new ArgumentException("'database_name' missing from cache options.");
