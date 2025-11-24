@@ -42,7 +42,7 @@ jobs:
       run: dotnet build ${{env.SOLUTION_PATH}} --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test ${{env.SOLUTION_PATH}} -c Release --nologo --no-build --results-directory "./Artifacts/Test/0.0.0" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test --solution ${{env.SOLUTION_PATH}} -c Release --no-build --results-directory "./Artifacts/Test/0.0.0" --coverage --coverage-output-format cobertura
 
     - name: Tree List
       run: tree -a ./Artifacts

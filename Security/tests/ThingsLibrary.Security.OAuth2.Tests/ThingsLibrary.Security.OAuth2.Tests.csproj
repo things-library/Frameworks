@@ -12,18 +12,10 @@
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <Content Remove="C:\Users\MLanning\.nuget\packages\microsoft.testplatform.testhost\17.8.0\build\netcoreapp3.1\x64\testhost.dll" />
-	  <Content Remove="C:\Users\MLanning\.nuget\packages\microsoft.testplatform.testhost\17.8.0\build\netcoreapp3.1\x64\testhost.exe" />
-	</ItemGroup>
-
+	
 	<ItemGroup>
 		<PackageReference Include="MSTest" Version="4.0.2" />
-		<PackageReference Include="coverlet.collector" Version="6.0.4">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+		<PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
