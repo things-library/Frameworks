@@ -35,7 +35,7 @@ namespace ThingsLibrary.DataType
     public class ActionResponse<TEntity> : ActionResponse
     {
         [JsonPropertyName("data")]
-        public TEntity? Data { get; set; }
+        public TEntity Data { get; set; } = default;
                 
         public ActionResponse() 
         { 

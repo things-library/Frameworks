@@ -5,6 +5,7 @@
 // </copyright>
 // ================================================================================
 
+using System.Reflection;
 using ThingsLibrary.Metrics;
 
 namespace ThingsLibrary.Services.AspNetCore
@@ -40,10 +41,8 @@ namespace ThingsLibrary.Services.AspNetCore
         /// <summary>
         /// Service Canvas
         /// </summary>
-        //public Schema.Canvas.CanvasRoot? ServiceCanvas { get; set; }
-
         public Schema.Library.ItemDto? Canvas { get; set; }
-
+        
         /// <summary>
         /// Debugging / Development State
         /// </summary>
@@ -92,19 +91,22 @@ namespace ThingsLibrary.Services.AspNetCore
 
         #region --- Assembly Properties ---
 
-        private AssemblyMetrics? _assemblyMetrics;
+        private Assembly? _assembly;
 
-        public AssemblyMetrics Assembly
+        public Assembly Assembly
         {
             get
             {
                 // only allociate the memory if we are using it
-                if (_assemblyMetrics == null) { _assemblyMetrics = new AssemblyMetrics(); }
+                if (_assembly == null)
+                {
+                    _assembly = Assembly.GetEntryAssembly() ?? throw new IOException("Unable to locate entry assembly.");
+                }
 
-                return _assemblyMetrics;
+                return _assembly;
             }
 
-            set { _assemblyMetrics = value; }
+            set { _assembly = value; }
         }
 
         /// <summary>

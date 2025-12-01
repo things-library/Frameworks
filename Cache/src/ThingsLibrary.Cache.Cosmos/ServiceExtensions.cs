@@ -5,11 +5,13 @@
 // </copyright>
 // ================================================================================
 
+using System.Text.Json;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Extensions.Caching.Cosmos;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 using ThingsLibrary.Schema.Library;
 using ThingsLibrary.Services.Extensions;
@@ -18,7 +20,7 @@ namespace ThingsLibrary.Cache.Cosmos
 {
     public static partial class ServicesExtensions
     {
-        public static IServiceCollection AddCacheCosmosStore(this IServiceCollection services, CosmosClient comosClient, ItemDto configOptions)
+        public static IServiceCollection AddCacheCosmosStore(this IServiceCollection services, CosmosClient comosClient, ItemDto configOptions, JsonSerializerOptions jsonSerializerOptions)
         {
             services.AddCosmosCache((CosmosCacheOptions cacheOptions) =>
             {
@@ -27,14 +29,14 @@ namespace ThingsLibrary.Cache.Cosmos
                 cacheOptions.ContainerName = configOptions["container_name"] ?? throw new ArgumentException("'container_name' missing from cache options.");
                 cacheOptions.CreateIfNotExists = true;
             });
-                        
-            //services.TryAddSingleton<JsonSerializerOptions>(jsonSerializerOptions);   //required 
+
+            services.TryAddSingleton<JsonSerializerOptions>(jsonSerializerOptions);   //required 
             services.AddTransient<ICacheStore, CacheStore>();
 
             return services;
         }
 
-        public static IServiceCollection AddCacheCosmosStore(this IServiceCollection services, IConfiguration configuration, ItemDto configOptions)
+        public static IServiceCollection AddCacheCosmosStore(this IServiceCollection services, IConfiguration configuration, ItemDto configOptions, JsonSerializerOptions jsonSerializerOptions)
         {
             services.AddCosmosCache((CosmosCacheOptions cacheOptions) =>
             {
@@ -46,7 +48,7 @@ namespace ThingsLibrary.Cache.Cosmos
                 cacheOptions.CreateIfNotExists = true;
             });
                         
-            //services.TryAddSingleton<JsonSerializerOptions>(jsonSerializerOptions);   //required 
+            services.TryAddSingleton<JsonSerializerOptions>(jsonSerializerOptions);   //required 
             services.AddTransient<ICacheStore, CacheStore>();
 
             return services;

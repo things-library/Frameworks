@@ -190,6 +190,14 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
         public static void AddCanvasAuthAzureAd(this IServiceCollection services, AuthenticationBuilder authBuilder, ItemDto azureAdOptions)
         {
             //{
+            //  "authority": "https://thingslibraryusers.ciamlogin.com/thingslibraryusers.onmicrosoft.com/v2.0/?appid=11716e4d-6fa7-41d8-bfa3-0cc96342afb4",
+            //  "domain": "thingslibraryusers.onmicrosoft.com",
+            //  "client_id": "11716e4d-6fa7-41d8-bfa3-0cc96342afb4",
+            //  "client_secret": null,
+            //  "scopes": "api://11716e4d-6fa7-41d8-bfa3-0cc96342afb4/default",                                          
+            //  "callback_path": "/signin-oidc"
+            //}
+            //{
             //    "authority": "https://c57be6f1-b43d-4a29-97a3-f1c6e9a727a4.ciamlogin.com/c57be6f1-b43d-4a29-97a3-f1c6e9a727a4/v2.0",
             //    "domain": "signodeconnectusers.onmicrosoft.com",
             //    "client_id": "4f62a04e-86aa-4c0f-9449-411b4b69503e",
@@ -206,7 +214,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             Log.Debug("+ {AppCapability}", "Microsoft Identity");
 
             authBuilder.AddMicrosoftIdentityWebApp(options =>
-            {
+            {                
                 options.Authority = azureAdOptions["authority"];
                 options.Domain = azureAdOptions["domain"];
                 options.ClientId = azureAdOptions["client_id"];
@@ -214,7 +222,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                 options.CallbackPath = azureAdOptions["callback_path"];
                 options.SignedOutCallbackPath = azureAdOptions["signed_out_callback_path"];
 
-                if (azureAdOptions.Items.ContainsKey("scopes"))
+                if (azureAdOptions.Tags.ContainsKey("scopes"))
                 {
                     var scopes = azureAdOptions["scopes"].Split(' ', StringSplitOptions.RemoveEmptyEntries);
                     scopes.ForEach<string>(x => options.Scope.Add(x));

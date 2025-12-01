@@ -30,10 +30,11 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.0" />
-		<PackageReference Include="Microsoft.Identity.Web.UI" Version="4.1.0" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="4.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\Cache\src\ThingsLibrary.Cache\ThingsLibrary.Cache.csproj" />
 		<ProjectReference Include="..\ThingsLibrary.Services\ThingsLibrary.Services.csproj" />
 	</ItemGroup>
 

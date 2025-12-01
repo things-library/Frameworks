@@ -29,13 +29,25 @@ namespace ThingsLibrary.Cache
         {
             ArgumentException.ThrowIfNullOrEmpty(key);
 
-            var json = await _cache.GetStringAsync(key, cancellationToken);
+            string? json;
 
-            // not found
-            if (json == null || json.Length == 0)
+            try
             {
-                _logger.LogInformation("= Cache: {Key} - NOT FOUND", key);
+                json = await _cache.GetStringAsync(key, cancellationToken);
 
+                // not found
+                if (json == null || json.Length == 0)
+                {
+                    _logger.LogInformation("= Cache: {Key} - NOT FOUND", key);
+
+                    return default;
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving cache for key: {Key}", key);
+
+                // NOT THE END OF THE WORLD IF WE CAN"T GET CACHE.. return default
                 return default;
             }
 
@@ -47,8 +59,9 @@ namespace ThingsLibrary.Cache
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unable to deserialze data for key: {Key}", key);
+                _logger.LogError(ex, "Unable to deserialize data for key: {Key}", key);
 
+                // NOT THE END OF THE WORLD IF WE CAN"T GET CACHE.. return default
                 return default;
             }
         }
@@ -82,7 +95,7 @@ namespace ThingsLibrary.Cache
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unable to remove key: {Key}", key);
+                _logger.LogError(ex, "Unable to set cache with key: {Key}", key);
             }
         }
 
