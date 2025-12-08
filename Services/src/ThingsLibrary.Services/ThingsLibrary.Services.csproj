@@ -9,7 +9,8 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Services</PackageId>
-		<PackageDescription>Things Library Services library.</PackageDescription>
+		<PackageDescription>Things Library Services library.</PackageDescription>		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
 		<ProductName>ThingsLibrary.Services</ProductName>
 		<Title>Things Library Services library.</Title>

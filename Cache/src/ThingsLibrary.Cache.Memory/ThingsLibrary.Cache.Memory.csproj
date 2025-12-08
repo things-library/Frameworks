@@ -10,6 +10,7 @@
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Cache.Memory</PackageId>
 		<PackageDescription>Things Library memory cache libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
 		<ProductName>ThingsLibrary.Cache.Memory</ProductName>
 		<Title>Things Library Memory Cache Library</Title>

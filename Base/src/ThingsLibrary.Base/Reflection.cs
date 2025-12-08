@@ -24,7 +24,7 @@ namespace ThingsLibrary
         {
             var defaultValue = GetDefault(typeof(T));
             if(defaultValue == null) { return default; }
-
+            
             return (T)defaultValue;
         }
 

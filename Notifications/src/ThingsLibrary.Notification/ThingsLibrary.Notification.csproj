@@ -9,7 +9,8 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Notification</PackageId>
-		<PackageDescription>Things Library notification library definition.</PackageDescription>
+		<PackageDescription>Things Library notification library definition.</PackageDescription>		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
 		<ProductName>ThingsLibrary.Notification</ProductName>
 		<Title>Things Library Notification Base Library</Title>

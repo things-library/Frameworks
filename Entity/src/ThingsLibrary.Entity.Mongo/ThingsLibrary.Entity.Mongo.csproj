@@ -9,6 +9,9 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Entity.Mongo</PackageId>
+		<PackageDescription>Things Library entity Mongo (NoSQL) libraries and wrappers.</PackageDescription>		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		
 		<ProductName>ThingsLibrary.Entity.Mongo</ProductName>
 		<Title>Cloud Entity Framework Library</Title>
 		<Description>This is the shared library</Description>

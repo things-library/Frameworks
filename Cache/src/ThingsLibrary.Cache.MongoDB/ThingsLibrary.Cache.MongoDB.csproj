@@ -9,7 +9,7 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Cache.MongoDB</PackageId>
-		<PackageDescription>Things Library Azure Cosmos cache libraries and wrappers.</PackageDescription>
+		<PackageDescription>Things Library Mongos cache libraries and wrappers.</PackageDescription>
 
 		<ProductName>ThingsLibrary.Cache.MongoDB</ProductName>
 		<Title>Things Library MongoDB Cache Library</Title>

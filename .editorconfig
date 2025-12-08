@@ -20,7 +20,7 @@ insert_final_newline = false
 # Organize usings
 dotnet_separate_import_directive_groups = false
 dotnet_sort_system_directives_first = true
-file_header_template = ================================================================================\n<copyright file="{fileName}" company="Starlight Software Co">\n   Copyright (c) Starlight Software Co. All rights reserved.\n   Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.\n</copyright>\n================================================================================
+file_header_template = ================================================================================\n<copyright file="{fileName}" company="Starlight Software Co">\n   Copyright (c) 2025 Starlight Software Co. All rights reserved.\n   Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.\n</copyright>\n================================================================================
 dotnet_diagnostic.IDE0073.severity = error
 
 # this. and Me. preferences

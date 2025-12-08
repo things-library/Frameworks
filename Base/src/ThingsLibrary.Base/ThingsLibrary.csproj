@@ -4,12 +4,13 @@
 		<TargetFrameworks>net10.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<IsPackable>true</IsPackable>
+		<IsPackable>true</IsPackable>		
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Base</PackageId>
 		<PackageDescription>Things Library core framework libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
 		<ProductName>ThingsLibrary.Base</ProductName>
 		<Title>Things Library Core Framework Library</Title>

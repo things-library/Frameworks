@@ -11,6 +11,9 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Database.SqlServer</PackageId>
+		<PackageDescription>Things Library SQL Server database libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		
 		<ProductName>ThingsLibrary.Database.SqlServer</ProductName>
 		<Title>ThingsLibrary SQL Server Services Framework Library</Title>
 		<Description>This is the shared foundational library</Description>

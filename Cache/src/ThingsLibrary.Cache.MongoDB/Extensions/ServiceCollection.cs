@@ -1,27 +1,24 @@
 ﻿// ================================================================================
-// <copyright file="ServiceExtensions.cs" company="Starlight Software Co">
-//    Copyright (c) Starlight Software Co. All rights reserved.
+// <copyright file="ServiceCollection.cs" company="Starlight Software Co">
+//    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 //    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
 // ================================================================================
 
 using System.Text.Json;
-using Microsoft.Extensions.Caching.Distributed;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 
 using MongoDB.Driver;
-
 using ThingsLibrary.Schema.Library;
-using ThingsLibrary.Services.Extensions;
 
-namespace ThingsLibrary.Cache.MongoDB
+namespace ThingsLibrary.Cache.MongoDB.Extensions
 {
-    public static partial class ServicesExtensions
+    public static partial class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCacheCosmosStore(this IServiceCollection services, IMongoClient mongoClient, ItemDto configOptions, JsonSerializerOptions jsonSerializerOptions)
+        public static IServiceCollection AddCacheMongoStore(this IServiceCollection services, IMongoClient mongoClient, ItemDto configOptions, JsonSerializerOptions jsonSerializerOptions)
         {
             ArgumentNullException.ThrowIfNull(services);
             //services.AddMongoDbCache((CosmosCacheOptions cacheOptions) =>
@@ -32,17 +29,17 @@ namespace ThingsLibrary.Cache.MongoDB
             //    cacheOptions.CreateIfNotExists = true;
             //});
 
-            services.Add(ServiceDescriptor.Singleton<IDistributedCache, MongoCache>((IServiceProvider provider) =>
-            {
-                var optionsMonitor = provider.GetService<IOptionsMonitor<MongoCacheOptions>>();
-                if (optionsMonitor != null)
-                {
-                    return new MongoCache(optionsMonitor);
-                }
+            //services.Add(ServiceDescriptor.Singleton<IDistributedCache, MongoCache>((IServiceProvider provider) =>
+            //{
+            //    var optionsMonitor = provider.GetService<IOptionsMonitor<MongoCacheOptions>>();
+            //    if (optionsMonitor != null)
+            //    {
+            //        return new MongoCache(optionsMonitor);
+            //    }
 
-                var options = provider.GetRequiredService<IOptions<MongoCacheOptions>>();
-                return new MongoCache(options);
-            }));
+            //    var options = provider.GetRequiredService<IOptions<MongoCacheOptions>>();
+            //    return new MongoCache(options);
+            //}));
 
 
             //services.TryAddSingleton<JsonSerializerOptions>(jsonSerializerOptions);   //required 

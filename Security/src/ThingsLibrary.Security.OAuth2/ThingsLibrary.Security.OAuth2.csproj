@@ -9,6 +9,9 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Security.OAuth2</PackageId>
+		<PackageDescription>Things Library OAuth2 libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		
 		<ProductName>ThingsLibrary.Security.OAuth2</ProductName>
 		<Title>Things Library Security OAuth2 Library</Title>
 		<Description>This is the shared OAuth2 library</Description>

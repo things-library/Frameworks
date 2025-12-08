@@ -1,6 +1,6 @@
 ﻿// ================================================================================
 // <copyright file="ServiceCollection.cs" company="Starlight Software Co">
-//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 //    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
 // ================================================================================
@@ -9,11 +9,18 @@ namespace ThingsLibrary.Entity.Cosmos.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Register an Entity Framework Cosmos DB store for the specified DbContext    
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="connectionString"></param>
+        /// <param name="databaseName"></param>
+        /// <returns></returns>
         public static IServiceCollection AddEntityStoreCosmos<TContext>(this IServiceCollection services, string connectionString, string databaseName) where TContext : DbContext
         {
             ArgumentException.ThrowIfNullOrEmpty(connectionString);
             ArgumentException.ThrowIfNullOrEmpty(databaseName);
-
 
             services.AddDbContext<TContext>(options =>
             {   
@@ -21,17 +28,7 @@ namespace ThingsLibrary.Entity.Cosmos.Extensions
             });
 
             return services;
-        }
-
-        public static void UseEntityStoreCosmos<TContext>(this IServiceProvider services) where TContext : DbContext
-        {
-            // make sure database has all indexes created 
-            using (var serviceScope = services.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<TContext>();
-                dbContext.Database.EnsureCreated();
-            }
-        }
+        }       
     }
 }
 

@@ -9,6 +9,9 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Entity</PackageId>
+		<PackageDescription>Things Library entity (NoSQL) libraries and wrappers.</PackageDescription>		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		
 		<ProductName>ThingsLibrary.Entity</ProductName>
 		<Title>Cloud Entity Framework Library</Title>
 		<Description>This is the shared library</Description>

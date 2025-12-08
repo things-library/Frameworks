@@ -75,6 +75,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Database.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Cache.Cosmos", "Cache\src\ThingsLibrary.Cache.Cosmos\ThingsLibrary.Cache.Cosmos.csproj", "{2B61A89B-03C9-4C17-AA09-D903C733ED8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Entity.Cosmos", "Entity\src\ThingsLibrary.Entity.AzureCosmos\ThingsLibrary.Entity.Cosmos.csproj", "{7CFB7ED4-3717-89BA-4338-0EF6DE70B911}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{60D8582C-5C49-4D06-A7E0-ACFFB94D044D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +164,10 @@ Global
 		{2B61A89B-03C9-4C17-AA09-D903C733ED8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B61A89B-03C9-4C17-AA09-D903C733ED8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B61A89B-03C9-4C17-AA09-D903C733ED8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,6 +198,7 @@ Global
 		{3B22F8CC-5485-40EE-909C-23D130F140B9} = {AEA7EBFB-4654-45AA-86A7-8331890456C1}
 		{4E8EAE34-4F80-655D-5132-4A7B5888CE78} = {3B22F8CC-5485-40EE-909C-23D130F140B9}
 		{2B61A89B-03C9-4C17-AA09-D903C733ED8E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911} = {811C99C8-1F68-4DB0-A9F9-E45C1D6C0A25}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CF34144-3CDD-4955-B934-A5278D7A1139}

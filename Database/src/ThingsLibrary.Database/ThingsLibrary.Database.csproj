@@ -11,6 +11,9 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Database</PackageId>
+		<PackageDescription>Things Library database libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		
 		<ProductName>ThingsLibrary.Database</ProductName>
 		<Title>ThingsLibrary Database Services Framework Library</Title>
 		<Description>Provides various database agnostic tools such as audit tracking using EntityFramework</Description>

@@ -9,7 +9,8 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Notification.Azure</PackageId>
-		<PackageDescription>Things Library Azure Communication Services wrapping library.</PackageDescription>
+		<PackageDescription>Things Library Azure Communication Services wrapping library.</PackageDescription>		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
 		<ProductName>ThingsLibrary.Notification.Azure</ProductName>
 		<Title>Things Library ACS Wrapper Library</Title>

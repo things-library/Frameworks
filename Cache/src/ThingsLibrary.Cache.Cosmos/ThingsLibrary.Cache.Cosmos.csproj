@@ -10,6 +10,7 @@
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Cache.Cosmos</PackageId>
 		<PackageDescription>Things Library Azure Cosmos cache libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
 		<ProductName>ThingsLibrary.Cache.Cosmos</ProductName>
 		<Title>Things Library Cosmos Cache Library</Title>
