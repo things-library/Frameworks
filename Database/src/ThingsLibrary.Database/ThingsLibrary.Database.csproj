@@ -21,21 +21,9 @@
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <Compile Remove="Audit\**" />
-	  <EmbeddedResource Remove="Audit\**" />
-	  <None Remove="Audit\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Include="Audit\AuditClient.cs" />
-	  <Compile Include="Audit\AuditEvent.cs" />
-	  <Compile Include="Audit\AuditType.cs" />
-	  <Compile Include="Audit\AuditUser.cs" />
-	</ItemGroup>
 	
 	<ItemGroup>
+		<PackageReference Include="JsonDiffPatch.Net" Version="2.5.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="10.0.0" />

@@ -6,7 +6,9 @@
 // ================================================================================
 
 using System.Reflection;
+using Microsoft.Extensions.Localization;
 using ThingsLibrary.Metrics;
+using ThingsLibrary.Schema.Library;
 
 namespace ThingsLibrary.Services.AspNetCore
 {
@@ -56,6 +58,16 @@ namespace ThingsLibrary.Services.AspNetCore
                 return System.Diagnostics.Debugger.IsAttached;
             }
         }
+
+        /// <summary>
+        /// Supported Languages
+        /// </summary>
+        public string[] SupportedLanguages { get; set; } = new[] { "en-US" };
+
+        /// <summary>
+        /// String Localizer
+        /// </summary>
+        //public IStringLocalizer Localizer { get; set; }
 
         /// <summary>
         /// Flag to indicate if this instance is ready for requests
@@ -158,8 +170,8 @@ namespace ThingsLibrary.Services.AspNetCore
 
             var rootMetrics = new RootItemDto
             {
-                Key = "instance",
-                Type = "app_instance",
+                Key = "$instance",
+                Type = "$app_instance",
                 Name = this.Name,                
 
                 Tags = new Dictionary<string, string>
@@ -177,8 +189,8 @@ namespace ThingsLibrary.Services.AspNetCore
             //assembly metrics
             var assemblyItem = new RootItemDto
             {
-                Key = "assembly",
-                Type = "app_assembly",
+                Key = "$assembly",
+                Type = "$app_assembly",
                 Name = this.Assembly.Name(),                
 
                 Tags = new Dictionary<string, string>()
@@ -221,8 +233,8 @@ namespace ThingsLibrary.Services.AspNetCore
             // machine metrics
             var machineItem = new RootItemDto
             {
-                Key = "machine",
-                Type = "app_machine",
+                Key = "$machine",
+                Type = "$app_machine",
                 Name = MachineMetrics.MachineName(),
 
                 Tags = new Dictionary<string, string>()
@@ -282,7 +294,7 @@ namespace ThingsLibrary.Services.AspNetCore
             // since we are going to the trouble keep track of it
             var memoryItem = new RootItemDto
             {
-                Key = $"hb_{dateTime.ToUnixTimeSeconds()}",
+                Key = $"$hb_{dateTime.ToUnixTimeSeconds()}",
 
                 Type = "app_instance_hb",
                 Name = "Instance Heartbeat",

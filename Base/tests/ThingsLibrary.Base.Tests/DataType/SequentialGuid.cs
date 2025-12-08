@@ -1,5 +1,12 @@
-using System.Collections.Generic;
+// ================================================================================
+// <copyright file="SequentialGuid.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
 using System.Data.SqlTypes;
+using ThingsLibrary.DataType;
 
 namespace ThingsLibrary.Tests.DataType
 {
@@ -14,7 +21,7 @@ namespace ThingsLibrary.Tests.DataType
             // generate 1000 items to test with
             for (int i = 0; i < 1000; i++)
             {
-                var value = ThingsLibrary.DataType.SequentialGuid.NewGuid();
+                var value = SequentialGuid.NewGuid();
 
                 list.Add(value);                
             }

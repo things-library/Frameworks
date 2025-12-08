@@ -224,8 +224,8 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
 
                 if (azureAdOptions.Tags.ContainsKey("scopes"))
                 {
-                    var scopes = azureAdOptions["scopes"].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                    scopes.ForEach<string>(x => options.Scope.Add(x));
+                    var scopes = azureAdOptions["scopes"]?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    scopes?.ForEach<string>(x => options.Scope.Add(x));
                 }
             });
 
