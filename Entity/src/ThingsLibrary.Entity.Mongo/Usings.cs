@@ -22,4 +22,3 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 // ======================================================================
 // FRAMEWORKS
 // ======================================================================
-global using ThingsLibrary.DataType;

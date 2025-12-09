@@ -7,12 +7,37 @@
 
 using Microsoft.Data.SqlClient;
 using Serilog;
+using ThingsLibrary.Schema.Library;
 using ThingsLibrary.Services.Extensions;
 
 namespace ThingsLibrary.Database.SqlServer.Extensions
 {
     public static class DatabaseExtensions
-    {        
+    {
+        /// <summary>
+        /// Add SQL Server Database from Canvas definition
+        /// </summary>
+        /// <typeparam name="TContext">DataContext</typeparam>
+        /// <param name="services">Service Collection</param>
+        /// <param name="canvas">Service Canvas</param>
+        /// <param name="canvasResourceKey">Canvas Resource Key</param>
+        /// <param name="configuration">Configuration</param>
+        /// <exception cref="ArgumentException"></exception>
+        public static void AddDatabaseSqlServer<TContext>(this IServiceCollection services, ItemDto canvas, string canvasResourceKey, IConfiguration configuration) where TContext : DataContext
+        {
+            if (canvas.TryGetItem(canvasResourceKey, out var dataverseOptions))
+            {
+                Log.Information("+ Catalog Services");
+                var connectionStringKey = dataverseOptions["connection_string_variable"] ?? throw new ArgumentException($"Missing connection string variable in '{canvasResourceKey}'.");
+
+                services.AddDatabaseSqlServer<TContext>(configuration, connectionStringKey);
+            }
+            else
+            {
+                throw new ArgumentException($"Service canvas missing settings at '{canvasResourceKey}'");
+            }
+        }
+
         /// <summary>
         /// Add SQL Server Database
         /// </summary>
