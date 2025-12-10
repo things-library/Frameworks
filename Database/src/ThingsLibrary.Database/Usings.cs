@@ -26,6 +26,10 @@ global using ILogger = Microsoft.Extensions.Logging.ILogger;
 // ================================================================================
 // THIRD PARTY
 // ================================================================================
+global using Serilog;
+
+global using ThingsLibrary.Schema.Library;
+global using ThingsLibrary.Schema.Library.Extensions;
 
 // ================================================================================
 // LOCAL 

@@ -16,8 +16,8 @@
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		
 		<ProductName>ThingsLibrary.Database.SqlServer</ProductName>
-		<Title>ThingsLibrary SQL Server Services Framework Library</Title>
-		<Description>This is the shared foundational library</Description>
+		<Title>Things Library SQL Server Database Library</Title>
+		<Description>This is the shared foundational database library</Description>
 
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>		

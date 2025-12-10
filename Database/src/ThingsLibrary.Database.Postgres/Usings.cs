@@ -23,7 +23,12 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Serilog;
 global using Npgsql;
 
+global using ThingsLibrary.Schema.Library;
+global using ThingsLibrary.Schema.Library.Extensions;
+
+global using ThingsLibrary.Services;
+global using ThingsLibrary.Services.Extensions;
+
 // ================================================================================
 // LOCAL
 // ================================================================================
-global using ThingsLibrary.Services.Extensions;

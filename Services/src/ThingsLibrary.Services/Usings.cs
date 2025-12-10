@@ -27,6 +27,9 @@ global using Serilog.Events;
 // ================================================================================
 // FIRST PARTY
 // ================================================================================
+global using ThingsLibrary.Schema.Library;
+global using ThingsLibrary.Schema.Library.Extensions;
+
 global using ThingsLibrary.DataType;
 global using ThingsLibrary.DataType.Extensions;
 global using ThingsLibrary.Services.Extensions;

@@ -41,7 +41,6 @@ namespace ThingsLibrary.Entity.HealthChecks
                     return HealthCheckResult.Unhealthy("Database is not reachable.");
                 }
 
-
                 return HealthCheckResult.Healthy("Database is reachable.");
             }
             catch (Exception ex)

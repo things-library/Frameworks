@@ -15,8 +15,8 @@
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
 		<ProductName>ThingsLibrary.Database.Cosmos</ProductName>
-		<Title>Things Library Cosmos Services Framework Library</Title>
-		<Description>This is the shared foundational library</Description>
+		<Title>Things Library Azure Cosmos Database Library</Title>
+		<Description>This is the shared foundational database library</Description>
 
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>

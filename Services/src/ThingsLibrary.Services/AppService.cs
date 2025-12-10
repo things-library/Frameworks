@@ -8,9 +8,8 @@
 using System.Reflection;
 
 using ThingsLibrary.Metrics;
-using ThingsLibrary.Schema.Library;
 
-namespace ThingsLibrary.Services.AspNetCore
+namespace ThingsLibrary.Services
 {
     public static class App
     {

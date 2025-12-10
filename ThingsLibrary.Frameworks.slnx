@@ -1,0 +1,59 @@
+<Solution>
+  <Folder Name="/.docs/">
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/.github/">
+    <File Path=".github/workflows/markdown_checker.json" />
+    <File Path=".github/workflows/markdown_checker.yml" />
+    <File Path=".github/workflows/publish_nugets.yml" />
+    <File Path=".github/workflows/pull_requests.yml" />
+  </Folder>
+  <Folder Name="/Base/">
+    <Project Path="Base/src/ThingsLibrary.Base/ThingsLibrary.csproj" />
+    <Project Path="Base/src/ThingsLibrary.Testing/ThingsLibrary.Testing.csproj" />
+  </Folder>
+  <Folder Name="/Base/Tests/">
+    <Project Path="Base/tests/ThingsLibrary.Base.Tests/ThingsLibrary.Core.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Cache/">
+    <Project Path="Cache/src/ThingsLibrary.Cache.Cosmos/ThingsLibrary.Cache.Cosmos.csproj" />
+    <Project Path="Cache/src/ThingsLibrary.Cache.Memory/ThingsLibrary.Cache.Memory.csproj" />
+    <Project Path="Cache/src/ThingsLibrary.Cache/ThingsLibrary.Cache.csproj" />
+  </Folder>
+  <Folder Name="/Cache/Tests/">
+    <Project Path="Cache/tests/ThingsLibrary.Cache.Tests/ThingsLibrary.Cache.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Database/">
+    <Project Path="Database/src/ThingsLibrary.Database.Cosmos/ThingsLibrary.Database.Cosmos.csproj" />
+    <Project Path="Database/src/ThingsLibrary.Database.Mongo/ThingsLibrary.Database.Mongo.csproj" />
+    <Project Path="Database/src/ThingsLibrary.Database.Postgres/ThingsLibrary.Database.Postgres.csproj" />
+    <Project Path="Database/src/ThingsLibrary.Database.SqlServer/ThingsLibrary.Database.SqlServer.csproj" />
+    <Project Path="Database/src/ThingsLibrary.Database/ThingsLibrary.Database.csproj" />
+  </Folder>
+  <Folder Name="/Database/Tests/">
+    <Project Path="Database/tests/ThingsLibrary.Database.Tests/ThingsLibrary.Database.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Entity/">
+    <Project Path="Entity/src/ThingsLibrary.Entity.AzureCosmos/ThingsLibrary.Entity.Cosmos.csproj" />
+    <Project Path="Entity/src/ThingsLibrary.Entity.Mongo/ThingsLibrary.Entity.Mongo.csproj" />
+    <Project Path="Entity/src/ThingsLibrary.Entity/ThingsLibrary.Entity.csproj" />
+  </Folder>
+  <Folder Name="/Entity/Tests/" />
+  <Folder Name="/Notifications/">
+    <Project Path="Notifications/src/ThingsLibrary.Notification/ThingsLibrary.Notification.csproj" />
+    <Project Path="Notifications/src/ThingsLibrary.Notifications.Azure/ThingsLibrary.Notification.Azure.csproj" />
+  </Folder>
+  <Folder Name="/Security/">
+    <Project Path="Security/src/ThingsLibrary.Security.OAuth2/ThingsLibrary.Security.OAuth2.csproj" />
+  </Folder>
+  <Folder Name="/Security/Tests/">
+    <Project Path="Security/tests/ThingsLibrary.Security.OAuth2.Tests/ThingsLibrary.Security.OAuth2.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="Services/src/ThingsLibrary.Services.AspNetCore/ThingsLibrary.Services.AspNetCore.csproj" />
+    <Project Path="Services/src/ThingsLibrary.Services/ThingsLibrary.Services.csproj" />
+  </Folder>
+  <Folder Name="/Services/Tests/">
+    <Project Path="Services/tests/ThingsLibrary.Services.Tests/ThingsLibrary.Services.Tests.csproj" />
+  </Folder>
+</Solution>

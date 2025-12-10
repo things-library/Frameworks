@@ -1,17 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
 
-  <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
-  </ItemGroup>
+		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ThingsLibrary.Database\ThingsLibrary.Database.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Database.Postgres</PackageId>
+		<PackageDescription>Things Library Postgres database libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+
+		<ProductName>ThingsLibrary.Database.Postgres</ProductName>
+		<Title>Things Library Postgres Database Library</Title>
+		<Description>This is the shared foundational database library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ThingsLibrary.Database\ThingsLibrary.Database.csproj" />
+	</ItemGroup>
 
 </Project>

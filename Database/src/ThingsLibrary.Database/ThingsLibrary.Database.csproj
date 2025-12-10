@@ -15,8 +15,8 @@
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		
 		<ProductName>ThingsLibrary.Database</ProductName>
-		<Title>ThingsLibrary Database Services Framework Library</Title>
-		<Description>Provides various database agnostic tools such as audit tracking using EntityFramework</Description>
+		<Title>Things Library Database Base Library</Title>
+		<Description>Provides various database agnostic tools such as audit tracking using EntityFrameworkCore</Description>
 
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>
@@ -24,7 +24,7 @@
 	
 	<ItemGroup>
 		<PackageReference Include="JsonDiffPatch.Net" Version="2.5.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.11" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="10.0.1" />
 	</ItemGroup>
