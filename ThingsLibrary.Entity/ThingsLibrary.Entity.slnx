@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Tests/">
+    <Project Path="../Entity/tests/ThingsLibrary.Entity.Tests/ThingsLibrary.Entity.Tests.csproj" />
+  </Folder>
+  <Project Path="../Entity/src/ThingsLibrary.Entity.Cosmos/ThingsLibrary.Entity.Cosmos.csproj" />
+  <Project Path="../Entity/src/ThingsLibrary.Entity.Local/ThingsLibrary.Entity.Local.csproj" />
+  <Project Path="../Entity/src/ThingsLibrary.Entity.Mongo/ThingsLibrary.Entity.Mongo.csproj" />
+  <Project Path="../Entity/src/ThingsLibrary.Entity/ThingsLibrary.Entity.csproj" />
+</Solution>

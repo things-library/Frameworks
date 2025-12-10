@@ -5,9 +5,6 @@
 // </copyright>
 // ================================================================================
 
-using Microsoft.Data.SqlClient;
-using Serilog;
-
 namespace ThingsLibrary.Database.SqlServer.Extensions
 {
     public static class DatabaseExtensions

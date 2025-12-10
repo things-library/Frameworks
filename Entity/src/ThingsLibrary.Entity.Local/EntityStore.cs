@@ -1,10 +1,10 @@
-﻿using System.Collections.Concurrent;
-using System.Linq;
-using Serilog;
-using Starlight.Entity.Interfaces;
-using Starlight.Entity.Types;
+﻿using Serilog;
+using ThingsLibrary.Entity.Local;
+using ThingsLibrary.DataType.Extensions;
+using ThingsLibrary.Entity.Interfaces;
+using ThingsLibrary.Entity.Types;
 
-namespace Starlight.Entity.Local;
+namespace ThingsLibrary.Entity.Local;
 
 public class EntityStore<T> : IEntityStore<T> where T : class
 {
@@ -409,8 +409,8 @@ public class EntityStore<T> : IEntityStore<T> where T : class
         if (this.IsFileSaving && !string.IsNullOrEmpty(this.TableDirPath))
         {                
             // remove the directory itself
-            Starlight.IO.Directory.TryDeleteDirectory(this.TableDirPath);
-            Starlight.IO.Directory.VerifyPath(this.TableDirPath);    //restore the base folder
+            ThingsLibrary.IO.Directory.TryDeleteDirectory(this.TableDirPath);
+            ThingsLibrary.IO.Directory.VerifyPath(this.TableDirPath);    //restore the base folder
         }
     }
 

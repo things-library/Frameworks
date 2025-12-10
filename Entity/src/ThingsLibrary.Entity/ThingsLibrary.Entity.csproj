@@ -13,7 +13,7 @@
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		
 		<ProductName>ThingsLibrary.Entity</ProductName>
-		<Title>Cloud Entity Framework Library</Title>
+		<Title>Entity Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>

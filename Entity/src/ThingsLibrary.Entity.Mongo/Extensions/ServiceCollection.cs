@@ -28,6 +28,25 @@ namespace ThingsLibrary.Entity.Mongo.Extensions
             });
 
             return services;
-        }        
+        }
+
+
+
+
+        public static IServiceCollection AddEntityStores(this IServiceCollection services, string connectionString, string databaseName)
+        {
+            // Register lib services here...
+            services.AddSingleton<Interfaces.IEntityStores>(new EntityStores(connectionString, databaseName));
+
+            return services;
+        }
+
+        public static IServiceCollection AddEntityStores(this IServiceCollection services, Uri connectionStringUri, string databaseName)
+        {
+            // Register lib services here...
+            services.AddSingleton<Interfaces.IEntityStores>(new EntityStores(connectionStringUri, databaseName));
+
+            return services;
+        }
     }
 }

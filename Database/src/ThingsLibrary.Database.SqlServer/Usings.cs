@@ -23,6 +23,8 @@ global using Microsoft.Extensions.DependencyInjection;
 // ================================================================================
 // THIRD PARTY
 // ================================================================================
+global using Serilog;
+
 global using ThingsLibrary.Schema.Library;
 global using ThingsLibrary.Schema.Library.Extensions;
 

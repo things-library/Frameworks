@@ -9,11 +9,11 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.Entity.Cosmos</PackageId>
-		<PackageDescription>Things Library entity Azure Cosmos (NoSQL) libraries and wrappers.</PackageDescription>		
+		<PackageDescription>Things Library Azure Cosmos (NoSQL) entity libraries and wrappers.</PackageDescription>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-		
+
 		<ProductName>ThingsLibrary.Entity.Cosmos</ProductName>
-		<Title>Cloud Entity Framework Library</Title>
+		<Title>Azure Cosmos Entity Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>

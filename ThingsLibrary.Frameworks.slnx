@@ -33,11 +33,7 @@
   <Folder Name="/Database/Tests/">
     <Project Path="Database/tests/ThingsLibrary.Database.Tests/ThingsLibrary.Database.Tests.csproj" />
   </Folder>
-  <Folder Name="/Entity/">
-    <Project Path="Entity/src/ThingsLibrary.Entity.AzureCosmos/ThingsLibrary.Entity.Cosmos.csproj" />
-    <Project Path="Entity/src/ThingsLibrary.Entity.Mongo/ThingsLibrary.Entity.Mongo.csproj" />
-    <Project Path="Entity/src/ThingsLibrary.Entity/ThingsLibrary.Entity.csproj" />
-  </Folder>
+  <Folder Name="/Entity/" />
   <Folder Name="/Entity/Tests/" />
   <Folder Name="/Notifications/">
     <Project Path="Notifications/src/ThingsLibrary.Notification/ThingsLibrary.Notification.csproj" />

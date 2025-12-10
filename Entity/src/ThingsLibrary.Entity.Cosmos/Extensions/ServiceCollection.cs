@@ -28,7 +28,16 @@ namespace ThingsLibrary.Entity.Cosmos.Extensions
             });
 
             return services;
-        }       
+        }
+
+
+        public static IServiceCollection AddEntityStores(this IServiceCollection services, string connectionString, string databaseName)
+        {
+            // Register lib services here...
+            services.AddSingleton<Interfaces.IEntityStores>(new EntityStores(connectionString, databaseName));
+
+            return services;
+        }
     }
 }
 

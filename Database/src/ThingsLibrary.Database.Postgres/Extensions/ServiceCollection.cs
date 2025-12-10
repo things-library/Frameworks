@@ -24,7 +24,7 @@ namespace ThingsLibrary.Database.Postgres.Extensions
             services.AddDbContext<TContext>(options =>
             {
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
+                
                 options.EnableSensitiveDataLogging(!App.Service.IsProduction());
                 options.EnableDetailedErrors(!App.Service.IsProduction());
                                 
