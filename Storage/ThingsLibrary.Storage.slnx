@@ -1,0 +1,23 @@
+<Solution>
+  <Folder Name="/Base/">
+    <Project Path="../../Schemas/src/csharp/ThingsLibrary.Schema.Library/ThingsLibrary.Schema.Library.csproj" />
+    <Project Path="../Base/src/ThingsLibrary.Base/ThingsLibrary.csproj" />
+    <Project Path="../Services/src/ThingsLibrary.Services/ThingsLibrary.Services.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/ThingsLibrary.Storage.Tests/ThingsLibrary.Storage.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Tests/Integration/">
+    <Project Path="tests-integration/ThingsLibrary.Storage.Tests.Integration.Aws/ThingsLibrary.Storage.Tests.Integration.Aws.csproj" />
+    <Project Path="tests-integration/ThingsLibrary.Storage.Tests.Integration.Azure/ThingsLibrary.Storage.Tests.Integration.Azure.csproj" />
+    <Project Path="tests-integration/ThingsLibrary.Storage.Tests.Integration.Gcp/ThingsLibrary.Storage.Tests.Integration.Gcp.csproj" />
+    <Project Path="tests-integration/ThingsLibrary.Storage.Tests.Integration.Local/ThingsLibrary.Storage.Tests.Integration.Local.csproj" />
+    <Project Path="tests-integration/ThingsLibrary.Storage.Tests.Integration/ThingsLibrary.Storage.Tests.Integration.csproj" />
+  </Folder>
+  <Project Path="src/ThingsLibrary.Storage.Aws/ThingsLibrary.Storage.Aws.csproj" />
+  <Project Path="src/ThingsLibrary.Storage.Azure/ThingsLibrary.Storage.Azure.csproj" />
+  <Project Path="src/ThingsLibrary.Storage.Gcp/ThingsLibrary.Storage.Gcp.csproj" />
+  <Project Path="src/ThingsLibrary.Storage.Local/ThingsLibrary.Storage.Local.csproj" />
+  <Project Path="src/ThingsLibrary.Storage/ThingsLibrary.Storage.csproj" />
+  
+</Solution>

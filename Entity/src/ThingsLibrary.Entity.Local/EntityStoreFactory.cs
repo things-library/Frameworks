@@ -1,8 +1,8 @@
-﻿using Starlight.Entity.Interfaces;
-using Starlight.Entity.Types;
+﻿using ThingsLibrary.Entity.Interfaces;
+using ThingsLibrary.Entity.Types;
 using System.ComponentModel;
 
-namespace Starlight.Entity.Local;
+namespace ThingsLibrary.Entity.Local;
 
 public class EntityStoreFactory : IEntityStoreFactory
 {

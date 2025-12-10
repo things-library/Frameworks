@@ -1,8 +1,8 @@
 ﻿using System.Security.Authentication;
-using Starlight.Entity.Interfaces;
-using Starlight.Entity.Types;
+using ThingsLibrary.Entity.Interfaces;
+using ThingsLibrary.Entity.Types;
 
-namespace Starlight.Entity.Mongo;
+namespace ThingsLibrary.Entity.Mongo;
 
 /// <summary>
 /// Mongo Entity Store Wrapper

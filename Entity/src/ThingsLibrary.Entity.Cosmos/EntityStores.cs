@@ -1,6 +1,7 @@
 ﻿using System.Security.Authentication;
+using Microsoft.Azure.Cosmos;
 
-namespace ThingsLibrary.Entity.AzureCosmos
+namespace ThingsLibrary.Entity.Cosmos
 {
     //using Azure.Cosmos;
 
