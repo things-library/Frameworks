@@ -18,9 +18,6 @@
 
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>
-
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/starlight-software-co/Frameworks</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>

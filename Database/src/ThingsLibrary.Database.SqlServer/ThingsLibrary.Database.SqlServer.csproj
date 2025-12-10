@@ -7,6 +7,7 @@
 		<IsPackable>true</IsPackable>
 
 		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
+		<UserSecretsId2>f8b96568-1250-4f34-95d6-3e17a62c1f55</UserSecretsId2>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -19,11 +20,7 @@
 		<Description>This is the shared foundational library</Description>
 
 		<Authors>Mark Lanning</Authors>
-		<Company>Starlight Software Co.</Company>
-
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
-		<UserSecretsId>f8b96568-1250-4f34-95d6-3e17a62c1f55</UserSecretsId>
+		<Company>Starlight Software Co.</Company>		
 	</PropertyGroup>
 
 	<ItemGroup>

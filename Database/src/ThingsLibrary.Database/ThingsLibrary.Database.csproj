@@ -20,9 +20,6 @@
 
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>
-
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/things-library/Frameworks</RepositoryUrl>
 	</PropertyGroup>
 	
 	<ItemGroup>

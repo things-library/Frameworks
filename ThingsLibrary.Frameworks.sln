@@ -82,6 +82,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{60D8582C
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Database.Mongo", "Database\src\ThingsLibrary.Database.Mongo\ThingsLibrary.Database.Mongo.csproj", "{61118B6C-21D0-3472-B80F-1B5722F6BCDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Database.Cosmos", "Database\src\ThingsLibrary.Database.Cosmos\ThingsLibrary.Database.Cosmos.csproj", "{352D4F44-8F03-3B2B-E54B-A861D91509EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +172,14 @@ Global
 		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61118B6C-21D0-3472-B80F-1B5722F6BCDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61118B6C-21D0-3472-B80F-1B5722F6BCDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61118B6C-21D0-3472-B80F-1B5722F6BCDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61118B6C-21D0-3472-B80F-1B5722F6BCDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{352D4F44-8F03-3B2B-E54B-A861D91509EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{352D4F44-8F03-3B2B-E54B-A861D91509EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{352D4F44-8F03-3B2B-E54B-A861D91509EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{352D4F44-8F03-3B2B-E54B-A861D91509EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +211,8 @@ Global
 		{4E8EAE34-4F80-655D-5132-4A7B5888CE78} = {3B22F8CC-5485-40EE-909C-23D130F140B9}
 		{2B61A89B-03C9-4C17-AA09-D903C733ED8E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{7CFB7ED4-3717-89BA-4338-0EF6DE70B911} = {811C99C8-1F68-4DB0-A9F9-E45C1D6C0A25}
+		{61118B6C-21D0-3472-B80F-1B5722F6BCDC} = {AEA7EBFB-4654-45AA-86A7-8331890456C1}
+		{352D4F44-8F03-3B2B-E54B-A861D91509EF} = {AEA7EBFB-4654-45AA-86A7-8331890456C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CF34144-3CDD-4955-B934-A5278D7A1139}

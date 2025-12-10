@@ -8,6 +8,7 @@
 using Microsoft.Data.SqlClient;
 using Serilog;
 using ThingsLibrary.Schema.Library;
+using ThingsLibrary.Schema.Library.Extensions;
 using ThingsLibrary.Services.Extensions;
 
 namespace ThingsLibrary.Database.SqlServer.Extensions
@@ -25,36 +26,17 @@ namespace ThingsLibrary.Database.SqlServer.Extensions
         /// <exception cref="ArgumentException"></exception>
         public static void AddDatabaseSqlServer<TContext>(this IServiceCollection services, ItemDto canvas, string canvasResourceKey, IConfiguration configuration) where TContext : DataContext
         {
-            if (canvas.TryGetItem(canvasResourceKey, out var dataverseOptions))
+            if (canvas.TryGetItemTag(canvasResourceKey, "connection_string_variable", out var connectionStringKey))
             {
                 Log.Information("+ Catalog Services");
-                var connectionStringKey = dataverseOptions["connection_string_variable"] ?? throw new ArgumentException($"Missing connection string variable in '{canvasResourceKey}'.");
+                var connectionString = configuration.TryGetConnectionString(connectionStringKey);
 
-                services.AddDatabaseSqlServer<TContext>(configuration, connectionStringKey);
+                services.AddDatabaseSqlServer<TContext>(connectionString);
             }
             else
             {
-                throw new ArgumentException($"Service canvas missing settings at '{canvasResourceKey}'");
+                throw new ArgumentException($"Service canvas missing 'connection_string_variable' at '{canvasResourceKey}'");
             }
-        }
-
-        /// <summary>
-        /// Add SQL Server Database
-        /// </summary>
-        /// <param name="services">Service Collection</param>
-        /// <param name="configuration">Configuration</param>        
-        /// <param name="parameterName">Full Parameter Name</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public static IServiceCollection AddDatabaseSqlServer<TContext>(this IServiceCollection services, IConfiguration configuration, string parameterName) where TContext : Database.DataContext
-        {
-            ArgumentNullException.ThrowIfNullOrEmpty(parameterName);
-
-            var connectionString = configuration.TryGetConnectionString(parameterName);
-
-            services.AddDatabaseSqlServer<TContext>(connectionString);
-
-            return services;
         }
 
         /// <summary>
@@ -71,9 +53,8 @@ namespace ThingsLibrary.Database.SqlServer.Extensions
             {
                 Log.Information("Testing SQL Connection to {DatabaseServer}...", connection.DataSource);
                 connection.Open();
-
-                Log.Information("+ SQL Server: {DatabaseServer}", connection.DataSource);
-                Log.Information("+ SQL Database: {DatabaseName}", connection.Database);
+                                
+                Log.Information("+ SQL Database: {DatabaseName} ({DatabaseServer})", connection.Database, connection.DataSource);
             }
 
             services.AddDbContext<TContext>(builder => builder.Configure<TContext>(connectionString));

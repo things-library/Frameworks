@@ -5,6 +5,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>true</IsPackable>
+
+		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
+		<UserSecretsId2>5172ce0b-055a-465e-a183-b7ddf193dd72</UserSecretsId2>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -17,8 +20,7 @@
 		<Description>This is the standarized AspNetCore wrapping services library.</Description>
 
 		<Authors>Mark Lanning</Authors>
-		<Company>Starlight Software Co.</Company>
-		<UserSecretsId>5172ce0b-055a-465e-a183-b7ddf193dd72</UserSecretsId>
+		<Company>Starlight Software Co.</Company>		
 	</PropertyGroup>
 	
 	<ItemGroup>
