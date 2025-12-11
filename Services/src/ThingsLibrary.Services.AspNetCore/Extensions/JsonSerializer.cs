@@ -5,11 +5,9 @@
 // </copyright>
 // ================================================================================
 
-using System.Diagnostics;
-using System.Text.Json.Serialization.Metadata;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ThingsLibrary.Portal.Extensions
+namespace ThingsLibrary.Services.AspNetCore.Extensions
 {
     public static class IServiceCollectionExtensions
     {
