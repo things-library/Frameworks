@@ -5,9 +5,6 @@
 // </copyright>
 // ================================================================================
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 
@@ -71,15 +68,13 @@ namespace ThingsLibrary.ItemStore.Cosmos
 
             // create the vendor specific object
             Log.Debug("Getting CosmosDB Client...");
-            var client = new CosmosClient(connectionString);
-            //, new CosmosClientOptions
-            //{
-            //    Serializer = new SystemTextJsonCosmosSerializer(new JsonSerializerOptions
-            //    {
-            //        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            //        //DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            //    })
-            //});
+            var client = new CosmosClient(connectionString, new CosmosClientOptions
+            {
+                SerializerOptions = new CosmosSerializationOptions
+                {
+                    PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase                    
+                }
+            });
 
             Log.Debug("Creating Database {DatabaseName} if not exists...", this.DatabaseName);
             DatabaseResponse databaseResponse = client.CreateDatabaseIfNotExistsAsync(this.DatabaseName, cancellationToken: default).Result;
@@ -197,7 +192,7 @@ namespace ThingsLibrary.ItemStore.Cosmos
 
             try
             {
-                var query = this.Container.GetItemLinqQueryable<ItemEnvelope>().Where(x => x.partition == partitionKey && x.ResourceKey == resourceKey && !x.IsDeleted);
+                var query = this.Container.GetItemLinqQueryable<ItemEnvelope>().Where(x => x.Partition == partitionKey && x.ResourceKey == resourceKey && !x.IsDeleted);
 
                 using var feedIterator = query.ToFeedIterator();
                 if (feedIterator.HasMoreResults)
@@ -227,7 +222,7 @@ namespace ThingsLibrary.ItemStore.Cosmos
             var resourceKeyPrefix = $"{resourceKey}/";
 
             var query = this.Container.GetItemLinqQueryable<ItemEnvelope>().Where(x => 
-                x.partition == partitionKey 
+                x.Partition == partitionKey 
                 && (x.ResourceKey == resourceKey || x.ResourceKey.StartsWith(resourceKeyPrefix))
                 && !x.IsDeleted
             );
@@ -247,16 +242,16 @@ namespace ThingsLibrary.ItemStore.Cosmos
         public async Task InsertAsync(ItemEnvelope itemEnvelope, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(itemEnvelope);
-            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.id);
-            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.partition);            
+            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.Id);
+            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.Partition);            
 
-            Log.Debug("Inserting Entity {ResourceKey} into partition {PartitionKey}.", itemEnvelope.ResourceKey, itemEnvelope.partition);
+            Log.Debug("Inserting Entity {ResourceKey} into partition {PartitionKey}.", itemEnvelope.ResourceKey, itemEnvelope.Partition);
                        
             try
             {                
                 await this.Container.CreateItemAsync(                    
                     item: itemEnvelope,                    
-                    partitionKey: new PartitionKey(itemEnvelope.partition),
+                    partitionKey: new PartitionKey(itemEnvelope.Partition),
                     cancellationToken: cancellationToken
                 );
             }
@@ -277,10 +272,10 @@ namespace ThingsLibrary.ItemStore.Cosmos
         public async Task UpdateAsync(ItemEnvelope itemEnvelope, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(itemEnvelope);
-            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.id);
-            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.partition);            
+            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.Id);
+            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.Partition);            
 
-            Log.Information("Updating Entity {ResourceKey} in partition {PartitionKey}.", itemEnvelope.ResourceKey, itemEnvelope.partition);
+            Log.Information("Updating Entity {ResourceKey} in partition {PartitionKey}.", itemEnvelope.ResourceKey, itemEnvelope.Partition);
 
             try
             {
@@ -289,8 +284,8 @@ namespace ThingsLibrary.ItemStore.Cosmos
 
                 await this.Container.ReplaceItemAsync<ItemEnvelope>(
                     item: itemEnvelope,
-                    id: itemEnvelope.id,
-                    partitionKey: new PartitionKey(itemEnvelope.partition),
+                    id: itemEnvelope.Id,
+                    partitionKey: new PartitionKey(itemEnvelope.Partition),
                     cancellationToken: cancellationToken
                 );
             }

@@ -5,8 +5,6 @@
 // </copyright>
 // ================================================================================
 
-using System.Threading;
-
 namespace ThingsLibrary.ItemStore.Tests.Cosmos
 {
     [TestClassIf, IgnoreIf(nameof(ItemStoreMissing))]

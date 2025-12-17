@@ -197,7 +197,7 @@ namespace ThingsLibrary.ItemStore.Mongo
 
             Log.Debug("EXISTS Item: {EntityKey} ({EntityPartitionKey})", resourceKey, partitionKey);
 
-            return await this.Collection.CountDocumentsAsync(x => x.partition == partitionKey && x.ResourceKey == resourceKey && !x.IsDeleted, cancellationToken: cancellationToken) > 0;
+            return await this.Collection.CountDocumentsAsync(x => x.Partition == partitionKey && x.ResourceKey == resourceKey && !x.IsDeleted, cancellationToken: cancellationToken) > 0;
         }
 
         /// <inheritdoc />
@@ -209,7 +209,7 @@ namespace ThingsLibrary.ItemStore.Mongo
             Log.Debug("GET Item: {EntityKey} ({EntityPartitionKey})", resourceKey, partitionKey);
 
             return await this.Collection.Find(x => 
-                x.partition == partitionKey && 
+                x.Partition == partitionKey && 
                 x.ResourceKey == resourceKey && 
                 !x.IsDeleted
             ).FirstOrDefaultAsync(cancellationToken);
@@ -226,7 +226,7 @@ namespace ThingsLibrary.ItemStore.Mongo
             Log.Debug("GET Item: {EntityKey} ({EntityPartitionKey})", resourceKey, partitionKey);
 
             var items = await this.Collection.FindAsync(x =>
-               x.partition == partitionKey &&
+               x.Partition == partitionKey &&
                (x.ResourceKey == resourceKey || x.ResourceKey.StartsWith(resourceKeyPrefix) && 
                !x.IsDeleted),
                cancellationToken: cancellationToken);
@@ -238,10 +238,10 @@ namespace ThingsLibrary.ItemStore.Mongo
         public async Task InsertAsync(ItemEnvelope itemEnvelope, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(itemEnvelope);
-            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.partition);
+            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.Partition);
             ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.ResourceKey);
 
-            Log.Debug("+ Entity {EntityKey} ({EntityPartitionKey})", itemEnvelope.ResourceKey, itemEnvelope.partition);
+            Log.Debug("+ Entity {EntityKey} ({EntityPartitionKey})", itemEnvelope.ResourceKey, itemEnvelope.Partition);
 
             try
             {
@@ -257,15 +257,15 @@ namespace ThingsLibrary.ItemStore.Mongo
         public async Task UpdateAsync(ItemEnvelope itemEnvelope, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(itemEnvelope);
-            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.partition);
+            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.Partition);
             ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.ResourceKey);
 
-            Log.Debug("= Entity {EntityKey} ({EntityPartitionKey}).", itemEnvelope.ResourceKey, itemEnvelope.partition);
+            Log.Debug("= Entity {EntityKey} ({EntityPartitionKey}).", itemEnvelope.ResourceKey, itemEnvelope.Partition);
                         
             try
             {                
                 var response = await this.Collection.ReplaceOneAsync(x => 
-                    x.partition == itemEnvelope.partition &&
+                    x.Partition == itemEnvelope.Partition &&
                     x.ResourceKey == itemEnvelope.ResourceKey && 
                     !x.IsDeleted, 
                     itemEnvelope, new ReplaceOptions() { IsUpsert = false }
@@ -290,7 +290,7 @@ namespace ThingsLibrary.ItemStore.Mongo
                 Log.Debug("- DELETE Entity {ResourceKey} ({PartitionKey})", resourceKey, partitionKey);
 
                 var response = await this.Collection.DeleteOneAsync(x => 
-                    x.partition == partitionKey && 
+                    x.Partition == partitionKey && 
                     x.ResourceKey == resourceKey && 
                     !x.IsDeleted
                 , cancellationToken);

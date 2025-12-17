@@ -61,7 +61,7 @@ namespace ThingsLibrary.ItemStore.Entities
         [Key]
         [Column("id"), Required]
         [JsonPropertyName("id")]
-        public string id { get; init; } = Guid.CreateVersion7().ToString();
+        public string Id { get; init; } = Guid.CreateVersion7().ToString();
 
         /// <summary>
         /// Partitioning Key and where the global types and attributes are located
@@ -69,7 +69,7 @@ namespace ThingsLibrary.ItemStore.Entities
         [PartitionKey]
         [Column("partition"), Required]
         [JsonPropertyName("partition")]
-        public string partition { get; init; } = string.Empty;
+        public string Partition { get; init; } = string.Empty;
 
         /// <summary>
         /// Globally Unique Sequential ID
@@ -120,7 +120,7 @@ namespace ThingsLibrary.ItemStore.Entities
         /// </summary>
         public ItemEnvelope(string partitionKey, string resourceKey)
         {
-            this.partition = partitionKey;
+            this.Partition = partitionKey;
             this.ResourceKey = resourceKey;
         }
 

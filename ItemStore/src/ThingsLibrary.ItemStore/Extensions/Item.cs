@@ -73,7 +73,7 @@ namespace ThingsLibrary.ItemStore.Extensions
         {
             return new ItemEnvelope
             {                
-                partition = partitionKey,
+                Partition = partitionKey,
                 ResourceKey = resourceKey,
                 Type = itemDto.Type,
 

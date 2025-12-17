@@ -163,7 +163,7 @@ namespace ThingsLibrary.ItemStore.Local
         {
             this.Collection.EnsureIndex(x => x.ResourceKey, false);
             this.Collection.EnsureIndex(x => x.ResourceKey, true);
-            this.Collection.EnsureIndex(x => x.partition);
+            this.Collection.EnsureIndex(x => x.Partition);
         }        
 
         #endregion
@@ -244,7 +244,7 @@ namespace ThingsLibrary.ItemStore.Local
         /// <inheritdoc />       
         public Task InsertAsync(ItemEnvelope itemEnvelope, CancellationToken cancellationToken)
         {
-            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.partition);
+            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.Partition);
             ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.ResourceKey);
             ArgumentNullException.ThrowIfNull(itemEnvelope.Data);
 
@@ -257,7 +257,7 @@ namespace ThingsLibrary.ItemStore.Local
             //save out entity?
             if (this.IsFileSaving)
             {
-                this.SaveItemFile(itemEnvelope.partition, itemEnvelope.ResourceKey, itemEnvelope);
+                this.SaveItemFile(itemEnvelope.Partition, itemEnvelope.ResourceKey, itemEnvelope);
             }
 
 
@@ -266,7 +266,7 @@ namespace ThingsLibrary.ItemStore.Local
 
         public Task UpdateAsync(ItemEnvelope itemEnvelope, CancellationToken cancellationToken)
         {
-            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.partition);
+            ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.Partition);
             ArgumentException.ThrowIfNullOrEmpty(itemEnvelope.ResourceKey);
             ArgumentNullException.ThrowIfNull(itemEnvelope.Data);
 
@@ -279,7 +279,7 @@ namespace ThingsLibrary.ItemStore.Local
             //save out entity?
             if (this.IsFileSaving)
             {
-                this.SaveItemFile(itemEnvelope.partition, itemEnvelope.ResourceKey, itemEnvelope);
+                this.SaveItemFile(itemEnvelope.Partition, itemEnvelope.ResourceKey, itemEnvelope);
             }
 
             return Task.CompletedTask;

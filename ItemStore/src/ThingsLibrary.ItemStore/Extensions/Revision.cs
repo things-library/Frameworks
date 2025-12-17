@@ -21,7 +21,7 @@ namespace ThingsLibrary.ItemStore.Extensions
 
             var revision = new Revision
             {
-                PartitionKey = current.partition,
+                PartitionKey = current.Partition,
                 
                 EntityType = typeof(Item).Name,
                 EntityId = current.ResourceKey,
