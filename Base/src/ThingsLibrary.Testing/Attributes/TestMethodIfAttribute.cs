@@ -58,13 +58,17 @@ namespace ThingsLibrary.Testing.Attributes
             var ignoreAttributes = new List<IgnoreIfAttribute>();
             ignoreAttributes.AddRange(testMethod.GetAttributes<IgnoreIfAttribute>());
 
+            var type = testMethod.MethodInfo.ReflectedType;
+            ignoreAttributes.AddRange(type.GetCustomAttributes<IgnoreIfAttribute>(inherit: false));
+
             // Walk the class hierarchy looking for an [IgnoreIf] attribute
-            var type = testMethod.MethodInfo.DeclaringType;
-            while (type != null)
+            // This includes walking up the inheritance chain (base classes)
+            if (testMethod.MethodInfo.DeclaringType != type)
             {
+                type = testMethod.MethodInfo.DeclaringType;
                 ignoreAttributes.AddRange(type.GetCustomAttributes<IgnoreIfAttribute>(inherit: true));
-                type = type.DeclaringType;
             }
+
             return ignoreAttributes;
         }
     }

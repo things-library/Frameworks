@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Base/">
+    <Project Path="../../Schemas/src/csharp/ThingsLibrary.Schema.Library/ThingsLibrary.Schema.Library.csproj" />
+    <Project Path="../Base/src/ThingsLibrary.Base/ThingsLibrary.csproj" />
+    <Project Path="../Base/src/ThingsLibrary.Testing/ThingsLibrary.Testing.csproj" />
+    <Project Path="../Services/src/ThingsLibrary.Services/ThingsLibrary.Services.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/ThingsLibrary.ItemStore.Tests.Cosmos/ThingsLibrary.ItemStore.Tests.Cosmos.csproj" Id="ddf54fad-8aeb-4d10-9ade-8d22a36e2cb5" />
+    <Project Path="tests/ThingsLibrary.ItemStore.Tests.Local/ThingsLibrary.ItemStore.Tests.Local.csproj" />
+    <Project Path="tests/ThingsLibrary.ItemStore.Tests.Mongo/ThingsLibrary.ItemStore.Tests.Mongo.csproj" />
+    <Project Path="tests/ThingsLibrary.ItemStore.Tests/ThingsLibrary.ItemStore.Tests.csproj" />
+  </Folder>
+  <Project Path="src/ThingsLibrary.ItemStore.Cosmos/ThingsLibrary.ItemStore.Cosmos.csproj" />
+  <Project Path="src/ThingsLibrary.ItemStore.Local/ThingsLibrary.ItemStore.Local.csproj" />
+  <Project Path="src/ThingsLibrary.ItemStore.Mongo/ThingsLibrary.ItemStore.Mongo.csproj" />
+  <Project Path="src/ThingsLibrary.ItemStore/ThingsLibrary.ItemStore.csproj" />
+</Solution>

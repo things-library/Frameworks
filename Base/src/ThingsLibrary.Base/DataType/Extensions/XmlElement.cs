@@ -38,7 +38,7 @@ namespace ThingsLibrary.DataType.Extensions
             var xNode = xmlElement.SelectSingleNode(propertyPath);
             if (xNode == null) { return defaultValue; }
 
-            return (T)Convert.ChangeType(xNode.Value, typeof(T));
+            return (T)Convert.ChangeType(xNode.Value, typeof(T))!;
         }
     }
 }

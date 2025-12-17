@@ -52,7 +52,7 @@ namespace ThingsLibrary.Database.SqlServer.Extensions
         {
             if (canvas.TryGetItemTag(canvasResourceKey, "connection_string_variable", out var connectionStringKey))
             {
-                Log.Information("+ Catalog Services");
+                Log.Information("+ {DatabaseCanvasKey}", canvasResourceKey);
                 var connectionString = configuration.TryGetConnectionString(connectionStringKey);
 
                 services.AddDatabaseSqlServer<TContext>(connectionString);

@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+		<EnableMSTestRunner>true</EnableMSTestRunner>
+		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+		<OutputType>Exe</OutputType>
+
+		<UserSecretsId>10000001-0000-0000-0000-100000000001</UserSecretsId>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MSTest" Version="4.0.2" />
+		<PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="AzureTable.cs" />
+	  <Compile Remove="Gcp.cs" />	  
+	  <Compile Remove="Mongo.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="C:\Users\5124256\.nuget\packages\microsoft.testplatform.testhost\18.0.1\build\net8.0\x64\testhost.dll" />
+	  <Content Remove="C:\Users\5124256\.nuget\packages\microsoft.testplatform.testhost\18.0.1\build\net8.0\x64\testhost.exe" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.1" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Testing\ThingsLibrary.Testing.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.ItemStore\ThingsLibrary.ItemStore.csproj" />
+	</ItemGroup>
+
+</Project>

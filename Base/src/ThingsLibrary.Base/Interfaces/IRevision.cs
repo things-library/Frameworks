@@ -15,6 +15,6 @@ namespace ThingsLibrary.Interfaces
         /// <summary>
         /// Data Partition Key
         /// </summary>
-        public int Revision { get; set; }
+        public int Revision { get; }
     }
 }

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Entity.Mongo</PackageId>
+		<PackageDescription>Things Library Mongo (NoSQL) entity libraries and wrappers.</PackageDescription>		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		
+		<ProductName>ThingsLibrary.Entity.Mongo</ProductName>
+		<Title>Mongo Entity Framework Library</Title>
+		<Description>This is the shared library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MongoDB.Driver" Version="3.5.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.ItemStore\ThingsLibrary.ItemStore.csproj" />
+	</ItemGroup>
+
+</Project>

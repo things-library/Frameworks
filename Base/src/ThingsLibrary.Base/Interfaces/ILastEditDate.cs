@@ -15,6 +15,6 @@ namespace ThingsLibrary.Interfaces
         /// <summary>
         /// DateTime (UTC) of last record edit
         /// </summary>
-        public DateTimeOffset UpdatedOn { get; set; }
+        public DateTime UpdatedOn { get; }
     }
 }

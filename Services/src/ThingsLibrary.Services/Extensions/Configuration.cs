@@ -17,11 +17,12 @@ namespace ThingsLibrary.Services.Extensions
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static string TryGetConnectionString(this IConfiguration configuration, string connectionStringName)
+        public static string? TryGetConnectionString(this IConfiguration configuration, string connectionStringName)
         {
             if (string.IsNullOrEmpty(connectionStringName)) { throw new ArgumentNullException(nameof(connectionStringName)); }
 
             Log.Debug("Getting connection string '{ConnectionStringName}'...", connectionStringName);
+            
             var connectionString = configuration.GetConnectionString(connectionStringName);
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -45,7 +46,7 @@ namespace ThingsLibrary.Services.Extensions
             if (string.IsNullOrEmpty(connectionString))
             {
                 Log.Warning("Connection string '{ConnectionStringName}' not found!", connectionStringName);
-                throw new ArgumentException($"Unable to find connection string '{connectionStringName}'");
+                return null;
             }
 
 
