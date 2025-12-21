@@ -33,8 +33,18 @@
   <Folder Name="/Database/Tests/">
     <Project Path="Database/tests/ThingsLibrary.Database.Tests/ThingsLibrary.Database.Tests.csproj" />
   </Folder>
-  <Folder Name="/Entity/" />
-  <Folder Name="/Entity/Tests/" />
+  <Folder Name="/ItemStore/">
+    <Project Path="ItemStore/src/ThingsLibrary.ItemStore.Cosmos/ThingsLibrary.ItemStore.Cosmos.csproj" />
+    <Project Path="ItemStore/src/ThingsLibrary.ItemStore.Local/ThingsLibrary.ItemStore.Local.csproj" />
+    <Project Path="ItemStore/src/ThingsLibrary.ItemStore.Mongo/ThingsLibrary.ItemStore.Mongo.csproj" />
+    <Project Path="ItemStore/src/ThingsLibrary.ItemStore/ThingsLibrary.ItemStore.csproj" />
+  </Folder>
+  <Folder Name="/ItemStore/Tests/">
+    <Project Path="ItemStore/tests/ThingsLibrary.ItemStore.Tests.Cosmos/ThingsLibrary.ItemStore.Tests.Cosmos.csproj" />
+    <Project Path="ItemStore/tests/ThingsLibrary.ItemStore.Tests.Local/ThingsLibrary.ItemStore.Tests.Local.csproj" />
+    <Project Path="ItemStore/tests/ThingsLibrary.ItemStore.Tests.Mongo/ThingsLibrary.ItemStore.Tests.Mongo.csproj" />
+    <Project Path="ItemStore/tests/ThingsLibrary.ItemStore.Tests/ThingsLibrary.ItemStore.Tests.csproj" />
+  </Folder>
   <Folder Name="/Notifications/">
     <Project Path="Notifications/src/ThingsLibrary.Notification/ThingsLibrary.Notification.csproj" />
     <Project Path="Notifications/src/ThingsLibrary.Notifications.Azure/ThingsLibrary.Notification.Azure.csproj" />
