@@ -60,6 +60,7 @@ namespace ThingsLibrary.ItemStore.Tests
             // ======================================================================
             // INSERT
             await ItemStore.InsertAsync(envelope, UnitTests.CancellationToken);
+            Thread.Sleep(100);
 
             // ======================================================================
             // FETCH
@@ -101,6 +102,7 @@ namespace ThingsLibrary.ItemStore.Tests
             // ======================================================================
             // INSERT
             await ItemStore.InsertAsync(envelope, UnitTests.CancellationToken);
+            Thread.Sleep(100);
 
             // ======================================================================
             // FETCH
@@ -122,6 +124,7 @@ namespace ThingsLibrary.ItemStore.Tests
             // ======================================================================
             // UPDATE
             await ItemStore.UpdateAsync(envelope2, UnitTests.CancellationToken);
+            Thread.Sleep(100);
 
             // ======================================================================
             // FETCH
@@ -137,7 +140,7 @@ namespace ThingsLibrary.ItemStore.Tests
             Assert.AreEqual(envelope.ResourceKey, envelope3.ResourceKey);
             Assert.AreEqual(envelope.Type, envelope3.Type);
             Assert.HasCount(envelope.SystemMeta.Count, envelope3.SystemMeta);
-            Assert.HasCount(envelope.Data.Tags.Count + 1, envelope3.Data.Tags);
+            Assert.HasCount(envelope2.Data.Tags.Count, envelope3.Data.Tags);
 
             Assert.AreEqual(0, System.Math.Round(delta.TotalSeconds, 1));
             Assert.AreEqual("test_value", envelope3.Data.Tags["test_key"]);

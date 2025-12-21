@@ -8,12 +8,12 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>ThingsLibrary.Entity.Mongo</PackageId>
+		<PackageId>ThingsLibrary.ItemStore.Mongo</PackageId>
 		<PackageDescription>Things Library Mongo (NoSQL) entity libraries and wrappers.</PackageDescription>		
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		
-		<ProductName>ThingsLibrary.Entity.Mongo</ProductName>
-		<Title>Mongo Entity Framework Library</Title>
+		<ProductName>ThingsLibrary.ItemStore.Mongo</ProductName>
+		<Title>Mongo Item Store Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>

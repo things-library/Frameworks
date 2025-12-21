@@ -10,7 +10,6 @@ using ThingsLibrary.ItemStore.Entities;
 
 namespace ThingsLibrary.ItemStore.Local
 {
-
     public class ItemStoreLocal : IItemStore
     {
         #region --- General ---

@@ -1,6 +1,5 @@
 <Solution>
   <Folder Name="/Base/">
-    <Project Path="../../Schemas/src/csharp/ThingsLibrary.Schema.Library/ThingsLibrary.Schema.Library.csproj" />
     <Project Path="../Base/src/ThingsLibrary.Base/ThingsLibrary.csproj" />
     <Project Path="../Base/src/ThingsLibrary.Testing/ThingsLibrary.Testing.csproj" />
     <Project Path="../Services/src/ThingsLibrary.Services/ThingsLibrary.Services.csproj" />

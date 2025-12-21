@@ -8,12 +8,12 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>ThingsLibrary.Entity.Local</PackageId>
-		<PackageDescription>Things Library local (file) entity libraries and wrappers.</PackageDescription>
+		<PackageId>ThingsLibrary.ItemStore.Local</PackageId>
+		<PackageDescription>Things Library local (file) libraries and wrappers.</PackageDescription>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
-		<ProductName>ThingsLibrary.Entity.Local</ProductName>
-		<Title>Local Entity Framework Library</Title>
+		<ProductName>ThingsLibrary.ItemStore.Local</ProductName>
+		<Title>Local Item Store Framework Library</Title>
 		<Description>This is the shared library</Description>
 
 		<Authors>Mark Lanning</Authors>

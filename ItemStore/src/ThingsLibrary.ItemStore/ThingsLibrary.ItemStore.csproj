@@ -9,7 +9,7 @@
 
 	<PropertyGroup>
 		<PackageId>ThingsLibrary.ItemStore</PackageId>
-		<PackageDescription>Things Library entity libraries and wrappers.</PackageDescription>		
+		<PackageDescription>Things Library libraries and wrappers.</PackageDescription>		
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		
 		<ProductName>ThingsLibrary.ItemStore</ProductName>
