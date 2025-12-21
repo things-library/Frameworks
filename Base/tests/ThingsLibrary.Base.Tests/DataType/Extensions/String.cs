@@ -10,7 +10,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
     [TestClass, ExcludeFromCodeCoverage]
     public class StringTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Hello World", "hElLo wOrLd")]
         [DataRow("This is SpongeBob", "tHiS Is sPoNgEbOb")]
         public void ToSpongebobText(string testValue, string expectedValue)
@@ -18,7 +18,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, testValue.ToSpongebobText());
         }
     
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("HelloWorld==", true)]
         [DataRow("Thi", false)]
         [DataRow("Thi0412=", true)]

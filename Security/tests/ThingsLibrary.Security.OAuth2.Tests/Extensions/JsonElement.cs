@@ -21,7 +21,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests.Extensions
             TestDocument = GetTestDocument().RootElement;
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("user/id", "10000000-0000-0000-0000-000000000001")]
         [DataRow("user/name", "Test")]
         [DataRow("user/contact/address/city", "Test City")]
@@ -32,7 +32,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests.Extensions
             Assert.AreEqual(expectedValue, TestDocument.GetProperty<string>(propertyKey, "[DEFAULT]"));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("", null, "System.String")]
         [DataRow(null, null, "System.String")]
         public void GetPropertyString_BadData(string propertyKey, string expectedValue, string typeStr)
@@ -41,7 +41,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests.Extensions
             Assert.Throws<ArgumentNullException>(() => TestDocument.GetProperty<string>(null, ""));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("CreatedOn", "2000-01-02T03:04:05.0", "System.DateTime")]
         [DataRow("id", "12345", "System.Int32")]
         [DataRow("user/contact/address/zip", "50263", "System.Int32")]

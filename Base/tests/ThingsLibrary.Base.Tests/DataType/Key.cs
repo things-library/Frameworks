@@ -13,7 +13,7 @@ namespace ThingsLibrary.Tests.DataType
     [TestClass, ExcludeFromCodeCoverage]
     public class KeyTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("123", true)]
         [DataRow("a123", true)]
         [DataRow("1a23", true)]
@@ -37,7 +37,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(false, Key.IsValidJsonKey(""));            
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("123", "123")]
         [DataRow("a123", "a123")]
         [DataRow("1a23", "1a23")]

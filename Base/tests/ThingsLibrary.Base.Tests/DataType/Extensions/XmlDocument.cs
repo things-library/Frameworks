@@ -20,7 +20,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             TestDocument = GetTestDocument();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("user/id", "12345")]
         [DataRow("user/name", "Test")]
         [DataRow("user/lastname", "Last")]
@@ -33,7 +33,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, TestDocument.GetProperty<string>(propertyKey, "[DEFAULT]"));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("user/createdOn", "2000-01-02T03:04:05.0", "System.DateTime")]
         [DataRow("id", "2", "System.Int32")]
         [DataRow("user/contact/address/zip", "50263", "System.Int32")]
@@ -80,7 +80,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             //</people>
 
             var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(@"<?xml version=""1.0"" encoding=""ISO-8859-1""?>
+            xmlDoc.LoadXml(@"<?xml version=""1.0"" encoding=""ISO-8859-1""?
                 <people id=""2"">
                     <user id=""12345"" name=""Test"" createdOn=""2000-01-02T03:04:05.0"">
                         <lastname>Last</lastname>

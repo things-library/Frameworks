@@ -13,7 +13,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
         [TestMethod]
         public void ConvertTo()
         {            
-            Assert.AreEqual(true, "true".ConvertTo<bool>());
+            Assert.IsTrue("true".ConvertTo<bool>());
 
             Assert.AreEqual(new DateTime(2000, 1, 2), "2000-01-02".ConvertTo<DateTime>());
 

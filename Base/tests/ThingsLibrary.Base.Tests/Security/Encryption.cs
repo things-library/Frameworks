@@ -36,7 +36,7 @@ namespace ThingsLibrary.Tests.Security
             Assert.AreEqual(AES_CRYPT_BASEIV, cipher.CryptBaseIV);
         }
 
-        [DataTestMethod]        
+        [TestMethod]        
         [DataRow(6)]    //AES
         public void Encrypt(int algorithmTypeId)
         {
@@ -67,7 +67,7 @@ namespace ThingsLibrary.Tests.Security
             Assert.Throws<CryptographicException>(() => cipher.Decrypt(null));
         }
 
-        [DataTestMethod]        
+        [TestMethod]        
         [DataRow(6)]    //AES
         public void EncryptWithSalt(int algorithmTypeId)
         {

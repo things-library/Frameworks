@@ -76,7 +76,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(8, DictionaryTests.TestDictionary["Eight"]);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("One", 1)]
         [DataRow("Two", 2)]
         [DataRow("Three", 3)]
@@ -87,7 +87,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, DictionaryTests.TestStringDictionary.GetValue<int>(key, default));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("One", 1)]
         [DataRow("Two", 2)]
         [DataRow("Three", 3)]

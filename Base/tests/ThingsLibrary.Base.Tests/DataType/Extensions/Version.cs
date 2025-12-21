@@ -10,7 +10,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
     [TestClass, ExcludeFromCodeCoverage]
     public class VersionTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1.0.0.0", 1000000000L)]
         [DataRow("1.2.0.0", 1002000000L)]
         [DataRow("1.2.3.0", 1002003000L)]
@@ -21,7 +21,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, version.ToLong());
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("5.4.1.0", "5.4.3.2")]
         [DataRow("5.4.4.1", "5.4.3.2")]
         [DataRow("5.4.3.0", "5.4.3.2")]
@@ -34,7 +34,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.IsTrue(versionCompare.IsBackCompatible(version));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("4.0.0.0", "5.4.3.2")]
         [DataRow("5.3.0.0", "5.4.3.2")]
         [DataRow("6.4.3.0", "5.4.3.2")]

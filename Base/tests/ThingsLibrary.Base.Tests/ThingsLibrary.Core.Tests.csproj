@@ -28,6 +28,11 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <Compile Remove="DataType\Extensions\XmlDocument.cs" />
+	  <Compile Remove="DataType\Extensions\XmlElement.cs" />
+	</ItemGroup>
+	
+	<ItemGroup>
 	  <EmbeddedResource Include="TestData\TestFile.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </EmbeddedResource>

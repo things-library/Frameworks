@@ -19,7 +19,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             TestDocument = JsonDocumentTests.GetTestDocument().RootElement;
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("user/id", "10000000-0000-0000-0000-000000000001")]
         [DataRow("user/name", "Test")]
         [DataRow("user/contact/address/city", "Test City")]
@@ -36,7 +36,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.Throws<ArgumentNullException>(() => TestDocument.GetProperty<string>(null, "[DEFAULT]"));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("CreatedOn", "2000-01-02T03:04:05.0", "System.DateTime")]
         [DataRow("id", "12345", "System.Int32")]
         [DataRow("user/contact/address/zip", "50263", "System.Int32")]

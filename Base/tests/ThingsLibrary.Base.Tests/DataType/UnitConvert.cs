@@ -14,7 +14,7 @@ namespace ThingsLibrary.Tests.DataType
     {
         #region --- Basic Unit Conversions ---
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1.25, "m2", "m2", 1.25)]
         [DataRow(1.25, "sq m", "sq m", 1.25)]
         [DataRow(1.25, "m2", "sq m", 1.25)]
@@ -100,7 +100,7 @@ namespace ThingsLibrary.Tests.DataType
 
         #region --- Epoch Time ---
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1581984000, "2020-02-18T00:00:00.0000000")]
         [DataRow(1641081600, "2022-01-02T00:00:00.0000000")]
         [DataRow(1641092645, "2022-01-02T03:04:05.0000000")]
@@ -111,7 +111,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(expectedDateTime, UnitConvert.FromUnixTime(testValue));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("2020-02-18T00:00:00.0000000", 1581984000)]
         [DataRow("2022-01-02T00:00:00.0000000", 1641081600)]
         [DataRow("2022-01-02T03:04:05.0000000", 1641092645)]
@@ -122,7 +122,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(expectedValue, UnitConvert.ToUnixTime(dateTime));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("2020-02-18T00:00:00.0000000")]
         [DataRow("2022-01-02T00:00:00.0000000")]
         [DataRow("2022-01-02T03:04:05.0000000")]
@@ -136,7 +136,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(dateTime, UnitConvert.FromUnixTime(epoch));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1581984000)]
         [DataRow(1641081600)]
         [DataRow(1641092645)]
@@ -148,7 +148,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(epoch, UnitConvert.ToUnixTime(dateTime));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1969-01-01T00:00:00.0000000")]
         public void Epoch_BadData(string dateTimeStr)
         {
@@ -163,7 +163,7 @@ namespace ThingsLibrary.Tests.DataType
 
         #region --- Epoch Day ---
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(18310, "2020-02-18T00:00:00.0000000")]
         [DataRow(18994, "2022-01-02T00:00:00.0000000")]
         [DataRow(32767, "2059-09-18T00:00:00.0000000")]        
@@ -173,7 +173,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(expectedDateTime, UnitConvert.FromUnixDay(Convert.ToInt16(testValue)));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("2020-02-18T00:00:00.0000000", 18310)]  
         [DataRow("2022-01-02T00:00:00.0000000", 18994)]
         [DataRow("2059-09-18T00:00:00.0000000", 32767)]
@@ -183,7 +183,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(expectedValue, UnitConvert.ToUnixDay(dateTime));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("2020-02-18T00:00:00.0000000")]
         [DataRow("2022-01-02T00:00:00.0000000")]
         [DataRow("2059-09-18T00:00:00.0000000")]
@@ -196,7 +196,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(dateTime, UnitConvert.FromUnixDay(epoch));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(18310)]
         [DataRow(18994)]
         [DataRow(32767)]
@@ -223,7 +223,7 @@ namespace ThingsLibrary.Tests.DataType
 
         #region --- Hex Strings ---
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("68656c6c6f", "hello")]
         [DataRow("737472696e67", "string")]
         [DataRow("48656c6c6f20576f726c64", "Hello World")]

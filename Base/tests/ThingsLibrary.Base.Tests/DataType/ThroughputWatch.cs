@@ -87,7 +87,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(0, watch.SlidingWindowSize);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(100, 0, 200)] // => (incrementSize, totalValue, windowSize, incrementWaitMS)
         [DataRow(100, 5, 200)]
         public void CalculateIncrements(int totalIncrements, int windowSize, int incrementWaitMS)
@@ -144,7 +144,7 @@ namespace ThingsLibrary.Tests.DataType
             Assert.AreEqual(TimeSpan.Zero, watch.CalculateETA());
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(10, 1000, 0, 100)]
         [DataRow(10, 1000, 10, 100)]
         [DataRow(10, 1000, 5, 50)]

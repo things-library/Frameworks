@@ -10,7 +10,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
     [TestClass, ExcludeFromCodeCoverage]
     public class BooleanTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true, "Yes")]
         [DataRow(false, "No")]
         public void ToYesNoTests(bool testValue, string expectedValue)
@@ -18,7 +18,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, testValue.ToYesNo());
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, "No")]
         [DataRow(true, "Yes")]
         [DataRow(false, "No")]

@@ -16,7 +16,7 @@ namespace ThingsLibrary.Tests.Security
     {
         public const string HASH_BASE = "tEsTLdfmvqK2ePT1RTdVu8PgnUFewYeVgMuR8ej8+QVTck7eXiWsTmFtm1B5kw";
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow((int)HashAlgorithmType.SHA256)]
         [DataRow((int)HashAlgorithmType.SHA384)]
         [DataRow((int)HashAlgorithmType.SHA512)]
@@ -31,7 +31,7 @@ namespace ThingsLibrary.Tests.Security
             Assert.IsTrue(hashAlgorithm.HashAlgorithm is HMAC);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow((int)HashAlgorithmType.SHA1)]
         [DataRow((int)HashAlgorithmType.SHA256)]
         [DataRow((int)HashAlgorithmType.SHA384)]

@@ -43,7 +43,7 @@
 //        // ======================================================================
 //        // 4. TESTS 
 //        // ======================================================================        
-//        [DataTestMethod]
+//        [TestMethod]
 //        [DataRow("/static/test.css")]
 //        [DataRow("/static/missing.css")]
 //        [DataRow("/static/test2.css")]

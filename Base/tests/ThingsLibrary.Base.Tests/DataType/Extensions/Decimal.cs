@@ -10,7 +10,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
     [TestClass, ExcludeFromCodeCoverage]
     public class DecimalTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1.0f, 1)]
         [DataRow(1.2f, 1)]
         [DataRow(1.4f, 1)]
@@ -22,7 +22,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, testValueDec.RoundToInt());
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1.0f, 1, 1.0f)]
         [DataRow(1.23456f, 1, 1.2f)]
         [DataRow(1.23456f, 2, 1.23f)]

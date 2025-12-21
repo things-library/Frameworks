@@ -26,7 +26,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests.Extensions
             Assert.IsTrue(scopes.Count() == 3);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("sub", "1234567890")]
         [DataRow("unique_name", "DOMAIN\\UserName")]
         [DataRow("email", "testuser@test.com")]
@@ -36,7 +36,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests.Extensions
             Assert.AreEqual(expectedValue, TOKEN.GetClaim(testValue));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null, null, null, 0, true)]       //defaults to: UtcNow, UtcNow, UtcNow + 1hr, 
         [DataRow(0, -10, 10, 0, true)]
         [DataRow(0, -10, -1, 0, false)]

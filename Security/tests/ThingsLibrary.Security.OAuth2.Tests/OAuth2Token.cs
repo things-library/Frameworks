@@ -21,9 +21,9 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             };
 
             Assert.AreEqual("Bearer", testToken.TokenType);
-            Assert.AreEqual(null, testToken.RefreshToken);
-            Assert.AreEqual(null, testToken.AccessToken);
-            Assert.AreEqual(null, testToken.IdToken);
+            Assert.IsNull(testToken.RefreshToken);
+            Assert.IsNull(testToken.AccessToken);
+            Assert.IsNull(testToken.IdToken);
 
             Assert.AreEqual("", testToken.ObjectId);
             Assert.AreEqual("", testToken.UserEmail);
@@ -64,7 +64,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests
 
             // token parsing should not change the refresh token
             Assert.AreEqual(refreshToken, testToken.RefreshToken);
-            Assert.AreEqual(null, testToken.IdToken);
+            Assert.IsNull(testToken.IdToken);
             Assert.AreEqual(16, testToken.JwtAccessToken.Claims.Count());
             Assert.AreEqual(637964561220000000, testToken.JwtAccessToken.ValidTo.Ticks);
             Assert.AreEqual("https://agsync.com", testToken.JwtAccessToken.Issuer);
@@ -89,7 +89,7 @@ namespace ThingsLibrary.Security.OAuth2.Tests
             Assert.AreEqual("", testToken.UserEmail);
         }
 
-        public static JwtSecurityToken TokenJwt => new JwtSecurityToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjNNR0xhWFloNmVVa1ZBVUJnTHJKcC1PVWFrSSIsImtpZCI6IjNNR0xhWFloNmVVa1ZBVUJnTHJKcC1PVWFrSSJ9.eyJjbGllbnRfaWQiOiJsYW5kdXNfY29vcGVyYXRpdmUiLCJhY2NvdW50X2ludGVncmF0aW9uX3BhcnRuZXJfaWQiOiI2Iiwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsImVtYWlsIiwiYWdzeW5jIiwicm9sZXMiLCJvZmZsaW5lX2FjY2VzcyJdLCJzdWIiOiI5ZWVlMDQ5OS1kNWIwLTRmMDUtOTIxMS1jODc1YTc3OTcwYzIiLCJhbXIiOlsicGFzc3dvcmQiXSwiYXV0aF90aW1lIjoiMTYzNjA2NTM2NyIsImlkcCI6Imlkc3J2IiwiaXNzIjoiaHR0cHM6Ly9hZ3N5bmMuY29tIiwiYXVkIjoiaHR0cHM6Ly9hZ3N5bmMuY29tL3Jlc291cmNlcyIsImV4cCI6MTY2MDg1OTMyMiwibmJmIjoxNjYwODU1NzIyfQ.gnw-8-6cYCuN-LvYLi024Btb41dx3RspDNKaYA_axil7xxPqi6Oy_GE1owZQb5V9M0sIdMd1vBhdB_6Sxi1MzX43fY4qTMU7q4jMCwNFUdbnGkuavg9pWwd5tzN9BMvzNoC2wzHLS4tScJmsjXeo8czjCY6J0r0_AISj8eKYciYRdDal46Bs713C4Ah75ai0bsIAxrk9GrWuwrrI0v57kwuBdKbsZSJlfXc9EHlWuCI8C6m9EwlP_wEydzh-cMXactGzECwguxXXgFmkKgiAI_BOVGNzac3fwmCx6B5NoPGCxYfCxdh6vRz_HJp3MHkI293rYL3ub1o0kbbL5exMLfczCYeJcDid0zoJCluRvRhXOQ-NVXiy5CeyDKQfV10OAOWd2_WssjBZXUrSQKGtxudgK24usHAyU4iw3OhaPF5f_ixT0M3Ke-41c_7AgUvX3OIKUbneRRjslLLrqHoYVIUNCQevx0rBNwqQXVlMwz4fWbMng-GMpKRTaPHPLkqXdNEXYRlXLtQRG64bvvKoVynetE_JDxb5XHHrLfFgDSVOvOl9uBtOdr2M4t0ndxln1Tm7KeEvrI9EzNouxM2iKH-6MPGme5KvuQbkOMODpzl4rJaZdPBrXzB1s06plsJecncEXCTKIEhaQNTtV2DxY-NMKgB_b5PGhmLN4SBYy7Y");
+        public static JwtSecurityToken TokenJwt => new JwtSecurityToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjNNR0xhWFloNmVVa1ZBVUJnTHJKcC1PVWFrSSIsImtpZCI6IjNNR0xhWFloNmVVa1ZBVUJnTHJKcC1PVWFrSSJ9.eyJjbGllbnRfaWQiOiJsYW5kdXNfY29vcGVyYXRpdmUiLCJhY2NvdW50X2ludGVncmF0aW9uX3BhcnRuZXJfaWQiOiI2Iiwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsImVtYWlsIiwiYWdzYW5nIiwicm9sZXMiLCJvZmZsaW5lX2FjY2VzcyJdLCJzdWIiOiI5ZWVlMDQ5OS1kNWIwLTRmMDUtOTIxMS1jODc1YTc3OTcwYzIiLCJhbXIiOlsicGFzc3dvcmQiXSwiYXV0aF90aW1lIjoiMTYzNjA2NTM2NyIsImlkcCI6Imlkc3J2IiwiaXNzIjoiaHR0cHM6Ly9hZ3N5bmMuY29tIiwiYXVkIjoiaHR0cHM6Ly9hZ3N5bmMuY29tL3Jlc291cmNlcyIsImV4cCI6MTY2MDg1OTMyMiwibmJmIjoxNjYwODU1NzIyfQ.gnw-8-6cYCuN-LvYLi024Btb41dx3RspDNKaYA_axil7xxPqi6Oy_GE1owZQb5V9M0sIdMd1vBhdB_6Sxi1MzX43fY4qTMU7q4jMCwNFUdbnGkuavg9pWwd5tzN9BMvzNoC2wzHLS4tScJmsjXeo8czjCY6J0r0_AISj8eKYciYRdDal46Bs713C4Ah75ai0bsIAxrk9GrWuwrrI0v57kwuBdKbsZSJlfXc9EHlWuCI8C6m9EwlP_wEydzh-cMXactGzECwguxXXgFmkKgiAI_BOVGNzac3fwmCx6B5NoPGCxYfCxdh6vRz_HJp3MHkI293rYL3ub1o0kbbL5exMLfczCYeJcDid0zoJCluRvRhXOQ-NVXiy5CeyDKQfV10OAOWd2_WssjBZXUrSQKGtxudgK24usHAyU4iw3OhaPF5f_ixT0M3Ke-41c_7AgUvX3OIKUbneRRjslLLrqHoYVIUNCQevx0rBNwqQXVlMwz4fWbMng-GMpKRTaPHPLkqXdNEXYRlXLtQRG64bvvKoVynetE_JDxb5XHHrLfFgDSVOvOl9uBtOdr2M4t0ndxln1Tm7KeEvrI9EzNouxM2iKH-6MPGme5KvuQbkOMODpzl4rJaZdPBrXzB1s06plsJecncEXCTKIEhaQNTtV2DxY-NMKgB_b5PGhmLN4SBYy7Y");
 
         /// <summary>
         /// Sample Token 2

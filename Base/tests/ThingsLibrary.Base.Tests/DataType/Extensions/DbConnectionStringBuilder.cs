@@ -10,7 +10,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
     [TestClass, ExcludeFromCodeCoverage]
     public class DbConnectionStringBuilderTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("param1=hello;param2=2000-01-02T03:04:05.0;param3=123", "param1", "hello", "System.String")]
         [DataRow("param1=hello;param2=2000-01-02T03:04:05.0;param3=123", "param2", "2000-01-02T03:04:05.0", "System.DateTime")]
         [DataRow("param1=hello;param2=2000-01-02T03:04:05.0;param3=123", "param3", "123", "System.Int32")]

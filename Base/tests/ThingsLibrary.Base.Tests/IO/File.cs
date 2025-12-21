@@ -103,7 +103,7 @@ namespace ThingsLibrary.Tests.IO
 
         // used online calculator https://md5calc.com/hash/md5 to get
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Hello World", "b10a8db164e0754105b7a99be72e3fe5")]
         [DataRow("This is a test of the MD5 hashing algorithm", "1a88d16c6414fc3ebe3eb6932b3f2e4b")]
         [DataRow("SuPe4S!r0#g_P@$$W0#d!", "369db275f46da8c0dd3a98d9670799fb")]
@@ -119,7 +119,7 @@ namespace ThingsLibrary.Tests.IO
             Assert.AreEqual(expectedValue, md5Hex.ToLower());
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Hello World", "sQqNsWTgdUEFt6mb5y4/5Q==")]
         [DataRow("This is a test of the MD5 hashing algorithm", "GojRbGQU/D6+PraTKz8uSw==")]
         [DataRow("SuPe4S!r0#g_P@$$W0#d!", "Np2ydfRtqMDdOpjZZweZ+w==")]
@@ -220,7 +220,7 @@ namespace ThingsLibrary.Tests.IO
 
         #region --- Mime ---
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("somethingNotInList", "bin")]  //default extension = bin        
         [DataRow("application/vnd.google-earth.kmz", "kmz")]
         [DataRow("text/plain", "txt")]
@@ -235,7 +235,7 @@ namespace ThingsLibrary.Tests.IO
             Assert.AreEqual(expectedValue, ThingsLibrary.IO.File.GetMimeExtension(mimeType));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("somethingNotInList.qzqz", "application/octet-stream")]  //default extension = bin        
         [DataRow("something.kmz", "application/vnd.google-earth.kmz")]
         [DataRow("something.txt", "text/plain")]

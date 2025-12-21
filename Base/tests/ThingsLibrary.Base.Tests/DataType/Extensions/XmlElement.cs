@@ -21,7 +21,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             TestElement = XmlDocumentTests.GetTestDocument().DocumentElement;
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("user/id", "12345")]
         [DataRow("user/name", "Test")]
         [DataRow("user/lastname", "Last")]
@@ -34,7 +34,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, TestElement.GetProperty<string>(propertyKey, "[DEFAULT]"));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("user/createdOn", "2000-01-02T03:04:05.0", "System.DateTime")]
         [DataRow("id", "2", "System.Int32")]
         [DataRow("user/contact/address/zip", "50263", "System.Int32")]

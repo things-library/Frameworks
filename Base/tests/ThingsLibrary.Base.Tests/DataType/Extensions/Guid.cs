@@ -10,7 +10,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
     [TestClass, ExcludeFromCodeCoverage]
     public class GuidTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("005cf14a-0000-0000-0000-000000000000", 6091082)]
         [DataRow("0007ce2e-0000-0000-0000-000000000000", 511534)]
         [DataRow("00002cef-0000-0000-0000-000000000000", 11503)]

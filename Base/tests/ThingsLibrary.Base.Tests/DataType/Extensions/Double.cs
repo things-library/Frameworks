@@ -10,7 +10,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
     [TestClass, ExcludeFromCodeCoverage]
     public class DoubleTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1.0d, 1)]
         [DataRow(1.2d, 1)]
         [DataRow(1.4d, 1)]
@@ -21,7 +21,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, testValue.RoundToInt());
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1.0d, 1, 1.0d)]
         [DataRow(1.23456d, 1, 1.2d)]
         [DataRow(1.23456d, 2, 1.23d)]
@@ -33,7 +33,7 @@ namespace ThingsLibrary.Tests.DataType.Extensions
             Assert.AreEqual(expectedValue, testValue.Round(decimals));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1d, "1")]
         [DataRow(1.0d, "1")]
         [DataRow(1.00000d, "1")]
