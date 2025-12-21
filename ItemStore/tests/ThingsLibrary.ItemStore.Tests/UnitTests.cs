@@ -126,7 +126,7 @@ namespace ThingsLibrary.ItemStore.Tests
             await ItemStore.UpdateAsync(envelope2, UnitTests.CancellationToken);
             Thread.Sleep(100);
 
-            // ======================================================================
+            // =================================>=====================================
             // FETCH
             var envelope3 = await ItemStore.GetAsync(partitionKey, resourceKey, UnitTests.CancellationToken);
 

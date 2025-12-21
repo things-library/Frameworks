@@ -218,12 +218,20 @@ namespace ThingsLibrary.ItemStore.Local
         }
 
         /// <inheritdoc />       
+        public Task<ItemEnvelope?> GetAsync(string id, CancellationToken cancellationToken)
+        {
+            var result = this.Collection.FindOne(x => x.Id == id);
+
+            return Task.FromResult<ItemEnvelope?>(result);
+        }
+
+        /// <inheritdoc />       
         public Task<ItemEnvelope?> GetAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken)
         {
             ArgumentException.ThrowIfNullOrEmpty(partitionKey);
             ArgumentException.ThrowIfNullOrEmpty(resourceKey);
 
-            var result = this.Collection.FindOne(x => x.ResourceKey == resourceKey);
+            var result = this.Collection.FindOne(x => x.Partition == partitionKey && x.ResourceKey == resourceKey);
 
             return Task.FromResult<ItemEnvelope?>(result);            
         }
@@ -236,7 +244,7 @@ namespace ThingsLibrary.ItemStore.Local
 
             var resourceKeyPrefix = $"{resourceKey}/";
 
-            var items = this.Collection.Query().Where(x => x.ResourceKey == resourceKey || x.ResourceKey.StartsWith(resourceKeyPrefix)).ToList();
+            var items = this.Collection.Query().Where(x => x.Partition == partitionKey && (x.ResourceKey == resourceKey || x.ResourceKey.StartsWith(resourceKeyPrefix))).ToList();
             
             return Task.FromResult<List<ItemEnvelope>>(items);
         }
@@ -257,7 +265,7 @@ namespace ThingsLibrary.ItemStore.Local
             lock (LockObject)
             {
                 // creates
-                this.Collection.Insert(itemEnvelope);
+                this.Collection.Insert(itemEnvelope.Id, itemEnvelope);
             }
 
             //save out entity?
@@ -279,7 +287,8 @@ namespace ThingsLibrary.ItemStore.Local
             lock (LockObject)
             {
                 // creates (if missing) or replaces entity
-                this.Collection.Upsert(itemEnvelope.ResourceKey, itemEnvelope);
+                bool updated = this.Collection.Update(itemEnvelope.Id, itemEnvelope);
+                if (!updated) { throw new InvalidOperationException($"Unable to update ItemEnvelope with ResourceKey '{itemEnvelope.ResourceKey}' because it does not exist."); }
             }
 
             //save out entity?

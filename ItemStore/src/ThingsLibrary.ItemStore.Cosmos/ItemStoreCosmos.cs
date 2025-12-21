@@ -184,7 +184,7 @@ namespace ThingsLibrary.ItemStore.Cosmos
 
             return await this.GetAsync(partitionKey, resourceKey, cancellationToken) != null;
         }
-
+        
         /// <inheritdoc />
         public async Task<ItemEnvelope?> GetAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken)
         {
