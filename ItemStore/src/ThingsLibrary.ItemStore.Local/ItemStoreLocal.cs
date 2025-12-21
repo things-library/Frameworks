@@ -5,6 +5,7 @@
 // </copyright>
 // ================================================================================
 
+using System.Linq.Expressions;
 using ThingsLibrary.ItemStore.Entities;
 
 namespace ThingsLibrary.ItemStore.Local
@@ -229,7 +230,7 @@ namespace ThingsLibrary.ItemStore.Local
         }
 
         /// <inheritdoc />       
-        public Task<List<ItemEnvelope>> GetAllAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken)
+        public Task<List<ItemEnvelope>> GetFamilyAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken)
         {
             ArgumentException.ThrowIfNullOrEmpty(partitionKey);
             ArgumentException.ThrowIfNullOrEmpty(resourceKey);
@@ -239,6 +240,12 @@ namespace ThingsLibrary.ItemStore.Local
             var items = this.Collection.Query().Where(x => x.ResourceKey == resourceKey || x.ResourceKey.StartsWith(resourceKeyPrefix)).ToList();
             
             return Task.FromResult<List<ItemEnvelope>>(items);
+        }
+
+        /// <inheritdoc />
+        public Task<IEnumerable<ItemEnvelope>> GetAllAsync(Expression<Func<ItemEnvelope, bool>> predicate, CancellationToken cancellationToken)
+        {            
+            return Task.FromResult(this.Collection.Find(predicate).AsEnumerable());
         }
 
         /// <inheritdoc />       

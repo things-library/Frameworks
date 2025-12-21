@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -259,7 +259,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                     // Make sure all the roles specified are in the expected app roles listing
                     
                     options.AddPolicy(policy.Key, policy => policy.RequireClaim("role", roles));
-                };
+                }
 
                 // ================================================================================
                 // REQUIRE EVERYONE TO LOGIN                
@@ -325,6 +325,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                         
                         ValidateAudience = true,
                         ValidAudience = jwtOptions["audience"],
+                        ValidAudiences = jwtOptions["audiences"]?.Split('|', StringSplitOptions.RemoveEmptyEntries),
 
                         ValidateLifetime = true,
 

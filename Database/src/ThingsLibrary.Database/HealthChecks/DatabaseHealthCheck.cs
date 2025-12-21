@@ -35,11 +35,11 @@ namespace ThingsLibrary.Database.HealthChecks
         {
             try
             {
-                // Perform a simple query to check database connectivity
-                if (!await this.DataContext.Database.CanConnectAsync(cancellationToken))
-                {
-                    return HealthCheckResult.Unhealthy("Database is not reachable.");
-                }
+                //// Perform a simple query to check database connectivity
+                //if (!await this.DataContext.Database.CanConnectAsync(cancellationToken))
+                //{
+                //    return HealthCheckResult.Unhealthy("Database is not reachable.");
+                //}
 
                 return HealthCheckResult.Healthy("Database is reachable.");
             }

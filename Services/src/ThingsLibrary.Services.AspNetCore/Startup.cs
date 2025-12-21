@@ -32,8 +32,8 @@ namespace ThingsLibrary.Services.AspNetCore
         /// App Duration Stopwatch
         /// </summary>
         public Stopwatch AppWatch { get; init; } = Stopwatch.StartNew();
-                
-        public ItemDto Canvas { get; private set; } = new();
+
+        public ItemDto Canvas => App.Service.Canvas;
         
         protected Startup()
         {
@@ -67,11 +67,10 @@ namespace ThingsLibrary.Services.AspNetCore
             // configure servides
             this.Builder.Host.ConfigureServices((context, services) =>
             {
-                services.AddSeriLogging(context.Configuration);
+                services.AddThingsLogging(context.Configuration);
                 
-                // Register the service canvas singletons and as a static instance
-                //this.ServiceCanvas = services.AddServiceCanvas(context.Configuration);                
-                this.Canvas = services.AddCanvas(context.Configuration);
+                // Register the service canvas singletons and as a static instance                
+                context.Configuration.InitCanvas();
                                 
                 Log.Debug("======================================================================");
                 Log.Information(" CONFIGURE SERVICES");

@@ -194,7 +194,16 @@ namespace ThingsLibrary.Database
         /// </summary>
         public virtual void Prechecks()
         {
-            this.Database.EnsureCreated();
+            try
+            {  
+
+                //this.Database.EnsureDeleted();
+                //this.Database.CanConnect();
+            }
+            catch(Exception ex)
+            {
+                Log.Warning(ex, "Unable to ensure that the database can connect and it exists.");
+            }            
         }
     }
 }

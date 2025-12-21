@@ -14,6 +14,6 @@ namespace ThingsLibrary.Database.Base
         /// <summary>
         /// Record Created DateTime (UTC)
         /// </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTime CreatedOn { get; }
     }
 }

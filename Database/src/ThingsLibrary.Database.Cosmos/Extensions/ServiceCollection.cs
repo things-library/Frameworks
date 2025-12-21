@@ -5,9 +5,7 @@
 // </copyright>
 // ================================================================================
 
-
-
-namespace ThingsLibrary.Entity.Cosmos.Extensions
+namespace ThingsLibrary.Database.Cosmos.Extensions
 {
     public static class ServiceCollectionExtensions
     {

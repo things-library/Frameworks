@@ -116,8 +116,8 @@ namespace ThingsLibrary.ItemStore.Tests
             // ======================================================================
             // EDIT
             envelope2.Data.Date = DateTimeOffset.UtcNow;
-            envelope2.Data.Tags["test_key"] = "test_value";
-            envelope.SystemMeta["$visible"] = "true";
+            envelope2.Data.Tags.Add("test_key", "test_value");
+            envelope2.SystemMeta["$visible"] = "true";
 
             // ======================================================================
             // UPDATE
@@ -141,6 +141,7 @@ namespace ThingsLibrary.ItemStore.Tests
 
             Assert.AreEqual(0, System.Math.Round(delta.TotalSeconds, 1));
             Assert.AreEqual("test_value", envelope3.Data.Tags["test_key"]);
+            Assert.AreEqual("true", envelope3.SystemMeta["$visible"]);
         }
 
         [TestMethodIf]
@@ -174,7 +175,45 @@ namespace ThingsLibrary.ItemStore.Tests
 
             // ======================================================================
             // FETCH
-            var envelopes2 = await ItemStore.GetAllAsync(partitionKey, resourceKey, UnitTests.CancellationToken);
+            var envelopes2 = await ItemStore.GetFamilyAsync(partitionKey, resourceKey, UnitTests.CancellationToken);
+
+            // ======================================================================
+            // VERIFY
+            Assert.HasCount(3, envelopes2);
+        }
+
+        [TestMethodIf]
+        public async Task Test_InsertQueryableFetch()
+        {
+            Assert.IsNotNull(ItemStore);
+
+            // ======================================================================
+            // COMPOSE
+            var testClass = TestData.GetTestClass();
+
+            var partitionKey = $"insert_children_{Random.Shared.Next(1000, 9999)}";
+            var resourceKey = $"{partitionKey}/{Random.Shared.Next(1000, 9999)}";
+
+            var envelopes = testClass.ToEnvelopes(partitionKey, resourceKey);
+            Assert.HasCount(3, envelopes);
+
+            // ======================================================================
+            // INSERT
+            int i = 0;
+            foreach (var env in envelopes)
+            {
+                // add some sort of system metadata
+                env.SystemMeta["$count"] = i++.ToString();
+                env.SystemMeta["source"] = "Test_InsertFetch";
+                env.SystemMeta["correlation_id"] = Guid.NewGuid().ToString();
+                env.SystemMeta["$visible"] = "false";
+
+                await ItemStore.InsertAsync(env, UnitTests.CancellationToken);
+            }
+
+            // ======================================================================
+            // FETCH
+            var envelopes2 = await ItemStore.GetAllAsync(x => x.Partition == partitionKey, UnitTests.CancellationToken);
 
             // ======================================================================
             // VERIFY

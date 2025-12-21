@@ -27,12 +27,11 @@ global using Microsoft.Extensions.Hosting;
 // ================================================================================
 // FIRST PARTY
 // ================================================================================
-global using ThingsLibrary.DataType;
 global using ThingsLibrary.DataType.Extensions;
-global using ThingsLibrary.Services.AspNetCore.Extensions;
+global using ThingsLibrary.Services.Extensions;
 
 global using ThingsLibrary.Schema.Library;
-global using ThingsLibrary.Schema.Library.Extensions;
+
 
 // ================================================================================
 // LOCAL 

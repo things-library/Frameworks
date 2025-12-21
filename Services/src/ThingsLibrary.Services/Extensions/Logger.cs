@@ -12,7 +12,7 @@ namespace ThingsLibrary.Services.Extensions
         /// <summary>
         /// Initialize a long term logger 
         /// </summary>
-        public static IServiceCollection AddSeriLogging(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddThingsLogging(this IServiceCollection services, IConfiguration configuration)
         {
             // configure the logger as as possible
             if (configuration.GetSection("Serilog").Exists())
@@ -34,8 +34,7 @@ namespace ThingsLibrary.Services.Extensions
                 Log.Warning("Default Serilog Logger Initalized.");
             }
 
-            // add the serilog
-            services.AddSeriLogging(configuration);
+            // add the serilog            
             services.AddSerilog(Log.Logger);
             services.AddLogging(loggerBuilder => loggerBuilder.AddSerilog(Log.Logger));
 

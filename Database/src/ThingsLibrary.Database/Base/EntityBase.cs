@@ -36,12 +36,12 @@ namespace ThingsLibrary.Database.Base
         /// Record Timestamp
         /// </summary>
         [Column("LastUpdatedOn"), LastEditDate, Required]
-        public DateTimeOffset UpdatedOn { get; set; } = DateTimeOffset.UtcNow;
+        public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Record Created Timestamp
         /// </summary>
         [Column("CreatedOn"), Required]
-        public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
     }
 }

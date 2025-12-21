@@ -5,6 +5,7 @@
 // </copyright>
 // ================================================================================
 
+using System.Linq.Expressions;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 
@@ -214,7 +215,7 @@ namespace ThingsLibrary.ItemStore.Cosmos
         }
 
         /// <inheritdoc />
-        public async Task<List<ItemEnvelope>> GetAllAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken)
+        public async Task<List<ItemEnvelope>> GetFamilyAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken)
         {
             ArgumentException.ThrowIfNullOrEmpty(partitionKey);
             ArgumentException.ThrowIfNullOrEmpty(resourceKey);
@@ -226,6 +227,22 @@ namespace ThingsLibrary.ItemStore.Cosmos
                 && (x.ResourceKey == resourceKey || x.ResourceKey.StartsWith(resourceKeyPrefix))
                 && !x.IsDeleted
             );
+
+            var results = new List<ItemEnvelope>();
+            using var feed = query.ToFeedIterator();
+            while (feed.HasMoreResults)
+            {
+                var response = await feed.ReadNextAsync(cancellationToken);
+                results.AddRange(response);
+            }
+
+            return results;
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<ItemEnvelope>> GetAllAsync(Expression<Func<ItemEnvelope, bool>> predicate, CancellationToken cancellationToken)
+        {
+            var query = this.Container.GetItemLinqQueryable<ItemEnvelope>().Where(predicate);
 
             var results = new List<ItemEnvelope>();
             using var feed = query.ToFeedIterator();

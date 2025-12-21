@@ -208,15 +208,11 @@ namespace ThingsLibrary.ItemStore.Mongo
 
             Log.Debug("GET Item: {EntityKey} ({EntityPartitionKey})", resourceKey, partitionKey);
 
-            return await this.Collection.Find(x => 
-                x.Partition == partitionKey && 
-                x.ResourceKey == resourceKey && 
-                !x.IsDeleted
-            ).FirstOrDefaultAsync(cancellationToken);
+            return await this.Collection.Find(x => x.Partition == partitionKey && x.ResourceKey == resourceKey).FirstOrDefaultAsync(cancellationToken);
         }
 
         /// <inheritdoc />
-        public async Task<List<ItemEnvelope>> GetAllAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken)
+        public async Task<List<ItemEnvelope>> GetFamilyAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken)
         {
             ArgumentException.ThrowIfNullOrEmpty(partitionKey);
             ArgumentException.ThrowIfNullOrEmpty(resourceKey);
@@ -226,13 +222,21 @@ namespace ThingsLibrary.ItemStore.Mongo
             Log.Debug("GET Item: {EntityKey} ({EntityPartitionKey})", resourceKey, partitionKey);
 
             var items = await this.Collection.FindAsync(x =>
-               x.Partition == partitionKey &&
-               (x.ResourceKey == resourceKey || x.ResourceKey.StartsWith(resourceKeyPrefix) && 
-               !x.IsDeleted),
+               x.Partition == partitionKey
+               && (x.ResourceKey == resourceKey || x.ResourceKey.StartsWith(resourceKeyPrefix)
+               ),
                cancellationToken: cancellationToken);
 
             return await items.ToListAsync(cancellationToken);
         }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<ItemEnvelope>> GetAllAsync(Expression<Func<ItemEnvelope, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await this.Collection.Find(predicate).ToListAsync(cancellationToken);
+        }
+
+
 
         /// <inheritdoc />
         public async Task InsertAsync(ItemEnvelope itemEnvelope, CancellationToken cancellationToken)

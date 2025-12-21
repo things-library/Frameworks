@@ -5,6 +5,8 @@
 // </copyright>
 // ================================================================================
 
+using System.Linq.Expressions;
+
 namespace ThingsLibrary.ItemStore.Interfaces
 {
     public interface IItemStore : IDisposable
@@ -46,7 +48,15 @@ namespace ThingsLibrary.ItemStore.Interfaces
         /// <param name="resourceKey">Resource Key</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
-        public Task<List<ItemEnvelope>> GetAllAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken);
+        public Task<List<ItemEnvelope>> GetFamilyAsync(string partitionKey, string resourceKey, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get all items that match the predicate
+        /// </summary>
+        /// <param name="predicate">LINQ predicate</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns>A list of matching items</returns>
+        public Task<IEnumerable<ItemEnvelope>> GetAllAsync(Expression<Func<ItemEnvelope, bool>> predicate, CancellationToken cancellationToken);
 
         /// <summary>
         /// Insert Entity into store
