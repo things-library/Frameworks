@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
@@ -23,13 +24,24 @@ using Serilog;
 
 namespace ThingsLibrary.Services.AspNetCore.Extensions
 {
+    public static class Constants
+    {
+        public const string AZURE_AD = "azure_ad";
+        public const string COOKIE = "cookie";
+        public const string JWT = "jwt";
+        public const string JWT_OR_OIDC = "JWT_OR_OIDC";
+        public const string OPEN_ID = "open_id";        
+    }
+
     public static class AuthExtensions
     {
-        public static AuthenticationBuilder AddCanvasAuth(this IServiceCollection services, IConfiguration configuration, ItemDto authenticationOptions)
+        
+
+        public static AuthenticationBuilder AddCanvasAuthentication(this IServiceCollection services, IConfiguration configuration, ItemDto authenticationOptions)
         {
             if (authenticationOptions.Type != "authentication") { throw new ArgumentException($"Invalid type '{authenticationOptions.Type}', expecting 'auth' for auth options."); }
 
-            if (authenticationOptions.Items.ContainsKey("open_id") && !authenticationOptions.Items.ContainsKey("cookie")) { throw new ArgumentException("OpenID must include a Cookie definition."); }
+            if (authenticationOptions.Items.ContainsKey(Constants.OPEN_ID) && !authenticationOptions.Items.ContainsKey(Constants.COOKIE)) { throw new ArgumentException("OpenID must include a Cookie definition."); }
 
             // ================================================================================
             // AUTHENTICATION
@@ -37,16 +49,16 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
 
             AuthenticationBuilder authBuilder;
 
-            if ((authenticationOptions.Items.ContainsKey("open_id") || authenticationOptions.Items.ContainsKey("azure_ad")) && authenticationOptions.Items.Any(x => x.Value.Type == "jwt"))
+            if ((authenticationOptions.Items.ContainsKey(Constants.OPEN_ID) || authenticationOptions.Items.ContainsKey(Constants.AZURE_AD)) && authenticationOptions.Items.Any(x => x.Value.Type == "jwt"))
             {
                 authBuilder = services.AddAuthentication(options =>
                 {
-                    options.DefaultAuthenticateScheme = "JWT_OR_OIDC";
-                    options.DefaultChallengeScheme = "JWT_OR_OIDC";
-                    options.DefaultScheme = "JWT_OR_OIDC";
+                    options.DefaultAuthenticateScheme = Constants.JWT_OR_OIDC;
+                    options.DefaultChallengeScheme = Constants.JWT_OR_OIDC;
+                    options.DefaultScheme = Constants.JWT_OR_OIDC;
                 });
 
-                authBuilder.AddPolicyScheme("JWT_OR_OIDC", "JWT_OR_OIDC", options =>
+                authBuilder.AddPolicyScheme(Constants.JWT_OR_OIDC, Constants.JWT_OR_OIDC, options =>
                 {
                     // runs on each request
                     options.ForwardDefaultSelector = context =>
@@ -65,7 +77,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                     };
                 });
             }
-            else if (authenticationOptions.Items.ContainsKey("open_id"))
+            else if (authenticationOptions.Items.ContainsKey(Constants.OPEN_ID))
             {
                 Log.Debug("+ {AppCapability}", "OpenID Authentication (OIDC)");
                 authBuilder = services.AddAuthentication(options =>
@@ -83,7 +95,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             // ====================================================================================================
             // cookie
             // ====================================================================================================
-            if (authenticationOptions.Items.ContainsKey("cookie"))
+            if (authenticationOptions.Items.ContainsKey(Constants.COOKIE))
             {
                 services.AddCanvasAuthCookie(authBuilder, authenticationOptions);
             }
@@ -91,7 +103,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             // ====================================================================================================
             // JWT
             // ====================================================================================================
-            if (authenticationOptions.Items.TryGetValue("jwt", out var jwtOptions))
+            if (authenticationOptions.Items.TryGetValue(Constants.JWT, out var jwtOptions))
             {
                 services.AddCanvasAuthJwt(authBuilder, jwtOptions);                
             }
@@ -104,7 +116,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             // ====================================================================================================
             // OPEN ID CONNECT Config
             // ====================================================================================================
-            if (authenticationOptions.Items.TryGetValue("open_id", out var openIdOptions))
+            if (authenticationOptions.Items.TryGetValue(Constants.OPEN_ID, out var openIdOptions))
             {
                 services.AddCanvasAuthOpenId(authBuilder, openIdOptions);
             }
@@ -112,7 +124,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             // ====================================================================================================
             // Azure AD integration?
             // ====================================================================================================            
-            if (authenticationOptions.Items.TryGetValue("azure_ad", out var azureAdOptions))
+            if (authenticationOptions.Items.TryGetValue(Constants.AZURE_AD, out var azureAdOptions))
             {
                 services.AddCanvasAuthAzureAd(authBuilder, azureAdOptions);
             }
@@ -208,7 +220,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             //    "role_claim_type": "roles",
             //}
 
-            if (azureAdOptions.Type != "azure_ad") { throw new ArgumentException($"Invalid type '{azureAdOptions.Type}', expecting 'azure_ad' for Azure AD auth options."); }
+            if (azureAdOptions.Type != Constants.AZURE_AD) { throw new ArgumentException($"Invalid type '{azureAdOptions.Type}', expecting 'azure_ad' for Azure AD auth options."); }
 
 
             Log.Debug("+ {AppCapability}", "Microsoft Identity");
@@ -248,54 +260,41 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             {
                 // add all the role -> claim matches            
                 Log.Debug("- Policies:");
-                var policies = authorizationOptions.Items.Where(x => x.Value.Type == "policy");
-
-                foreach(var policy in policies)
+                if (authorizationOptions.Items.ContainsKey("policies"))
                 {
-                    var roles = policy.Value["roles"]?.Split('|', StringSplitOptions.RemoveEmptyEntries) ?? new string[0];
-                    
-                    Log.Debug("--- Policy: {AppPolicy}, Roles: {AppPolicyRoles}", policy.Key, string.Join(", ", roles));
+                    var policies = authorizationOptions.Items["policies"];
 
-                    // Make sure all the roles specified are in the expected app roles listing
-                    
-                    options.AddPolicy(policy.Key, policy => policy.RequireClaim("role", roles));
+                    foreach (var policy in policies.Items.Values)
+                    {
+                        var roleNames = policy.Items.Select(x => x.Value.Name).ToList();
+
+                        Log.Information("--- Policy: {AppPolicy}, Roles: {AppPolicyRoles}", policy.Name, string.Join(", ", roleNames));
+
+                        options.AddPolicy(policy.Name, policy => policy.RequireClaim("roles", roleNames));                        
+                    }
                 }
 
                 // ================================================================================
                 // REQUIRE EVERYONE TO LOGIN                
                 // By default, all incoming requests will be authorized according to the default policy.
-                //options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); //options.DefaultPolicy;
+                options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); //options.DefaultPolicy;
             });         
         }
         
         public static void AddCanvasAuthJwt(this IServiceCollection services, AuthenticationBuilder authBuilder, ItemDto jwtOptions)
-        {
-            //{            
-            //    "authority": "https://signodeconnectusers.ciamlogin.com/c57be6f1-b43d-4a29-97a3-f1c6e9a727a4/v2.0",
-            //    "issuer": "https://c57be6f1-b43d-4a29-97a3-f1c6e9a727a4.ciamlogin.com/c57be6f1-b43d-4a29-97a3-f1c6e9a727a4/v2.0",
-            //    "issuers": "https://sts.windows.net/c57be6f1-b43d-4a29-97a3-f1c6e9a727a4/|https://sts.windows.net/7db30361-ce9f-4244-8d28-60553bffff38/",
-            //    "audience": "portal",
-            //    "client_id": "4f62a04e-86aa-4c0f-9449-411b4b69503e",
-            //    "name_claim_type": "name",
-            //    "role_claim_type": "roles",
-            //    "disable_validation": "true",
-            //    "show_validation_errors": "true"
-            //}
-
+        {                     
+            // "authority": "https://signodeconnectusers.ciamlogin.com/c57be6f1-b43d-4a29-97a3-f1c6e9a727a4/v2.0",
+            // "issuer": "https://c57be6f1-b43d-4a29-97a3-f1c6e9a727a4.ciamlogin.com/c57be6f1-b43d-4a29-97a3-f1c6e9a727a4/v2.0",
+            // "issuers": "https://sts.windows.net/c57be6f1-b43d-4a29-97a3-f1c6e9a727a4/|https://sts.windows.net/7db30361-ce9f-4244-8d28-60553bffff38/",
+            // "audience": "portal",
+            // "client_id": "4f62a04e-86aa-4c0f-9449-411b4b69503e",
+            // "name_claim_type": "name",
+            // "role_claim_type": "roles",
+            // "disable_validation": "true",
+            // "show_validation_errors": "true"
+            
             if (jwtOptions.Type != "jwt") { throw new ArgumentException($"Invalid type '{jwtOptions.Type}', expecting 'jwt' for JWT auth options."); }
-
-            //if (authBuilder == null)
-            //{
-            //    Log.Debug("+ {AppCapability}", "JWT Authentication");
-            //    authBuilder = services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
-            //}
-
-            // make sure higher environments don't have disabled validation
-            //if (jwtOptions.Tags.GetValue<bool>("disable_validation", false))
-            //{
-            //    throw new ArgumentException("JWT Disable Validation not allowed in production environments!");
-            //}
-
+                        
             Log.Debug("======================================================================");
             Log.Debug("= JWT Configuration:");
             if (!jwtOptions.Tags.GetValue<bool>("disable_validation", false))
@@ -312,11 +311,10 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             authBuilder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Authority = jwtOptions["authority"];
-                options.Audience = (!string.IsNullOrEmpty(jwtOptions["audience"]) ? jwtOptions["audience"] : null);
-                
+                //options.Audience = (!string.IsNullOrEmpty(jwtOptions["audience"]) ? jwtOptions["audience"] : null);
+                                                
                 if (!jwtOptions.Tags.GetValue<bool>("disable_validation", false))
-                {
-                    //options.TokenValidationParameters = App.Service.OAuth2Client!.GetTokenValidationParametersAsync().Result;
+                {                    
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -327,10 +325,18 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                         ValidAudience = jwtOptions["audience"],
                         ValidAudiences = jwtOptions["audiences"]?.Split('|', StringSplitOptions.RemoveEmptyEntries),
 
-                        ValidateLifetime = true,
+                        ValidateLifetime = true,                        
+                        RequireSignedTokens = true,
 
-                        NameClaimType = jwtOptions["name_claim_type"],
-                        RoleClaimType = jwtOptions["role_claim_type"]
+                        //TODO: REMOVE fool the validation logic since we aren't validating tokens
+                        ValidateIssuerSigningKey = false,
+                        SignatureValidator = delegate (string token, TokenValidationParameters parameters)
+                        {
+                            return new JsonWebToken(token);
+                        },
+
+                        NameClaimType = jwtOptions["name_claim_type"] ?? "name",
+                        RoleClaimType = jwtOptions["role_claim_type"] ?? "roles"
                     };
                 }
                 else
@@ -340,10 +346,11 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        RequireAudience = false,
+                        RequireAudience = false,                        
 
                         ValidateLifetime = false,
                         RequireSignedTokens = false,
+
                         ValidateIssuerSigningKey = false,
 
                         // fool the validation logic since we aren't validating tokens
@@ -352,8 +359,8 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                             return new JsonWebToken(token);
                         },
 
-                        NameClaimType = jwtOptions["name_claim_type"],
-                        RoleClaimType = jwtOptions["role_claim_type"]
+                        NameClaimType = jwtOptions["name_claim_type"] ?? "name",
+                        RoleClaimType = jwtOptions["role_claim_type"] ?? "roles"
                     };
                 }
             });
@@ -369,9 +376,9 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             //}
 
             if(authOptions.Type != "authentication") { throw new ArgumentException($"Invalid type '{authOptions.Type}', expecting 'authentication' for auth options."); }
-            if(!authOptions.Items.ContainsKey("cookie")) { return; }
+            if(!authOptions.Items.ContainsKey(Constants.COOKIE)) { return; }
 
-            var cookieOptions = authOptions.Items["cookie"];
+            var cookieOptions = authOptions.Items[Constants.COOKIE];
 
             Log.Debug("======================================================================");
             Log.Debug("= Cookies");
