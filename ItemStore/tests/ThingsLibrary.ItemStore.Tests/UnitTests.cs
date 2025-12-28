@@ -221,6 +221,10 @@ namespace ThingsLibrary.ItemStore.Tests
             // ======================================================================
             // VERIFY
             Assert.HasCount(3, envelopes2);
+            
+            // try to get a specific item by tag
+            var envelopeList = await ItemStore.GetAllAsync(x => x.Partition == partitionKey && x.Data.Tags["release_theaters"] == "3854", UnitTests.CancellationToken);
+            Assert.HasCount(1, envelopeList);
         }
 
     }

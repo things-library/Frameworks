@@ -277,7 +277,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
                 // ================================================================================
                 // REQUIRE EVERYONE TO LOGIN                
                 // By default, all incoming requests will be authorized according to the default policy.
-                options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); //options.DefaultPolicy;
+                //options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); //options.DefaultPolicy;
             });         
         }
         
@@ -300,7 +300,7 @@ namespace ThingsLibrary.Services.AspNetCore.Extensions
             if (!jwtOptions.Tags.GetValue<bool>("disable_validation", false))
             {
                 Log.Debug("--- Issuer: {JwtIssuer}", (!string.IsNullOrEmpty(jwtOptions["issuer"]) ? jwtOptions["issuer"] : "<< ANY >>"));
-                Log.Debug("--- Audience: {JwtAudience}", (!string.IsNullOrEmpty(jwtOptions["audience"]) ? jwtOptions["audience"] : "<< ANY >>"));
+                Log.Debug("--- Audience: {JwtAudience}", (!string.IsNullOrEmpty(jwtOptions["audiences"]) ? jwtOptions["audiences"] : "<< ANY >>"));
             }
             else
             {
