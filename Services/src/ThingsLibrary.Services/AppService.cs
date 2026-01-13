@@ -42,7 +42,7 @@ namespace ThingsLibrary.Services
         /// <summary>
         /// Service Canvas
         /// </summary>
-        public Schema.Library.ItemDto? Canvas { get; set; }
+        public ItemDto? Canvas { get; set; }
         
         /// <summary>
         /// Debugging / Development State
@@ -62,6 +62,11 @@ namespace ThingsLibrary.Services
         /// Supported Languages
         /// </summary>
         public string[] SupportedLanguages { get; set; } = new[] { "en-US" };
+
+        /// <summary>
+        /// Default Culture if native is not present
+        /// </summary>
+        public string DefaultCulture => this.SupportedLanguages[0];
 
         /// <summary>
         /// String Localizer
