@@ -304,7 +304,7 @@ namespace ThingsLibrary.DataType.Extensions
             foreach (var destinationProperty in destinationProperties)
             {
                 var destinationSetProperty = destinationProperty.GetSetMethod(false);
-                if (destinationSetProperty?.IsPrivate != true) { continue; }
+                if (destinationSetProperty?.IsPrivate == true) { continue; }
 
                 var sourceProperty = sourceType.GetProperty(destinationProperty.Name, BindingFlags.Public | BindingFlags.Instance);
                 if (sourceProperty?.CanRead != true) { continue; }

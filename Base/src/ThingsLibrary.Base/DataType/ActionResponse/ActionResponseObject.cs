@@ -106,6 +106,8 @@ namespace ThingsLibrary.DataType
         public ActionResponse(ActionResponse jsonResponse)
         {
             jsonResponse.CopyPropertyValues(this);
+
+            this.StatusCode = jsonResponse.StatusCode;            
         }
     }
 }

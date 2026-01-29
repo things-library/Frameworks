@@ -302,7 +302,7 @@ namespace ThingsLibrary.Services
 
                 Type = "app_instance_hb",
                 Name = "Instance Heartbeat",
-                Date = DateTime.Now,
+                Date = DateTime.UtcNow,
 
                 Tags = new Dictionary<string, string>()
                 {       
