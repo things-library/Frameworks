@@ -48,6 +48,7 @@
   <Folder Name="/Notifications/">
     <Project Path="Notifications/src/ThingsLibrary.Notification/ThingsLibrary.Notification.csproj" />
     <Project Path="Notifications/src/ThingsLibrary.Notifications.Azure/ThingsLibrary.Notification.Azure.csproj" />
+    <Project Path="Notifications/src/ThingsLibrary.Notifications.SmtpRelay/ThingsLibrary.Notifications.SmtpRelay.csproj" Id="9735f6f8-7f41-4491-8416-d611306226ad" />
   </Folder>
   <Folder Name="/Security/">
     <Project Path="Security/src/ThingsLibrary.Security.OAuth2/ThingsLibrary.Security.OAuth2.csproj" />

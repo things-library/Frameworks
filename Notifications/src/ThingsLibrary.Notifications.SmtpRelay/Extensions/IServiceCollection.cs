@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ThingsLibrary.Schema.Library;
 using ThingsLibrary.Services.Extensions;
 
-namespace ThingsLibrary.Notification.Azure.Extensions
+namespace ThingsLibrary.Notification.SmtpRelay.Extensions
 {
     public static class IServiceCollectionExtensions
     {
@@ -19,29 +19,16 @@ namespace ThingsLibrary.Notification.Azure.Extensions
         /// Register Library Services
         /// </summary>
         /// <param name="services"></param>
-        public static void AddSmsAzureService(this IServiceCollection services, SmsServiceOptions options)
-        {
-            services.AddSingleton(options);
-
-            services.AddScoped<SmsService>();
-        }
-
-
-        /// <summary>
-        /// Register Library Services
-        /// </summary>
-        /// <param name="services"></param>
-        public static void AddEmailAzureService(this IServiceCollection services, ItemDto options, string addressFrom, IConfiguration configuration)// EmailServiceOptions options)
+        public static void AddEmailRelayService(this IServiceCollection services, ItemDto options, string addressFrom, IConfiguration configuration)// EmailServiceOptions options)
         {
             var emailConnectionString = configuration.TryGetConnectionString(options["connection_string_variable"] ?? "Notifications");
             
+            // register the singleton
             var emailOptions = new EmailServiceOptions(emailConnectionString, addressFrom);
-
             services.AddSingleton(emailOptions);
 
+            // register the service
             services.AddScoped<EmailService>();
         }
-
-
     }
 }
