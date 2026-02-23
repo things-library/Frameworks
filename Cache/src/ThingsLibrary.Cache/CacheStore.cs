@@ -129,5 +129,23 @@ namespace ThingsLibrary.Cache
             };
         }
 
+        public void Prechecks()
+        {
+            var testId = $"Precheck-{Guid.NewGuid()}";
+            this.SetAsync(testId, testId, TimeSpan.FromSeconds(30), CancellationToken.None).Wait();
+
+            var result = this.GetAsync<string>(testId, CancellationToken.None).Result;
+            if(string.Compare(testId, result, false) != 0)
+            {
+                throw new IOException("Unable to read/write to cache store during precheck. Check inner exception for details.", new Exception($"Expected: {testId}, Actual: {result}"));
+            }
+        }
+
+        public bool IsHealthy()
+        {
+            //TODO: fix to actually check
+
+            return true;
+        }
     }
 }

@@ -5,13 +5,15 @@
 // </copyright>
 // ================================================================================
 
+using System.Data.Common;
+
 namespace ThingsLibrary.Notification.Azure
 {
-    public class EmailService : IEmailNotifications
+    public class EmailNotificationService : IEmailNotifications
     {
         public EmailServiceOptions Options { get; set; }
 
-        public EmailService(EmailServiceOptions options)
+        public EmailNotificationService(EmailServiceOptions options)
         {
             this.Options = options;
         }
@@ -47,6 +49,31 @@ namespace ThingsLibrary.Notification.Azure
                 return new ActionResponse(ex, ex.Message);
             }
 
+        }
+
+        public bool IsHealthy()
+        {
+            DbConnectionStringBuilder builder = new DbConnectionStringBuilder();
+            builder.ConnectionString = this.Options.ConnectionString;
+
+            var serverHost = builder["endpoint"].ToString();
+
+            if (string.IsNullOrEmpty(serverHost))
+            {
+                return false;
+            }
+
+            try
+            {
+                using var ping = new System.Net.NetworkInformation.Ping();
+                var reply = ping.Send(serverHost, timeout:3000); // 3 second timeout
+
+                return reply.Status == System.Net.NetworkInformation.IPStatus.Success;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

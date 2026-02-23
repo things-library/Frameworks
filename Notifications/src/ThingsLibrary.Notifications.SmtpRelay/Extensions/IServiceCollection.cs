@@ -28,7 +28,7 @@ namespace ThingsLibrary.Notification.SmtpRelay.Extensions
             services.AddSingleton(emailOptions);
 
             // register the service
-            services.AddScoped<EmailService>();
+            services.AddScoped<IEmailNotifications, EmailNotificationService>();
         }
     }
 }

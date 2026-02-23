@@ -12,5 +12,7 @@ namespace ThingsLibrary.Notification
     public interface IEmailNotifications
     {
         public Task<ActionResponse> SendAsync(string toAddress, string subject, string body, bool isHtmlBody, CancellationToken cancellationToken);
+                
+        public abstract bool IsHealthy();
     }
 }

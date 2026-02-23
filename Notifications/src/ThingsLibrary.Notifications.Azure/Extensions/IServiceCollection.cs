@@ -39,7 +39,7 @@ namespace ThingsLibrary.Notification.Azure.Extensions
 
             services.AddSingleton(emailOptions);
 
-            services.AddScoped<EmailService>();
+            services.AddScoped<EmailNotificationService>();
         }
 
 

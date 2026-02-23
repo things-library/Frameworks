@@ -15,5 +15,8 @@ namespace ThingsLibrary.Cache
         public Task SetAsync<T>(string key, T item, TimeSpan slidingExpiration, CancellationToken cancellationToken);
 
         public Task RemoveAsync(string key, CancellationToken cancellationToken);
+
+        public abstract void Prechecks();
+        public abstract bool IsHealthy();
     }
 }
