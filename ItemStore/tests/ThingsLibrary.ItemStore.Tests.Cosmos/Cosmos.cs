@@ -21,8 +21,8 @@ namespace ThingsLibrary.ItemStore.Tests.Cosmos
 
             UnitTests.Configuration = new ConfigurationBuilder()
                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-               .AddJsonFile("appsettings.json")
-               .AddUserSecrets(System.Reflection.Assembly.GetExecutingAssembly())       // Source: %APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json
+               .AddJsonFile("appsettings.json", optional: true)               
+               .AddUserSecrets(System.Reflection.Assembly.GetExecutingAssembly(), optional: true)
                .Build();
 
             _ = UnitTests.Configuration.InitCanvas();

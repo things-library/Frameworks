@@ -103,6 +103,12 @@ namespace ThingsLibrary.ItemStore.Tests.Mongo
 
         }
 
+        [TestMethod]
+        public void Canvas_Test()
+        {
+            Assert.IsNotNull(App.Service.Canvas);
+        }
+
 
         //[TestMethod]
         //[DataRow(null, "TestTable")]   // Null connectionstring
