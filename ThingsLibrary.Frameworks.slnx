@@ -40,9 +40,7 @@
     <Project Path="ItemStore/src/ThingsLibrary.ItemStore/ThingsLibrary.ItemStore.csproj" />
   </Folder>
   <Folder Name="/ItemStore/Tests/">
-    <Project Path="ItemStore/tests/ThingsLibrary.ItemStore.Tests.Cosmos/ThingsLibrary.ItemStore.Tests.Cosmos.csproj" />
     <Project Path="ItemStore/tests/ThingsLibrary.ItemStore.Tests.Local/ThingsLibrary.ItemStore.Tests.Local.csproj" />
-    <Project Path="ItemStore/tests/ThingsLibrary.ItemStore.Tests.Mongo/ThingsLibrary.ItemStore.Tests.Mongo.csproj" />
     <Project Path="ItemStore/tests/ThingsLibrary.ItemStore.Tests/ThingsLibrary.ItemStore.Tests.csproj" />
   </Folder>
   <Folder Name="/Notifications/">
