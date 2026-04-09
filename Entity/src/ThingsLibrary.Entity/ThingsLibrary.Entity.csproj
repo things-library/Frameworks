@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>		
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Entity</PackageId>
+		<PackageDescription>Things Library entity (NoSQL) libraries and wrappers.</PackageDescription>		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		
+		<ProductName>ThingsLibrary.Entity</ProductName>
+		<Title>Entity Framework Library</Title>
+		<Description>This is the shared library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="JsonPatch.Net" Version="4.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.11" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="10.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />		
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Services\src\ThingsLibrary.Services\ThingsLibrary.Services.csproj" />
+	</ItemGroup>
+
+</Project>

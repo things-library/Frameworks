@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+
+		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Database</PackageId>
+		<PackageDescription>Things Library database libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		
+		<ProductName>ThingsLibrary.Database</ProductName>
+		<Title>Things Library Database Base Library</Title>
+		<Description>Provides various database agnostic tools such as audit tracking using EntityFrameworkCore</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="JsonDiffPatch.Net" Version="2.5.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="10.0.5" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Services\src\ThingsLibrary.Services\ThingsLibrary.Services.csproj" />
+	</ItemGroup>	
+
+</Project>

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Database\src\ThingsLibrary.Database.Audit\ThingsLibrary.Database.Audit.csproj" />
+    <ProjectReference Include="..\..\..\Security\src\ThingsLibrary.Security.OAuth2\ThingsLibrary.Security.OAuth2.csproj" />
+    <ProjectReference Include="..\ThingsLibrary.Entity.Mongo\ThingsLibrary.Entity.Mongo.csproj" />
+  </ItemGroup>
+
+</Project>

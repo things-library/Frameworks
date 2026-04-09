@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Testing</PackageId>
+		<PackageDescription>Things Library testing framework libraries and wrappers.</PackageDescription>
+		
+		<ProductName>ThingsLibrary.Testing</ProductName>
+		<Title>Things Library Testing Framework Library</Title>		
+		<Description>This is the testing library that adds test container capabilities</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.5" />
+		<PackageReference Include="MSTest.TestFramework" Version="4.2.1" />
+		<PackageReference Include="Testcontainers" Version="4.11.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Base\ThingsLibrary.csproj" />
+	</ItemGroup>
+
+</Project>

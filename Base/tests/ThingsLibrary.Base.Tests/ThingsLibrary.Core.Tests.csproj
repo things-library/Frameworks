@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>		
+		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+		<EnableMSTestRunner>true</EnableMSTestRunner>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<ProductName>ThingsLibrary.Core.Tests</ProductName>
+		<Title>Core Tests</Title>
+		<Description>This is the core tests project</Description>
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+		<Copyright>1998</Copyright>
+	</PropertyGroup>
+	
+	<ItemGroup>
+	  <Compile Remove="DataType\Events\**" />
+	  <EmbeddedResource Remove="DataType\Events\**" />
+	  <None Remove="DataType\Events\**" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Compile Remove="DataType\Extensions\XmlDocument.cs" />
+	  <Compile Remove="DataType\Extensions\XmlElement.cs" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <EmbeddedResource Include="TestData\TestFile.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="TestData\TestImage.jpg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MSTest" Version="4.2.1" />
+		<PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.6.2" />		
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
+	</ItemGroup>
+
+</Project>

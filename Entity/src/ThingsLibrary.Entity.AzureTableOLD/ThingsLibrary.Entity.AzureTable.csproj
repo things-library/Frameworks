@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>Starlight.Entity.AzureTable</PackageId>
+		<ProductName>Starlight.Entity.AzureTable</ProductName>
+		<Title>Cloud Entity Azure Framework Library</Title>
+		<Description>This is the shared library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/starlight-software-co/Frameworks</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Data.Tables" Version="12.8.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Starlight.Entity\Starlight.Entity.csproj" />
+	</ItemGroup>
+
+</Project>

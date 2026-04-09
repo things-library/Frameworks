@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+
+		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Database.Cosmos</PackageId>
+		<PackageDescription>Things Library Azure Cosmos database libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+
+		<ProductName>ThingsLibrary.Database.Cosmos</ProductName>
+		<Title>Things Library Azure Cosmos Database Library</Title>
+		<Description>This is the shared foundational database library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="10.0.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ThingsLibrary.Database\ThingsLibrary.Database.csproj" />
+	</ItemGroup>
+
+</Project>

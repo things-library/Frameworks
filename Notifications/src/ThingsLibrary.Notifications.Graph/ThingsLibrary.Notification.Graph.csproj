@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Notification.Graph</PackageId>
+		<PackageDescription>Things Library Graph Communication Services wrapping library.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+
+		<ProductName>ThingsLibrary.Notification.Graph</ProductName>
+		<Title>Things Library Graph Wrapper Library</Title>
+		<Description>This is the Graph Communication Services wrapper library.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Identity" Version="1.20.0" />
+		<PackageReference Include="Microsoft.Graph" Version="5.103.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThingsLibrary.Notification\ThingsLibrary.Notification.csproj" />
+	</ItemGroup>
+
+</Project>

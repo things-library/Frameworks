@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+
+		<UserSecretsId>70000007-7000-7000-7000-700000000007</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+		<PackageReference Include="MSTest.TestAdapter" Version="4.0.2" />
+		<PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
+		<PackageReference Include="coverlet.collector" Version="6.0.4">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Testing\ThingsLibrary.Testing.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Storage.Aws\ThingsLibrary.Storage.Aws.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Storage.Azure\ThingsLibrary.Storage.Azure.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Storage.Gcp\ThingsLibrary.Storage.Gcp.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Storage.Local\ThingsLibrary.Storage.Local.csproj" />
+	  <ProjectReference Include="..\..\src\ThingsLibrary.Storage\ThingsLibrary.Storage.csproj" />
+	</ItemGroup>
+
+</Project>

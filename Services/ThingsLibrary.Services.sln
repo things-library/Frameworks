@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{50785E5C-B62C-4683-BC65-58FE6B1231B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Services", "src\ThingsLibrary.Services\ThingsLibrary.Services.csproj", "{6E1E2E8A-5917-48D7-A07D-505F6A616430}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{79DA89B4-2395-4406-BEA7-A4F220F6CB8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary", "..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj", "{69A74342-DD23-54EF-BF18-B34E75393DB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Services.Tests", "tests\ThingsLibrary.Services.Tests\ThingsLibrary.Services.Tests.csproj", "{8D05A077-90C1-0C51-7945-BC30074B2B78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Schema.Canvas", "..\..\Schemas\src\csharp\ThingsLibrary.Schema.Canvas\ThingsLibrary.Schema.Canvas.csproj", "{D9EF8235-E280-A857-F70A-D36E8F06D10E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Services.AspNetCore", "src\ThingsLibrary.Services.AspNetCore\ThingsLibrary.Services.AspNetCore.csproj", "{C1EAE21A-CA35-0C54-1671-2C81DC47F777}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E1E2E8A-5917-48D7-A07D-505F6A616430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E1E2E8A-5917-48D7-A07D-505F6A616430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E1E2E8A-5917-48D7-A07D-505F6A616430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E1E2E8A-5917-48D7-A07D-505F6A616430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69A74342-DD23-54EF-BF18-B34E75393DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A74342-DD23-54EF-BF18-B34E75393DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A74342-DD23-54EF-BF18-B34E75393DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A74342-DD23-54EF-BF18-B34E75393DB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D05A077-90C1-0C51-7945-BC30074B2B78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D05A077-90C1-0C51-7945-BC30074B2B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D05A077-90C1-0C51-7945-BC30074B2B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D05A077-90C1-0C51-7945-BC30074B2B78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9EF8235-E280-A857-F70A-D36E8F06D10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9EF8235-E280-A857-F70A-D36E8F06D10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9EF8235-E280-A857-F70A-D36E8F06D10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9EF8235-E280-A857-F70A-D36E8F06D10E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1EAE21A-CA35-0C54-1671-2C81DC47F777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1EAE21A-CA35-0C54-1671-2C81DC47F777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1EAE21A-CA35-0C54-1671-2C81DC47F777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1EAE21A-CA35-0C54-1671-2C81DC47F777}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{69A74342-DD23-54EF-BF18-B34E75393DB7} = {79DA89B4-2395-4406-BEA7-A4F220F6CB8F}
+		{8D05A077-90C1-0C51-7945-BC30074B2B78} = {50785E5C-B62C-4683-BC65-58FE6B1231B2}
+		{D9EF8235-E280-A857-F70A-D36E8F06D10E} = {79DA89B4-2395-4406-BEA7-A4F220F6CB8F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CF34144-3CDD-4955-B934-A5278D7A1139}
+	EndGlobalSection
+EndGlobal

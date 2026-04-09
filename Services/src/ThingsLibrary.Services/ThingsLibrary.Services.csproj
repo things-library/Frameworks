@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Services</PackageId>
+		<PackageDescription>Things Library Services library.</PackageDescription>		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+
+		<ProductName>ThingsLibrary.Services</ProductName>
+		<Title>Things Library Services library.</Title>
+		<Description>This is the standarized wrapping services library.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Remove="DataType\Resource.resx" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ApplicationDefinition Include="DataType\Resource.resx" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Templates\Resources.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Humanizer.Core" Version="3.0.10" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.5" />
+		<PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="10.0.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+		<PackageReference Include="ThingsLibrary.Schema.Library" Version="0.6.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Base\src\ThingsLibrary.Base\ThingsLibrary.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+
+		<UserSecretsId>10000000-1000-1000-1000-100000000001</UserSecretsId>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Database.Mongo</PackageId>
+		<PackageDescription>Things Library Mongo database libraries and wrappers.</PackageDescription>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+
+		<ProductName>ThingsLibrary.Database.Mongo</ProductName>
+		<Title>Things Library MongoDB Database Library</Title>
+		<Description>This is the shared foundational database library</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MongoDB.EntityFrameworkCore" Version="10.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ThingsLibrary.Database\ThingsLibrary.Database.csproj" />
+	</ItemGroup>
+
+</Project>
