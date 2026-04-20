@@ -33,7 +33,7 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.6" />
-		<PackageReference Include="Microsoft.Identity.Web.UI" Version="4.7.0" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="4.8.0" />
 	</ItemGroup>
 
 	<ItemGroup>
