@@ -24,10 +24,15 @@ namespace ThingsLibrary.Cache
             _logger = logger;
             _serializerOptions = jsonSerializerOptions ?? new JsonSerializerOptions();
         }
-        
+
+        private static string GetValidKey(string key) => key.Replace("/", "__").Replace("\\", "__");
+
         public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken)
         {
             ArgumentException.ThrowIfNullOrEmpty(key);
+
+            // cache keys can't have slashes, so replace with how appSettings in environment variables works.
+            key = GetValidKey(key);
 
             string? json;
 
@@ -82,6 +87,11 @@ namespace ThingsLibrary.Cache
 
         private async Task SetAsync<T>(string key, T item, DistributedCacheEntryOptions ttlOptions, CancellationToken cancellationToken)
         {
+            ArgumentException.ThrowIfNullOrEmpty(key);
+
+            // cache keys can't have slashes, so replace with how appSettings in environment variables works.
+            key = GetValidKey(key);
+
             // remove in case it already exists
             await this.RemoveAsync(key, cancellationToken);
 
@@ -102,6 +112,9 @@ namespace ThingsLibrary.Cache
         public async Task RemoveAsync(string key, CancellationToken cancellationToken)
         {
             ArgumentException.ThrowIfNullOrEmpty(key);
+
+            // cache keys can't have slashes, so replace with how appSettings in environment variables works.
+            key = GetValidKey(key);
 
             try
             {
